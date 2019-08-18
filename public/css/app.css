@@ -844,6 +844,14 @@ body {
   background-color: #f5f5f3;
 }
 
+.clientFormWrapper {
+  display: none;
+}
+
+.success-message {
+  display: none;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

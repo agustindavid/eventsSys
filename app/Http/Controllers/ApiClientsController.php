@@ -26,7 +26,7 @@ class ApiClientsController extends Controller
         $newClient=\App\models\Client::create($request->all());
         $arr = array('msg' => 'Something goes to wrong. Please try again lator', 'status' => false);
         if($newClient){
-        $arr = array('msg' => 'Successfully submit form using ajax', 'status' => true);
+        $arr = array('msg' => 'Cliente creado con exito', 'status' => true);
         }
         return Response()->json($arr);
 

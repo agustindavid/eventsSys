@@ -49,3 +49,11 @@ body{
     width: calc(100% - 280px);
     background-color: $lightgray;
 }
+
+.clientFormWrapper {
+    display: none;
+}
+
+.success-message {
+    display: none;
+}
