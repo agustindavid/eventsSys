@@ -1,0 +1,51 @@
+body{
+    background-color: $lightgray;
+}
+
+.dt-bootstrap4 .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.sidebar{
+  background-color: $darkblue;
+  width: 280px;
+  color: #fff;
+  position: fixed;
+  height: 100vh;
+  overflow: auto;
+
+  nav {
+      flex-direction: column;
+  }
+
+  ul{
+      padding: 15px 50px;
+      list-style: none;
+      flex-direction: column;
+
+      li {
+          list-style: none;
+          display: block;
+
+        a {
+            color: $lightfont;
+            font-family: $montserrat;
+            font-size: 1.2rem;
+            font-weight: 100;
+
+            i {
+                font-size: 1rem;
+                margin-right: 10px;
+            }
+        }
+      }
+  }
+}
+
+.content-page{
+    left: 280px;
+    position: relative;
+    width: calc(100% - 280px);
+    background-color: $lightgray;
+}

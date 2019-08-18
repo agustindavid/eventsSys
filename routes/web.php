@@ -15,6 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/calendar', function () {
+    return view('calendar');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resources([
+    'clients' => 'ClientController',
+    'services' => 'ServicesController',
+    'venues' => 'VenuesController',
+    'packages' => 'PackageController',
+    'categories' => 'CategoryController',
+    'quotes' => 'QuoteController',
+    'events' => 'EventController',
+]);

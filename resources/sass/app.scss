@@ -1,8 +1,12 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600&display=swap');
+@import '~datatables.net-bs4/css/dataTables.bootstrap4.css';
+@import '~jquery-typeahead/src/jquery.typeahead.css';
 
 // Variables
 @import 'variables';
+@import 'layout';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
