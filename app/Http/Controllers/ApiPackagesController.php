@@ -17,7 +17,7 @@ class ApiPackagesController extends Controller
     {
         $services=$package->services;
         //$allServices=\App\models\Service::with('packages')->get();
-        $data=array('package'=>$package, 'services' => $services);
+        $data=array('package'=>$package);
         return  $data;
     }
 }

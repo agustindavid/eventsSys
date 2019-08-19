@@ -26,7 +26,7 @@
                                         <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
                                         <input type="text" name="slug" id="slug" class="form-control input-sm" placeholder="Nombre Corto">
                                         <select name="categorizable_type" id="categorizable_type">
-                                            <option value="quote">Evento</option>
+                                            <option value="quotes">Evento</option>
                                             <option value="services">Servicio</option>
                                         </select>
                                     <input type="submit"  value="Guardar" class="btn btn-success btn-block">
