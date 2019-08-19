@@ -53,6 +53,8 @@ class QuoteController extends Controller
      */
     public function show(Quote $quote)
     {
+        //$client=$quote->client;
+
         return  view('quotes.show', compact('quote'));
     }
 

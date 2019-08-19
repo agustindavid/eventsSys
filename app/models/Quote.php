@@ -29,7 +29,7 @@ class Quote extends Model
     }
 
     public function services() {
-        return $this->belongsToMany('App\models\Service');
+        return $this->belongsToMany('App\models\Service')->withPivot('price');
     }
 
     public function event() {

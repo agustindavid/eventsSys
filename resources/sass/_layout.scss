@@ -50,6 +50,12 @@ body{
     background-color: $lightgray;
 }
 
+.defaultForm {
+    width: 80%;
+    max-width: 800px;
+    padding: 0 40px;
+}
+
 .clientFormWrapper {
     display: none;
 }

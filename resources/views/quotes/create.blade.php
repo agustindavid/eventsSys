@@ -24,7 +24,7 @@
    <div class="typeahead__container">
      <div class="typeahead__field">
        <div class="typeahead__query">
-         <input type="search" name="clientName" id="clientName" class="form-control input-sm js-typeahead-client" placeholder="Nombre" autocomplete="off">
+         <input type="search" name="clientName" id="clientName" class="form-control input-sm js-typeahead-client" placeholder="Buscar cliente" autocomplete="off">
        </div>
      </div>
    </div>
@@ -111,9 +111,13 @@
       @endforeach
     </select>
   </div>
+  <div class="services-container">
+
+  </div>
   <div class="form-group">
       <label for="price">Precio</label>
-      <input type="text" name="price" id="price" disabled class="form-control input-sm" placeholder="Precio">
+      <input type="text" name="price_shown" id="price_shown" disabled class="form-control input-sm">
+      <input type="hidden" name="price" id="price" class="form-control input-sm" placeholder="Precio">
   </div>
   <div class="form-group">
         <label for="peopleQty">Cantidad de personas</label>
@@ -143,11 +147,6 @@
 </div>
 <script>
     $(document).ready(function(){
-        $('#package_id').change(function(){
-            var packagePrice=$(this).find(':selected').data('price');
-            $('#price').val(packagePrice);
-        })
-
         $('.showClientForm').click(function(){
             $('.clientFormWrapper').slideToggle();
         });
@@ -167,7 +166,7 @@ $('.js-typeahead-client').typeahead({
         onInit: function () { console.log($(this)); },
         onClickAfter: function (node, a, item, event) {
             //console.log(item.id);
-          $('#parent_id').val(item.id);
+          $('#client_id').val(item.id);
           $('#clientname').val(item.name+' '+item.lastname);
         }
     }
@@ -200,8 +199,31 @@ $.ajax({
         $('.clientFormWrapper').slideToggle();
         $('.success-message').slideToggle();
         $('.success-message').html(data.msg);
+        $('#clientname').val(data.cliente.name+' '+data.cliente.lastname);
+        $('#client_id').val(data.cliente.id);
         console.log(data);
 
+        // here we will handle errors and validation messages
+    });
+});
+
+$('#package_id').change(function(){
+    var packagePrice=$(this).find(':selected').data('price');
+            $('#price').val(packagePrice);
+            $('#price_shown').val(packagePrice);
+    var item_id=$(this).val();
+    $.ajax({
+    type        : 'get', // define the type of HTTP verb we want to use (POST for our form)
+    url         : '/api/packages/'+item_id, // the url where we want to POST
+}).done(function(data) {
+        console.log(data);
+        var i=0;
+        $('.services-container').html("");
+        $.map(data, function(){
+        //console.log(data[i]);
+        $('.services-container').append("<li>"+data.package.services[i].name+"</li>");
+        i++;
+    })
         // here we will handle errors and validation messages
     });
 });

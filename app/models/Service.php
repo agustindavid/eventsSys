@@ -18,6 +18,6 @@ class Service extends Model
     }
 
     public function quotes() {
-        return $this->belongsToMany('App\models\Quote');
+        return $this->belongsToMany('App\models\Quote')->withPivot('price');
     }
 }

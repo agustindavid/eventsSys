@@ -844,6 +844,12 @@ body {
   background-color: #f5f5f3;
 }
 
+.defaultForm {
+  width: 80%;
+  max-width: 800px;
+  padding: 0 40px;
+}
+
 .clientFormWrapper {
   display: none;
 }

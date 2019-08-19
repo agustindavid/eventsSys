@@ -4,8 +4,6 @@
 
 @section('content')
 
-{{$events}}
-
 <table id="eventsTable" class="infotable">
     <thead>
       <tr>
@@ -79,6 +77,11 @@ $('.js-typeahead-client').typeahead({
     }
 
 });
+
+$(document).on("click", ".quote-selector", function(e){
+    e.preventDefault();
+    $('#quote_id').val($(this).data('id'));
+})
 
 </script>
 

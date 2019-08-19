@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resources([
     'calendar' => 'CalendarController',
     'clients' => 'ApiClientsController',
+    'packages' => 'ApiPackagesController',
 ]);
 
 
