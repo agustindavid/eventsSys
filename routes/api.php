@@ -22,6 +22,7 @@ Route::resources([
     'calendar' => 'CalendarController',
     'clients' => 'ApiClientsController',
     'packages' => 'ApiPackagesController',
+    'payment' => 'ApiPaymentController',
 ]);
 
 

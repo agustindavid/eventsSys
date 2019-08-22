@@ -8,7 +8,7 @@
         <li><a href="/quotes"><i class="fas fa-file-invoice"></i>Cotizaciones</a></li>
         <li><a href="/events"><i class="fas fa-birthday-cake"></i>Eventos</a></li>
         <li><a href="/calendar"><i class="fas fa-calendar"></i>Calendario</a></li>
-        <li><a href="/calendar"><i class="fas fa-calendar"></i>Pagos</a></li>
+        <li><a href="/payments"><i class="fas fa-calendar"></i>Pagos</a></li>
         <li><a href="/calendar"><i class="fas fa-calendar"></i>Gastos</a></li>
     </ul>
 </nav>

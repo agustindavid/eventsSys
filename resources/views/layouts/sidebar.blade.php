@@ -19,7 +19,9 @@
 
         <!-- main content -->
         <div id="content-page" class="content-page">
-            @yield('content')
+            <div class="page-wrap">
+              @yield('content')
+            </div>
         </div>
 
     </div>

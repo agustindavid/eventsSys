@@ -20,7 +20,7 @@
  </div>
  @endif
  <h3 class="panel-title">Crear nueva cotizacion</h3>
- <p>Use el siguiente campo para buscar clientes existentes o <a href="#" class="showClientForm">Cree uno nuevo en caso de ser necesario</a></p>
+ <p>Use el siguiente campo para buscar clientes existentes o <a href="#" class="showHiddenForm">Cree uno nuevo en caso de ser necesario</a></p>
    <div class="typeahead__container">
      <div class="typeahead__field">
        <div class="typeahead__query">
@@ -29,7 +29,7 @@
      </div>
    </div>
 
-<div class="clientFormWrapper">
+<div class="hiddenFormWrapper defaultForm">
   <h3 class="panel-title">Nuevo Cliente</h3>
   <form role="form" class="newClientForm">
   {{ csrf_field() }}
@@ -71,7 +71,7 @@
     </div>
     <div class="form-group">
         <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
-        <a href="#" class="btn btn-info btn-block clientFormClose" >Cerrar</a>
+        <a href="#" class="btn btn-info btn-block hiddenFormClose" >Cerrar</a>
     </div>
   </form>
 </div>
@@ -117,7 +117,7 @@
   <div class="form-row form-group">
     <div class="col-md-6">
       <label for="validThru">Cotizacion valida hasta:</label>
-      <input type="date" name="validThru" id="validThru" class="form-control input-sm" placeholder="Valido hasta">
+      <input type="text" name="validThru" id="validThru" class="form-control input-sm" placeholder="Valido hasta">
     </div>
   </div>
   <div class="form-row form-group">
@@ -165,6 +165,10 @@
       <input type="hidden" name="price" id="price" class="form-control input-sm" placeholder="Precio">
   </div>
   <div class="form-group">
+        <label for="price">Adicionales</label>
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+    </div>
+  <div class="form-group">
     <input type="submit"  value="Guardar" class="btn btn-success btn-block">
     <a href="{{ route('quotes.index') }}" class="btn btn-info btn-block" >Atrás</a>
   </div>
@@ -172,13 +176,18 @@
 </div>
 <script>
     $(document).ready(function(){
-        $('.showClientForm, .clientFormClose').click(function(e){
+        $('.showHiddenForm, .hiddenFormClose').click(function(e){
             e.preventDefault();
-            $('.clientFormWrapper').slideToggle();
+            $('.hiddenFormWrapper').slideToggle();
         });
 
 
     })
+
+    $('#validThru').datepicker({
+        endDate: "+2w",
+        language: 'es'
+    });
 </script>
 <script>
 $('.js-typeahead-client').typeahead({

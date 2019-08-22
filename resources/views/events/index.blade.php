@@ -4,18 +4,58 @@
 
 @section('content')
 
+{{$events}}
+
+<div class="defaultForm">
+        <h3 class="panel-title">Nuevo Evento</h3>
+        <div class="typeahead__container">
+          <div class="typeahead__field">
+            <div class="typeahead__query">
+              <input type="search" name="name" id="name" class="form-control input-sm js-typeahead-client" placeholder="Nombre" autocomplete="off">
+            </div>
+          </div>
+        </div>
+        <div class="results"></div>
+          <form method="POST" action="{{ route('events.store') }}"  role="form">
+            {{ csrf_field() }}
+              <div class="form-row form-group">
+                <div class="col">
+                  <input type="text" name="quote_name" id="quote_name" class="form-control input-sm" placeholder="Cotizacion">
+                  <input type="hidden" name="quote_id" id="quote_id">
+                </div>
+                <div class="col">
+                  <input type="number" name="receiptsQty" id="receiptsQty" class="form-control input-sm" placeholder="Cantidad de cuotas">
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="submit"  value="Guardar" class="btn btn-success btn-block">
+                <a href="{{ route('events.index') }}" class="btn btn-info btn-block" >Atrás</a>
+              </div>
+         </form>
+      </div>
+
 <table id="eventsTable" class="infotable">
     <thead>
       <tr>
         <th>Nombre</th>
+        <th>Paquete</th>
+        <th>Cliente</th>
+        <th>Locacion</th>
+        <th>Monto total</th>
+        <th>Monto pagado</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
     @foreach ($events as $event)
      <tr>
-       <td>{{$event->name}}</td>
-     <td><a href="/events/{{$event->id}}/edit">Editar</a> - Eliminar</td>
+       <td>{{$event->quote->eventName}}</td>
+       <td>{{$event->quote->package->name}}</td>
+       <td>{{$event->quote->client->name}} {{$event->quote->client->lastname}}</td>
+       <td>{{$event->quote->venue->name}}</td>
+       <td>{{$event->quote->price}}</td>
+       <td>{{$event->payments->sum('amount')}}</td>
+       <td><a href="/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
      </tr>
     @endforeach
     </tbody>
@@ -25,28 +65,6 @@ $(document).ready( function () {
    $('#eventsTable').DataTable();
 } );
 </script>
-
-<h3 class="panel-title">Nuevo Evento</h3>
-   <div class="typeahead__container">
-            <div class="typeahead__field">
-                <div class="typeahead__query">
-     
-            <input type="search" name="name" id="name" class="form-control input-sm js-typeahead-client" placeholder="Nombre" autocomplete="off">
-                </div>
-            </div>
-   </div>
-<div class="results"></div>
-<form method="POST" action="{{ route('events.store') }}"  role="form">
-    {{ csrf_field() }}
-
-                <input type="number" name="quote_id" id="quote_id" class="form-control input-sm" placeholder="Cotizacion">
-                <input type="number" name="receiptsQty" id="receiptsQty" class="form-control input-sm" placeholder="Cantidad de cuotas">
-
-
-
-            <input type="submit"  value="Guardar" class="btn btn-success btn-block">
-            <a href="{{ route('events.index') }}" class="btn btn-info btn-block" >Atrás</a>
-</form>
 
 
 <script>
@@ -68,7 +86,7 @@ $('.js-typeahead-client').typeahead({
             var i=0;
     $.map(data, function(){
         console.log(data[i]);
-        $('.results').append("<p><a href='#' class='quote-selector' data-id='"+data[i].id+"'>Usar</a>"+data[i].eventName+"<a>Ver Cotizacion</a></p>");
+        $('.results').append("<p><a href='#' class='quote-selector' data-name='"+data[i].eventName+"' data-id='"+data[i].id+"'>Usar</a>"+data[i].eventName+"<a>Ver Cotizacion</a></p>");
         i++;
     })
 
@@ -81,6 +99,7 @@ $('.js-typeahead-client').typeahead({
 $(document).on("click", ".quote-selector", function(e){
     e.preventDefault();
     $('#quote_id').val($(this).data('id'));
+    $('#quote_name').val($(this).data('name'));
 })
 
 </script>

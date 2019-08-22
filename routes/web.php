@@ -31,4 +31,5 @@ Route::resources([
     'categories' => 'CategoryController',
     'quotes' => 'QuoteController',
     'events' => 'EventController',
+    'payments' => 'PaymentController',
 ]);

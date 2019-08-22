@@ -4,26 +4,6 @@
 
 @section('content')
 <a href="/clients/create">Agregar nuevo</a>
- <table id="clientsTable" class="infotable">
-     <thead>
-       <tr>
-         <th>Nombre</th>
-         <th>Correo Electronico</th>
-         <th>Acciones</th>
-       </tr>
-     </thead>
-     <tbody>
-     @foreach ($clients as $client)
-      <tr>
-        <td>{{$client->name}} {{$client->lastname}}</td>
-        <td>{{$client->email}}</td>
-      <td><a href="/clients/{{$client->id}}/edit">Editar</a> - Eliminar</td>
-      </tr>
-     @endforeach
-     </tbody>
- </table>
-
-
 <div class="defaultForm">
         <h3 class="panel-title">Nuevo Cliente</h3>
         <form role="form" class="newClientForm">
@@ -72,6 +52,26 @@
       </div>
 
       <div class="alert alert-success success-message" role="alert"></div>
+
+      <table id="clientsTable" class="infotable stripe">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo Electronico</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+        @foreach ($clients as $client)
+         <tr>
+           <td>{{$client->name}} {{$client->lastname}}</td>
+           <td>{{$client->email}}</td>
+         <td><a href="/clients/{{$client->id}}/edit">Editar</a> - Eliminar</td>
+         </tr>
+        @endforeach
+        </tbody>
+    </table>
+
 <script>
     $(document).ready( function () {
     var table=$('#clientsTable').DataTable();

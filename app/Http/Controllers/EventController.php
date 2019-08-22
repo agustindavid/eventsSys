@@ -14,7 +14,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events=\App\models\Event::with('quote')->get();
+        $events=\App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments'])->get();
         return view('events.index', ['events' => $events]);
     }
 
@@ -56,7 +56,8 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $event = \App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments'])->find($event->id);
+        return view('events.show', compact('event'));
     }
 
     /**
