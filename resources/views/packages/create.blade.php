@@ -24,7 +24,8 @@
                         <form method="POST" action="{{ route('packages.store') }}"  role="form">
                             {{ csrf_field() }}
                                         <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
-                                        <input type="text" name="price" id="price" class="form-control input-sm" placeholder="Precio">
+                                        <input type="number" name="kidsPrice" id="kidsPrice" class="form-control input-sm" placeholder="Precio por niño">
+                                        <input type="number" name="adultPrice" id="adultPrice" class="form-control input-sm" placeholder="Precio por adulto">
                                         @foreach ($allServices as $service)
                                             <input type="checkbox" name="services[]" value="{{$service->id}}">{{$service->name}}<br>
                                         @endforeach

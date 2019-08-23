@@ -3,7 +3,6 @@
 @section('pageTitle', 'Eventos')
 
 @section('content')
-{{$event}}
 
 <div class="dataInfo">
   <h2>Detalles del evento</h2>

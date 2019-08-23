@@ -97,7 +97,7 @@
   <div class="form-row form-group">
     <div class="col">
       <label for="eventDate">Fecha del evento</label>
-      <input type="date" name="eventDate" id="eventDate" class="form-control input-sm" placeholder="Fecha del evento">
+      <input type="text" name="eventDate" id="eventDate" class="form-control input-sm" placeholder="Fecha del evento">
     </div>
     <div class="col">
       <label for="eventTime">Hora del evento</label>
@@ -107,7 +107,7 @@
   <div class="form-row form-group">
     <div class="col">
       <label for="eventFinishDate">Fecha final del evento</label>
-      <input type="date" name="eventFinishDate" id="eventFinishDate" class="form-control input-sm" placeholder="Fecha final del evento">
+      <input type="text" name="eventFinishDate" id="eventFinishDate" class="form-control input-sm" placeholder="Fecha final del evento">
     </div>
     <div class="col">
       <label for="eventFinishTime">Hora final del evento</label>
@@ -144,14 +144,22 @@
       <select name="package_id" id="package_id" class="form-control">
           <option value="">Selecciona un paquete</option>
         @foreach ($allPackages as $package)
-          <option value="{{$package->id}}" data-price="{{$package->price}}">{{$package->name}}</option>
+          <option value="{{$package->id}}" data-kidsPrice="{{$package->kidsPrice}}" data-adultsPrice="{{$package->adultsPrice}}">{{$package->name}}</option>
         @endforeach
       </select>
     </div>
-    <div class="col">
-      <label for="peopleQty">Cantidad de personas</label>
-      <input type="text" name="peopleQty" id="peopleQty" class="form-control input-sm" placeholder="Cantidad de personas">
+    <div class="col-md-2">
+      <label for="kidsQty">Niños</label>
+      <input type="number" name="kidsQty" id="kidsQty" class="form-control input-sm" disabled value="0">
     </div>
+    <div class="col-md-2">
+        <label for="adultsQty">Adultos</label>
+        <input type="number" name="adultsQty" id="adultsQty" class="form-control input-sm" disabled value="0">
+      </div>
+      <div class="col-md-2">
+        <label for="peopleQty">Total</label>
+        <input type="text" name="peopleQty" id="peopleQty" class="form-control input-sm" readonly placeholder="">
+      </div>
   </div>
   <div class="services-container">
     <h3>Servicios Incluidos</h3>
@@ -159,15 +167,21 @@
 
     </ul>
   </div>
-  <div class="form-group">
-      <label for="price">Precio</label>
-      <input type="text" name="price_shown" id="price_shown" disabled class="form-control input-sm">
-      <input type="hidden" name="price" id="price" class="form-control input-sm" placeholder="Precio">
+  <div class="form-row form-group">
+    <div class="col">
+      <label for="extras">Adicionales</label>
+      <textarea name="extras" id="extras" class="form-control input-sm" disabled></textarea>
+    </div>
+    <div class="col">
+        <label for="extrasPrice">Precio adicionales</label>
+        <input type="number" name="extrasPrice" id="extrasPrice" class="form-control input-sm" disabled  value="0">
+      </div>
   </div>
   <div class="form-group">
-        <label for="price">Adicionales</label>
-        <textarea name="" id="" cols="30" rows="10"></textarea>
-    </div>
+    <label for="price">Precio</label>
+    <input type="text" name="price_shown" id="price_shown" disabled class="form-control input-sm">
+    <input type="hidden" name="price" id="price" class="form-control input-sm" placeholder="Precio">
+</div>
   <div class="form-group">
     <input type="submit"  value="Guardar" class="btn btn-success btn-block">
     <a href="{{ route('quotes.index') }}" class="btn btn-info btn-block" >Atrás</a>
@@ -183,11 +197,36 @@
 
 
     })
+    $('#eventDate').datepicker({
+        format:'yyyy/mm/dd',
+        startDate: "+1w",
+        language: 'es'
+    }).on('changeDate', function (selected) {
+        if($('#eventFinishDate').val() != ''){
+          var auxDate=$('#eventFinishDate').val();
+          var eventFinishDate=Date.parse(auxDate);
+          eventFinishDate=new Date(eventFinishDate);
+          var eventDate=Date.parse($(this).val());
+          if(eventFinishDate < eventDate){
+            alert('La fecha final del evento debe ser mayor a la fecha de inicio');
+            $('#eventFinishDate').val('');
+          }
+        }
+        var minDate = new Date(selected.date.valueOf());
+        $('#eventFinishDate').datepicker('setStartDate', minDate);
+    });;
 
-    $('#validThru').datepicker({
-        endDate: "+2w",
+
+    $('#eventFinishDate').datepicker({
+        format:'yyyy/mm/dd',
         language: 'es'
     });
+    $('#validThru').datepicker({
+        format:'yyyy/mm/dd',
+        endDate: "+1m",
+        language: 'es'
+    });
+
 </script>
 <script>
 $('.js-typeahead-client').typeahead({
@@ -240,29 +279,59 @@ $.ajax({
         $('#client_id').val(data.cliente.id);
         console.log(data);
 
+
         // here we will handle errors and validation messages
     });
 });
 
+var kidsPrice;
+var adultsPrice;
+
 $('#package_id').change(function(){
-    var packagePrice=$(this).find(':selected').data('price');
-            $('#price').val(packagePrice);
-            $('#price_shown').val(packagePrice);
+            //$('#price').val(packagePrice);
+            //$('#price_shown').val(packagePrice);
     var item_id=$(this).val();
     $.ajax({
     type        : 'get', // define the type of HTTP verb we want to use (POST for our form)
     url         : '/api/packages/'+item_id, // the url where we want to POST
 }).done(function(data) {
         console.log(data);
+        kidsPrice=data.package.kidsPrice;
+        adultsPrice=data.package.adultPrice;
         var i=0;
         $('.services-container ul').html("");
         $.map(data.package.services, function(){
         //console.log(data[i]);
         $('.services-container ul').append("<li>"+data.package.services[i].name+"</li>");
         i++;
+        console.log(kidsPrice);
+        console.log(adultsPrice);
+        $('#kidsQty, #adultsQty, #extras').prop('disabled', false);
     })
         // here we will handle errors and validation messages
     });
 });
+
+$('#extras').change(function(){
+    if($(this).val() != ''){
+      $('#extrasPrice').prop('disabled', false);
+    } else {
+        $('#extrasPrice').prop('disabled', true)
+    }
+});
+
+$('#kidsQty, #adultsQty, #extrasPrice').keyup(function(){
+    totalKids=$('#kidsQty').val();
+    totalAdults=$('#adultsQty').val();
+    extrasPrice=$('#extrasPrice').val();
+    totalPrice = (kidsPrice * totalKids*1 + adultsPrice * totalAdults*1) + extrasPrice*1;
+    totalPeople=totalKids*1 + totalAdults*1;
+    $('#peopleQty').val(totalPeople);
+    $('#price').val(totalPrice);
+    $('#price_shown').val(totalPrice);
+})
+
+
+
 </script>
 @endsection

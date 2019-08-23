@@ -40,7 +40,7 @@ class QuoteController extends Controller
      */
     public function store(Request $request)
     {
-        //print_r($request->all());
+
         $newQuote=\App\models\Quote::create($request->all());
         return redirect()->route('quotes.index')->with('success','Registro creado satisfactoriamente');
     }

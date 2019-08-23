@@ -4,14 +4,12 @@
 
 @section('content')
 
-{{$events}}
-
 <div class="defaultForm">
         <h3 class="panel-title">Nuevo Evento</h3>
         <div class="typeahead__container">
           <div class="typeahead__field">
             <div class="typeahead__query">
-              <input type="search" name="name" id="name" class="form-control input-sm js-typeahead-client" placeholder="Nombre" autocomplete="off">
+              <input type="search" name="name" id="name" class="form-control input-sm js-typeahead-client" placeholder="Nombre del cliente" autocomplete="off">
             </div>
           </div>
         </div>

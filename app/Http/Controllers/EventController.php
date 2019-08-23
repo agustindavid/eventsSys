@@ -41,7 +41,7 @@ class EventController extends Controller
 
 
         for($i=0; $i<$newEvent->receiptsQty; $i++){
-            \App\models\Payment::create(array('amount' => '1000', 'payDate'=>'2019-08-22 00:00:00', 'payMethod' => 'payMethod', 'tentativeDate'=>'2019-08-22 00:00:00', 'debtAmount' => 5000, 'payTotal'=> 3000, 'comments'=>'ssddsdsds', 'event_id'=>$newEvent->id, 'user_id'=>1));
+            \App\models\Payment::create(array('amount' => '0', 'payDate'=>null,'payMethod' => '', 'tentativeDate'=>'2019-08-22 00:00:00', 'debtAmount' => 5000, 'payTotal'=> 0, 'comments'=>'', 'event_id'=>$newEvent->id, 'user_id'=>1, 'status' => 0));
             }
         return redirect()->route('events.index')->with('success','Registro creado satisfactoriamente');
 

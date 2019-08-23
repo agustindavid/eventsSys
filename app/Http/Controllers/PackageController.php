@@ -37,7 +37,7 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[ 'name'=>'required', 'price' => 'required']);
+        $this->validate($request,[ 'name'=>'required', 'kidsPrice' => 'required', 'adultPrice' => 'required']);
         //$assoc_services=;
         $newPackage=\App\models\Package::create($request->all());
         $newPackage->services()->sync($request->services);
