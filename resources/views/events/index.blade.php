@@ -55,7 +55,7 @@
        <td>{{$event->quote->client->name}} {{$event->quote->client->lastname}}</td>
        <td>{{$event->quote->venue->name}}</td>
        <td>{{$event->quote->price}}</td>
-       <td>{{$event->payments->sum('amount')}}</td>
+       <td>{{$event->total_paid}}</td>
        <td><a href="/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
      </tr>
     @endforeach

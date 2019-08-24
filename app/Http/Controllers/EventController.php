@@ -15,8 +15,10 @@ class EventController extends Controller
      */
     public function index()
     {
+        $paid=0;
         $events=\App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments'])->get();
-        return view('events.index', ['events' => $events]);
+
+        return view('events.index', ['events' => $events, 'paid' => $paid]);
     }
 
 

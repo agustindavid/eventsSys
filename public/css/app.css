@@ -842,6 +842,11 @@ body {
   margin: auto;
 }
 
+.dataInfo {
+  background-color: #fff;
+  padding: 40px;
+}
+
 .content-page {
   left: 280px;
   position: relative;
