@@ -26,6 +26,7 @@
                                         <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
                                         <input type="number" name="kidsPrice" id="kidsPrice" class="form-control input-sm" placeholder="Precio por niño">
                                         <input type="number" name="adultPrice" id="adultPrice" class="form-control input-sm" placeholder="Precio por adulto">
+                                        <input type="number" name="minQty" id="minQty" class="form-control input-sm" placeholder="Cantidad minima de personas">
                                         @foreach ($allServices as $service)
                                             <input type="checkbox" name="services[]" value="{{$service->id}}">{{$service->name}}<br>
                                         @endforeach

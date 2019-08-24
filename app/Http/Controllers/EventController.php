@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\models\Event;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -38,11 +39,22 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $newEvent=\App\models\Event::firstOrCreate(['quote_id'=>$request->quote_id], ['receiptsQty' => $request->receiptsQty]);
-
-
+        $firstPayment=$request->firstPayment;
+        $carbon = new Carbon();
+        $relatedQuote=\App\models\Quote::find($newEvent->quote_id);
+        $debtAmount=$relatedQuote->price - $firstPayment;
+        $eachPay=$debtAmount/($newEvent->receiptsQty-1);
+        $payTotal=0;
         for($i=0; $i<$newEvent->receiptsQty; $i++){
-            \App\models\Payment::create(array('amount' => '0', 'payDate'=>null,'payMethod' => '', 'tentativeDate'=>'2019-08-22 00:00:00', 'debtAmount' => 5000, 'payTotal'=> 0, 'comments'=>'', 'event_id'=>$newEvent->id, 'user_id'=>1, 'status' => 0));
-            }
+          if($i==0){
+            \App\models\Payment::create(array('amount' => $firstPayment, 'payDate'=>$carbon,' payMethod' => '', 'tentativeDate'=>$carbon, 'debtAmount' => $debtAmount, 'payTotal'=> $firstPayment, 'comments'=>'Primer pago', 'event_id'=>$newEvent->id, 'user_id'=>1, 'status' => 1));
+            $payTotal=$firstPayment;
+          } else {
+            $payTotal=$payTotal+$eachPay;
+            \App\models\Payment::create(array('amount' => $eachPay, 'payDate'=>null,'payMethod' => '', 'tentativeDate'=>$carbon->addMonths(1), 'debtAmount' => $debtAmount-$eachPay, 'payTotal'=> $payTotal, 'comments'=>'', 'event_id'=>$newEvent->id, 'user_id'=>1, 'status' => 0));
+            $debtAmount=$debtAmount-$eachPay;
+          }
+        }
         return redirect()->route('events.index')->with('success','Registro creado satisfactoriamente');
 
     }

@@ -17,12 +17,15 @@
           <form method="POST" action="{{ route('events.store') }}"  role="form">
             {{ csrf_field() }}
               <div class="form-row form-group">
-                <div class="col">
+                <div class="col-md-6">
                   <input type="text" name="quote_name" id="quote_name" class="form-control input-sm" placeholder="Cotizacion">
                   <input type="hidden" name="quote_id" id="quote_id">
                 </div>
-                <div class="col">
+                <div class="col-md-3">
                   <input type="number" name="receiptsQty" id="receiptsQty" class="form-control input-sm" placeholder="Cantidad de cuotas">
+                </div>
+                <div class="col-md-3">
+                  <input type="number" name="firstPayment" id="firstPayment" class="form-control input-sm" placeholder="Primer pago">
                 </div>
               </div>
               <div class="form-group">

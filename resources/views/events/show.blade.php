@@ -13,15 +13,16 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <p>{{$event->quote->eventName}}</p>
+      <p>Nombre del evento: <strong>{{$event->quote->eventName}}</strong></p>
     </div>
     <div class="col-md-6">
-      <p>{{$event->quote->venue->name}}</p>
+      <p>Salón: <strong>{{$event->quote->venue->name}}</strong></p>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <p>{{$event->quote->eventDate}}</p>
+      <p>Fecha de inicio</p>
+      <p>{!! \Carbon\Carbon::parse($event->quote->eventDate)->format('d-m-Y') !!}</p>
     </div>
     <div class="col-md-6">
       <p>{{$event->quote->eventTime}}</p>
@@ -29,7 +30,8 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <p>{{$event->quote->eventFinishDate}}</p>
+      <p>Fecha final</p>
+      <p>{!! \Carbon\Carbon::parse($event->quote->eventFinishDate)->format('d-m-Y') !!}</p>
    </div>
    <div class="col-md-6">
      <p>{{$event->quote->eventFinishTime}}</p>
@@ -60,6 +62,7 @@
             <input type="hidden" name="event_id" value="{{$event->id}}">
             <input type="hidden" name="debtAmount" value="{{$event->quote->price}}">
             <input type="hidden" name="payTotal" value="0">
+            <input type="hidden" name="id" id="paymentId">
               <div class="form-row form-group">
                 <div class="col">
                   <label for="amount">Cantidad a abonar</label>
@@ -71,13 +74,9 @@
                 </div>
               </div>
               <div class="form-row form-group">
-                <div class="col">
+                <div class="col-md-6">
                   <label for="payDate">Fecha de pago</label>
                   <input type="date" name="payDate" id="payDate" class="form-control input-sm" placeholder="Dia de pago">
-                </div>
-                <div class="col">
-                  <label for="tentativeDate">Fecha Tentativa</label>
-                  <input type="date" name="tentativeDate" id="tentativeDate" class="form-control input-sm" placeholder="Fecha tentativa">
                 </div>
               </div>
               <div class="form-row form-group">
@@ -93,14 +92,63 @@
             </form>
           </div>
           <div class="alert alert-success success-message" role="alert"></div>
+    <h3>Pagos Realizados</h3>
     <table>
+        <tr>
+            <th>Monto pagado</th>
+            <th>Fecha de pago</th>
+            <th>Forma de pago</th>
+            <th>Monto adeudado</th>
+            <th>Total pagado</th>
+            <th>Comentario</th>
+        </tr>
         @foreach($event->payments as $payment)
-          <tr>
+          @if($payment->status==1)
+            <tr>
               <td>
-                  {{$payment->amount}}
+                {{$payment->amount}}
               </td>
-          </tr>
+              <td>
+                {{$payment->payDate}}
+              </td>
+              <td>
+                {{$payment->payMethod}}
+              </td>
+              <td>
+                {{$payment->debtAmount}}
+              </td>
+              <td>
+                {{$payment->payTotal}}
+              </td>
+              <td>
+                {{$payment->comments}}
+              </td>
+            </tr>
+          @endif
         @endforeach
+    </table>
+    <h3>Proyecciones</h3>
+    <table>
+      <tr>
+        <th>Monto a pagar</th>
+        <th>Fecha de vencimiento</th>
+        <th>Acciones</th>
+      </tr>
+      @foreach($event->payments as $payment)
+        @if($payment->status==0)
+          <tr>
+            <td>
+              <p data-editable>{{$payment->amount}}</p>
+            </td>
+            <td>
+              {!! \Carbon\Carbon::parse($payment->tentativeDate)->format('d-m-Y') !!}
+            </td>
+            <td>
+              <button class="makePay" data-amount="{{$payment->amount}}" data-payment="{{$payment->id}}">Hacer pago</button>
+            </td>
+          </tr>
+        @endif
+      @endforeach
     </table>
   </div>
 </div>
@@ -119,7 +167,16 @@ $(document).ready(function(){
 
 $('.newPaymentForm').submit(function(event) {
 event.preventDefault();
+var paymentID=$('input[name=id]').val();
+if(paymentID != ''){
+    requestType='PUT';
+    requestUrl='/api/payment/'+paymentID;
+} else {
+    requestUrl='/api/payment';
+    requestType='POST';
+}
 var formData = {
+    'id': $('input[name=id]').val(),
     'amount': $('input[name=amount]').val(),
     'payMethod': $('input[name=payMethod]').val(),
     'payDate': $('input[name=payDate]').val(),
@@ -132,8 +189,8 @@ var formData = {
 };
 // process the form
 $.ajax({
-    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-    url         : '/api/payment', // the url where we want to POST
+    type        : requestType, // define the type of HTTP verb we want to use (POST for our form)
+    url         : requestUrl, // the url where we want to POST
     data        : formData // our data object
 }).done(function(data) {
         $('.newPaymentForm').trigger("reset");
@@ -147,7 +204,14 @@ $.ajax({
     });
 });
 
-})
+$('.makePay').click(function(event) {
+  event.preventDefault();
+  $('.hiddenFormWrapper').slideToggle();
+  $('#paymentId').val($(this).data('payment'));
+  $('#amount').val($(this).data('amount'));
+});
+});
+
 </script>
 
 @endsection
