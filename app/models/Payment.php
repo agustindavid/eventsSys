@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $fillable = ['amount', 'payDate', 'payMethod', 'tentativeDate', 'debtAmount', 'payTotal', 'comments', 'event_id', 'user_id', 'status'];
+    protected $fillable = ['amount', 'payDate', 'payMethod', 'tentativeDate', 'debtAmount', 'payTotal', 'comments', 'event_id', 'user_id', 'status', 'toBePaid'];
 
     public function event() {
         return $this->belongsTo('App\models\Event');

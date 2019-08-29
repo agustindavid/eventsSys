@@ -24,11 +24,21 @@ class ApiPaymentController extends Controller
     }
 
     public function update(Request $request,  Payment $payment){
-        $prevPayment=\App\models\Payment::where('event_id', $payment->event_id)->where('status', 1)->where('id', '<', $payment->id)->max('id');
-        $prevPayment=\App\models\Payment::find($prevPayment);
+        $prevPayment_id=\App\models\Payment::where('event_id', $payment->event_id)->where('status', 1)->where('id', '<', $payment->id)->max('id');
+        $prevPayment=\App\models\Payment::find($prevPayment_id);
         $debtAmount=$prevPayment->debtAmount - $request->amount;
         $payTotal=$prevPayment->payTotal+$request->amount;
-        //print_r($prevPayment);
-        $payment->update(array('amount' => $request->amount, 'payDate'=>$request->payDate, 'payMethod' => $request->payMethod, 'debtAmount' => $debtAmount, 'payTotal'=> $payTotal, 'comments'=>$request->comments, 'user_id'=>$request->user_id, 'status' => 1));
+        if($request->amount < $payment->toBePaid){
+          $remaing=$payment->toBePaid-$request->amount;
+          $newPayment=\App\models\Payment::create(array('amount' => 0, 'payDate'=>null, 'payMethod' => $request->payMethod,'tentativeDate'=>$payment->tentativeDate, 'debtAmount' => $debtAmount-$request->amount, 'payTotal'=> $payTotal, 'comments'=>'', 'event_id'=>$payment->event_id, 'user_id'=>1, 'status' => 0, 'toBePaid'=>$remaing));
+        } else if ($request->amount > $payment->toBePaid){
+          $payment->update(array('amount' => $request->amount, 'payDate'=>$request->payDate, 'payMethod' => $request->payMethod, 'debtAmount' => $debtAmount, 'payTotal'=> $payTotal, 'comments'=>$request->comments, 'user_id'=>$request->user_id, 'status' => 1));
+          $missingPayments=\App\models\Payment::where('status', 0)->get();
+            foreach($missingPayments as $missingPayment){
+              $missingPayment->update(array('toBePaid' => $debtAmount/count($missingPayments)));
+            }
+        } else {
+          $payment->update(array('amount' => $request->amount, 'payDate'=>$request->payDate, 'payMethod' => $request->payMethod, 'debtAmount' => $debtAmount, 'payTotal'=> $payTotal, 'comments'=>$request->comments, 'user_id'=>$request->user_id, 'status' => 1));
+        }
     }
 }

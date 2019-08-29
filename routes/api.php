@@ -23,6 +23,9 @@ Route::resources([
     'clients' => 'ApiClientsController',
     'packages' => 'ApiPackagesController',
     'payment' => 'ApiPaymentController',
+    'venues' => 'ApiVenuesController',
+    'categories' => 'ApiCategoryController',
+    'services' => 'ApiServiceController',
 ]);
 
 

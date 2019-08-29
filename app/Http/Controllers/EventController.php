@@ -49,11 +49,11 @@ class EventController extends Controller
         $payTotal=0;
         for($i=0; $i<$newEvent->receiptsQty; $i++){
           if($i==0){
-            \App\models\Payment::create(array('amount' => $firstPayment, 'payDate'=>$carbon,' payMethod' => '', 'tentativeDate'=>$carbon, 'debtAmount' => $debtAmount, 'payTotal'=> $firstPayment, 'comments'=>'Primer pago', 'event_id'=>$newEvent->id, 'user_id'=>1, 'status' => 1));
+            \App\models\Payment::create(array('amount' => $firstPayment, 'payDate'=>$carbon,'payMethod' => $request->payMethod, 'tentativeDate'=>$carbon, 'debtAmount' => $debtAmount, 'payTotal'=> $firstPayment, 'comments'=>'Primer pago', 'event_id'=>$newEvent->id, 'user_id'=>1, 'status' => 1, 'toBePaid'=>0));
             $payTotal=$firstPayment;
           } else {
             $payTotal=$payTotal+$eachPay;
-            \App\models\Payment::create(array('amount' => $eachPay, 'payDate'=>null,'payMethod' => '', 'tentativeDate'=>$carbon->addMonths(1), 'debtAmount' => $debtAmount-$eachPay, 'payTotal'=> $payTotal, 'comments'=>'', 'event_id'=>$newEvent->id, 'user_id'=>1, 'status' => 0));
+            \App\models\Payment::create(array('amount' => 0, 'payDate'=>null,'payMethod' => '', 'tentativeDate'=>$carbon->addMonths(1), 'debtAmount' => $debtAmount-$eachPay, 'payTotal'=> $payTotal, 'comments'=>'', 'event_id'=>$newEvent->id, 'user_id'=>1, 'status' => 0, 'toBePaid'=>$eachPay));
             $debtAmount=$debtAmount-$eachPay;
           }
         }

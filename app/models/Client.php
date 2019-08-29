@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
 
-    public $fillable = ['name','lastname', 'email', 'rfc', 'fiscalname', 'commercialname', 'phone'];
+    public $fillable = ['name','lastname', 'email', 'rfc', 'fiscalname', 'commercialname', 'phone', 'number', 'street', 'colony', 'city', 'state', 'postalCode', 'dni', 'dniType'];
     public function quote() {
         return $this->hasMany('App\models\Quote');
     }

@@ -124,10 +124,13 @@
     <div class="col">
       <label for="venue_id">Locacion</label>
       <select name="venue_id" id="venue_id" class="form-control">
+            <option value="">Selecciona una locacion</option>
         @foreach ($allVenues as $venue)
-          <option value="{{$venue->id}}">{{$venue->name}}</option>
+          <option data-maxcapacity="{{$venue->maxcapacity}}" value="{{$venue->id}}">{{$venue->name}}</option>
         @endforeach
       </select>
+      <p class="infoText" id="maxVenuePeople">Maximo de personas: <span id="maxVenuePeopleQty"></span></p>
+
     </div>
     <div class="col">
       <label for="category_id">Categoria</label>
@@ -144,9 +147,10 @@
       <select name="package_id" id="package_id" class="form-control">
           <option value="">Selecciona un paquete</option>
         @foreach ($allPackages as $package)
-          <option value="{{$package->id}}" data-kidsPrice="{{$package->kidsPrice}}" data-adultsPrice="{{$package->adultsPrice}}">{{$package->name}}</option>
+          <option value="{{$package->id}}" data-minQty="{{$package->minQty}}" data-kidsPrice="{{$package->kidsPrice}}" data-adultsPrice="{{$package->adultsPrice}}">{{$package->name}}</option>
         @endforeach
       </select>
+      <p class="infoText" id="minPkgPeople">Minimo de personas: <span id="minPkgPeopleQty"></span></p>
     </div>
     <div class="col-md-2">
       <label for="kidsQty">Niños</label>
@@ -158,7 +162,7 @@
       </div>
       <div class="col-md-2">
         <label for="peopleQty">Total</label>
-        <input type="text" name="peopleQty" id="peopleQty" class="form-control input-sm" readonly placeholder="">
+        <input type="number" name="peopleQty" min="1" id="peopleQty" class="form-control input-sm" readonly placeholder="">
       </div>
   </div>
   <div class="services-container">
@@ -194,8 +198,6 @@
             e.preventDefault();
             $('.hiddenFormWrapper').slideToggle();
         });
-
-
     })
     $('#eventDate').datepicker({
         format:'yyyy/mm/dd',
@@ -221,6 +223,7 @@
         format:'yyyy/mm/dd',
         language: 'es'
     });
+
     $('#validThru').datepicker({
         format:'yyyy/mm/dd',
         endDate: "+1m",
@@ -286,6 +289,9 @@ $.ajax({
 
 var kidsPrice;
 var adultsPrice;
+var minQty;
+var maxQty;
+var totalPeople;
 
 $('#package_id').change(function(){
             //$('#price').val(packagePrice);
@@ -298,18 +304,32 @@ $('#package_id').change(function(){
         console.log(data);
         kidsPrice=data.package.kidsPrice;
         adultsPrice=data.package.adultPrice;
+        minQty=data.package.minQty;
         var i=0;
         $('.services-container ul').html("");
+        $('#peopleQty').attr('min', minQty);
+        $('#minPkgPeopleQty').text(minQty);
         $.map(data.package.services, function(){
         //console.log(data[i]);
         $('.services-container ul').append("<li>"+data.package.services[i].name+"</li>");
         i++;
         console.log(kidsPrice);
         console.log(adultsPrice);
+        $('#kidsQty, #adultsQty, #peopleQty, #price').val('');
         $('#kidsQty, #adultsQty, #extras').prop('disabled', false);
     })
         // here we will handle errors and validation messages
     });
+});
+
+$('#venue_id').change(function(){
+  var currentMaxQty=maxQty;
+  maxQty=$(this).find(':selected').data('maxcapacity');
+  if(maxQty < totalPeople){
+    $('#kidsQty, #adultsQty, #peopleQty, #price, #price_shown').val('');
+  }
+  $('#maxVenuePeopleQty').text(maxQty);
+  $('#peopleQty').attr('max', maxQty);
 });
 
 $('#extras').change(function(){
@@ -330,6 +350,17 @@ $('#kidsQty, #adultsQty, #extrasPrice').keyup(function(){
     $('#price').val(totalPrice);
     $('#price_shown').val(totalPrice);
 })
+
+$('#kidsQty, #adultsQty').change(function(){
+    if(totalPeople > maxQty){
+        alert("La cantidad de personas es mayor a la capacidad del salon");
+        $('#kidsQty, #adultsQty, #peopleQty, #price, #price_shown').val('');
+    }
+    if( (totalPeople < minQty && $('#kidsQty').val() > 1 ) && (totalPeople < minQty && $('#adultsQty').val() > 1 )   ){
+        alert("La cantidad de personas es menor a la cuota minima del paquete");
+        $('#kidsQty, #adultsQty, #peopleQty, #price, #price_shown').val('');
+    }
+});
 
 
 

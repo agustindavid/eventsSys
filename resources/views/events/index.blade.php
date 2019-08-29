@@ -13,14 +13,31 @@
             </div>
           </div>
         </div>
-        <div class="results"></div>
+        <div class="resultsTable table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nombre del evento</th>
+                  <th>Fecha del evento</th>
+                  <th>Precio cotizado</th>
+                  <th>Paquete</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody class="results table-striped">
+              </tbody>
+            </table>
+        </div>
           <form method="POST" action="{{ route('events.store') }}"  role="form">
             {{ csrf_field() }}
               <div class="form-row form-group">
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <input type="text" name="quote_name" id="quote_name" class="form-control input-sm" placeholder="Cotizacion">
                   <input type="hidden" name="quote_id" id="quote_id">
                 </div>
+                <div class="col-md-3">
+                    <input type="text" name="payMethod" id="payMethod" class="form-control input-sm" placeholder="Forma de pago">
+                  </div>
                 <div class="col-md-3">
                   <input type="number" name="receiptsQty" id="receiptsQty" class="form-control input-sm" placeholder="Cantidad de cuotas">
                 </div>
@@ -87,7 +104,8 @@ $('.js-typeahead-client').typeahead({
             var i=0;
     $.map(data, function(){
         console.log(data[i]);
-        $('.results').append("<p><a href='#' class='quote-selector' data-name='"+data[i].eventName+"' data-id='"+data[i].id+"'>Usar</a>"+data[i].eventName+"<a>Ver Cotizacion</a></p>");
+        console.log(moment().format('l'));
+        $('.results').append("<tr><td>"+data[i].eventName+"</td><td>"+data[i].eventDate+"</td><td>"+data[i].price+"$</td><td>"+data[i].package.name+"</td><td><p><button href='#' class='quote-selector btn btn-primary' data-eventDate='"+data[i].eventDate+"' data-name='"+data[i].eventName+"' data-id='"+data[i].id+"'>Crear evento</button></p><p><a role='button' class='btn btn-info'>Ver detalles</a></p></td></tr>");
         i++;
     })
 
@@ -101,6 +119,7 @@ $(document).on("click", ".quote-selector", function(e){
     e.preventDefault();
     $('#quote_id').val($(this).data('id'));
     $('#quote_name').val($(this).data('name'));
+
 })
 
 </script>

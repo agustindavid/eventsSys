@@ -25,7 +25,6 @@
     },
     "dependencies": {
         "datatables.net-bs4": "^1.10.19",
-        "jquery-typeahead": "^2.10.6",
-        "moment": "^2.24.0"
+        "jquery-typeahead": "^2.10.6"
     }
 }

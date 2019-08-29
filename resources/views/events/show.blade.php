@@ -72,7 +72,6 @@
       <p>Monto por pagar hasta la fecha: {{$event->quote->price-$event->total_paid}}$</p>
     </div>
 </div>
-        <h4><a href="#" class="showHiddenForm">Registrar Pago:</a></h4>
         <div class="hiddenFormWrapper defaultForm">
         <h3 class="panel-title">Nuevo abono para el Evento {{$event->quote->eventName}}</h3>
                 <form role="form" class="newPaymentForm">
@@ -85,7 +84,7 @@
                   <div class="form-row form-group">
                     <div class="col">
                       <label for="amount">Cantidad a abonar</label>
-                      <input type="number" name="amount" id="amount" class="form-control input-sm" placeholder="">
+                      <input type="number" step="0.01" max="{{$event->quote->price-$event->total_paid}}" min="1" name="amount" id="amount" class="form-control input-sm" placeholder="">
                     </div>
                     <div class="col">
                       <label for="payMethod">Forma de pago:</label>
@@ -95,7 +94,7 @@
                   <div class="form-row form-group">
                     <div class="col">
                       <label for="payDate">Fecha de pago</label>
-                      <input type="date" name="payDate" id="payDate" class="form-control input-sm" placeholder="Dia de pago">
+                      <input type="text" name="payDate" id="payDate" class="form-control input-sm" placeholder="Dia de pago">
                     </div>
                   </div>
                   <div class="form-row form-group">
@@ -111,7 +110,7 @@
                 </form>
               </div>
               <div class="alert alert-success success-message" role="alert"></div>
-        <h3>Pagos Realizados</h3>
+        <h3  style="margin-top:30px;">Pagos Realizados</h3>
         <table class="table">
             <tr>
                 <th>Monto pagado</th>
@@ -121,7 +120,7 @@
                 <th>Total pagado</th>
                 <th>Comentario</th>
             </tr>
-            @foreach($event->payments as $payment)
+            @foreach($event->payments->sortBy('payDate') as $payment)
               @if($payment->status==1)
                 <tr>
                   <td>
@@ -146,29 +145,38 @@
               @endif
             @endforeach
         </table>
-        <h3>Proyecciones</h3>
-        <table>
+        <h3  style="margin-top:30px;">Pagos por realizar</h3>
+        <table class="table">
           <tr>
             <th>Monto a pagar</th>
             <th>Fecha de vencimiento</th>
             <th>Acciones</th>
           </tr>
-          @foreach($event->payments as $payment)
+          @foreach($event->payments->sortBy('tentativeDate') as $payment)
             @if($payment->status==0)
               <tr>
                 <td>
-                  <p data-editable>{{$payment->amount}}</p>
+                  <p>{{$payment->toBePaid}}</p>
                 </td>
                 <td>
+                  @if(\Carbon\Carbon::parse($payment->tentativeDate) < \Carbon\Carbon::now())
+                    <span style="color:red">{!! \Carbon\Carbon::parse($payment->tentativeDate)->format('d-m-Y') !!}</span>
+                  @else
                   {!! \Carbon\Carbon::parse($payment->tentativeDate)->format('d-m-Y') !!}
+                  @endif
                 </td>
                 <td>
-                  <button class="makePay" data-amount="{{$payment->amount}}" data-payment="{{$payment->id}}">Hacer pago</button>
+                  @if($payment->toBePaid < 1)
+                    <button class="makePay btn btn-primary" data-amount="{{$payment->toBePaid}}" disabled data-payment="{{$payment->id}}">Realizar pago</button>
+                  @else
+                    <button class="makePay btn btn-primary" data-amount="{{$payment->toBePaid}}" data-payment="{{$payment->id}}">Realizar pago</button>
+                  @endif
                 </td>
               </tr>
             @endif
           @endforeach
         </table>
+        <h4><button class="btn btn-primary makePay" href="#" class="showHiddenForm">Registrar nuevo pago para este evento</button></h4>
       </div>
     </div>
 </div>
@@ -189,6 +197,13 @@ $(document).ready(function(){
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
 });
+
+$('#payDate').datepicker({
+        format:'yyyy/mm/dd',
+        language: 'es',
+        endDate: 'today',
+        todayHighlight: true
+    });
 
 $('.newPaymentForm').submit(function(event) {
 event.preventDefault();

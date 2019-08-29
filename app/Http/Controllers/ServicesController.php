@@ -14,8 +14,9 @@ class ServicesController extends Controller
      */
     public function index()
     {
+        $services_categories=\App\models\Category::where('categorizable_type', 'services')->get();
         $services=\App\models\Service::with('categories')->get();
-        return view('services.index', ['services' => $services]);
+        return view('services.index', ['services' => $services, 'services_categories' => $services_categories]);
     }
 
     /**

@@ -14,11 +14,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories=\App\models\Category::All();
+        $quotesCategories=\App\models\Category::where('categorizable_type', 'quotes')->get();
+        $servicesCategories=\App\models\Category::where('categorizable_type', 'services')->get();
         //$categories_events=\App\models\Category::with('quotes')->get();
         //$categories_events=$categories_events->categories;
 
-        return view('categories.index', ['categories' => $categories]);
+        return view('categories.index', ['quotesCategories' => $quotesCategories, 'servicesCategories' => $servicesCategories]);
     }
 
     /**

@@ -100,3 +100,20 @@ body{
     max-width: 800px;
     margin: auto;
 }
+
+.results td {
+    vertical-align: middle !important;
+    text-align: center;
+
+    p {
+        margin: 10px 0;
+    }
+}
+
+ul.typeahead__list {
+    margin-top: -40px;
+}
+
+span.typeahead__cancel-button {
+    margin-top: 20px;
+}

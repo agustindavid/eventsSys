@@ -892,6 +892,23 @@ body {
   margin: auto;
 }
 
+.results td {
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+.results td p {
+  margin: 10px 0;
+}
+
+ul.typeahead__list {
+  margin-top: -40px;
+}
+
+span.typeahead__cancel-button {
+  margin-top: 20px;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

@@ -14,8 +14,9 @@ class PackageController extends Controller
      */
     public function index()
     {
+        $allServices=\App\models\Service::all();
         $packages=\App\models\Package::All();
-        return view('packages.index', ['packages' => $packages]);
+        return view('packages.index', ['packages' => $packages, 'allServices'=>$allServices]);
     }
 
     /**

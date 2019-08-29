@@ -4,6 +4,53 @@
 
 @section('content')
 
+<div class="defaultForm">
+  @if (count($errors) > 0)
+    <div class="alert alert-danger">
+      <strong>Error!</strong> Revise los campos obligatorios.<br><br>
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+  @if(Session::has('success'))
+  <div class="alert alert-info">
+    {{Session::get('success')}}
+  </div>
+  @endif
+    <h3 class="panel-title">Nuevo servicio</h3>
+    <form method="POST" class="newServiceForm"  role="form">
+      {{ csrf_field() }}
+      <div class="form-row form-group">
+        <div class="col">
+          <label for="name">Nombre del servicio</label>
+          <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
+        </div>
+        <div class="col">
+          <label for="servicePrice">Precio</label>
+          <input type="text" name="servicePrice" id="servicePrice" class="form-control input-sm" placeholder="Precio">
+        </div>
+      </div>
+      <div class="form-row form-group">
+        <div class="col">
+          <label for="category_id">Categoria</label>
+          <select name="category_id" id="category_id" class="form-control input-sm">
+              <option value="">Seleccione una Categoria</option>
+            @foreach ($services_categories as $service_category)
+              <option value="{{$service_category->id}}">{{$service_category->name}}</option>
+            @endforeach
+          </select>
+        </div>
+      </div>
+      <div class="form-group form-row">
+        <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
+        <a href="#" class="btn btn-info btn-block clientFormClose" >Cerrar</a>
+      </div>
+    </form>
+</>
+<div class="alert alert-success success-message" role="alert"></div>
 <table id="servicesTable" class="infotable">
     <thead>
       <tr>
@@ -27,6 +74,34 @@
 <script>
 $(document).ready( function () {
   $('#servicesTable').DataTable();
+
+  $.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+
+$('.newServiceForm').submit(function(event) {
+event.preventDefault();
+var formData = {
+    'name': $('input[name=name]').val(),
+    'servicePrice': $('input[name=servicePrice]').val(),
+    'category_id': $('select[name=category_id]').val(),
+    };
+// process the form
+$.ajax({
+    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+    url         : '/api/services', // the url where we want to POST
+    data        : formData // our data object
+}).done(function(data) {
+        $('.newServiceForm').trigger("reset");
+        $('.success-message').slideToggle();
+        $('.success-message').html(data.msg);
+        console.log(data);
+        window.location.reload();
+        // here we will handle errors and validation messages
+    });
+});
 });
 </script>
 @endsection

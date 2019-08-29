@@ -20,4 +20,17 @@ class ApiPackagesController extends Controller
         $data=array('package'=>$package);
         return  $data;
     }
+
+    public function store(Request $request)
+    {
+        //$this->validate($request,[ 'name'=>'required', 'kidsPrice' => 'required', 'adultPrice' => 'required']);
+        //$assoc_services=;
+        $newPackage=\App\models\Package::create($request->all());
+        $newPackage->services()->sync($request->services);
+
+        if($newPackage){
+            $arr = array('msg' => 'Servicio creado con exito', 'status' => true, 'category'=>$newPackage);
+          }
+          return Response()->json($arr);
+    }
 }

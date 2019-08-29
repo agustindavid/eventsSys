@@ -14,7 +14,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $quotes = \App\models\Quote::all();
+        $quotes = \App\models\Quote::with('package', 'client', 'venue')->get();
         return view('quotes.index', ['quotes' => $quotes]);
     }
 

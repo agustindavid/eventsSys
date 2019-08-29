@@ -24,8 +24,12 @@
               <input type="text" name="email" id="email" class="form-control input-sm" placeholder="Correo Electronico">
             </div>
             <div class="col">
-              <label for="rfc">RFC</label>
-              <input type="text" name="rfc" id="rfc" class="form-control input-sm" placeholder="RFC">
+              <label for="dniType">Tipo de documento</label>
+              <input type="text" name="dniType" id="dniType" class="form-control input-sm" placeholder="Tipo de documento">
+            </div>
+            <div class="col">
+              <label for="dni">DNI</label>
+              <input type="text" name="dni" id="dni" class="form-control input-sm" placeholder="DNI">
             </div>
           </div>
           <div class="form-row form-group">
@@ -39,9 +43,47 @@
             </div>
           </div>
           <div class="form-row form-group">
-            <div class="col-md-6">
+            <div class="col">
               <label for="phone">Telefono</label>
               <input type="text" name="phone" id="phone" class="form-control input-sm" placeholder="Telefono">
+            </div>
+            <div class="col">
+                <label for="rfc">RFC</label>
+                <input type="text" name="rfc" id="rfc" class="form-control input-sm" placeholder="RFC">
+              </div>
+          </div>
+          <div class="form-row text-center">
+              <h4 class="text-center">Datos de direccion</h4>
+          </div>
+          <div class="form-row form-group">
+            <div class="col">
+              <label for="number">Numero de casa</label>
+              <input type="text" name="number" id="number" class="form-control input-sm" placeholder="Numero de casa/Departamento">
+            </div>
+            <div class="col">
+                <label for="street">Calle</label>
+                <input type="text" name="street" id="street" class="form-control input-sm" placeholder="Calle">
+            </div>
+          </div>
+          <div class="form-row form-group">
+            <div class="col">
+              <label for="colony">Colonia</label>
+              <input type="text" name="colony" id="colony" class="form-control input-sm" placeholder="Colonia">
+            </div>
+            <div class="col">
+                <label for="postalCode">Codigo postal</label>
+                <input type="number" name="postalCode" id="postalCode" class="form-control input-sm" placeholder="Codigo Postal">
+            </div>
+          </div>
+          <div class="form-row form-group">
+            <div class="col">
+              <label for="state">Estado</label>
+              <input type="text" name="state" id="state" class="form-control input-sm" placeholder="Estado">
+
+            </div>
+            <div class="col">
+              <label for="city">Ciudad</label>
+              <input type="text" name="city" id="city" class="form-control input-sm" placeholder="Ciudad">
             </div>
           </div>
           <div class="form-group">
@@ -92,7 +134,15 @@ var formData = {
     'rfc': $('input[name=rfc]').val(),
     'fiscalname': $('input[name=fiscalname]').val(),
     'commercialname': $('input[name=commercialname]').val(),
-    'phone': $('input[name=phone]').val()
+    'phone': $('input[name=phone]').val(),
+    'dni': $('input[name=dni]').val(),
+    'dniType': $('input[name=dniType]').val(),
+    'number': $('input[name=number]').val(),
+    'street': $('input[name=street]').val(),
+    'colony': $('input[name=colony]').val(),
+    'postalCode': $('input[name=postalCode]').val(),
+    'state': $('input[name=state]').val(),
+    'city': $('input[name=city]').val()
 };
 // process the form
 $.ajax({
