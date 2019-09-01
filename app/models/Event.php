@@ -22,5 +22,13 @@ class Event extends Model
         return $this->payments()->where('status', 1)->sum('amount');
     }
 
-    protected $appends = ['total_paid'];
+    //protected $appends = ['total_paid'];
+
+    public function getTotalDebtAttribute()
+    {
+        $paid=$this->payments()->where('status', 1)->sum('amount');
+        return $this->quote()->sum('price')-$paid;
+    }
+
+    protected $appends = ['total_paid', 'total_debt'];
 }

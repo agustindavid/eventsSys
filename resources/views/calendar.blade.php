@@ -4,9 +4,16 @@
 
 @section('content')
 
+<nav>
+    <ul>
+        @foreach ($venues as $venue)
+    <li>{{$venue->name}}</li>
+        @endforeach
+    </ul>
+</nav>
 
 
-
+{{$venues}}
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {

@@ -62,7 +62,12 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return  view('clients.show',compact('client'));
+
+        $events = \App\models\Event::whereHas('quote', function($query) use ($client) {
+            $query->where('client_id', $client->id);
+        })->with('quote.package', 'quote.venue', 'payments')->get();
+        //$clientEvents=\App\models\Event::where('client_id', $client->id)->where('status', 1)->get();
+        return  view('clients.show',compact(['client', 'events']));
     }
 
     /**

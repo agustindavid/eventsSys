@@ -2,7 +2,7 @@
     <ul class="nav sidebar-list">
         {{Auth::user()->name}}
         @can('usuarios')
-          <li><a href="/users"><i class="fas fa-chalkboard-teacher"></i>Usuarios</a></li>
+          <li><a href="/users"><i class="fas fa-users"></i>Usuarios</a></li>
         @endcan
         @can('clientes')
           <li><a href="/clients"><i class="fas fa-chalkboard-teacher"></i>Clientes</a></li>

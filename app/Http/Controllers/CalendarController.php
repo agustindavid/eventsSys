@@ -27,9 +27,11 @@ class CalendarController extends Controller
             $quote->end = $quote->eventFinishDate;
             $quote->url ='http://localhost:8000/quotes/'.$quote->id;
         }
+        $venues=\App\models\Venue::all();
 
         $quotes_sub = $quotes->map->only(['title', 'start', 'end', 'id', 'url']);
-        return $quotes_sub;
+        //return [$quotes_sub, $venues];
+        return view('calendar', compact(['quotes_sub', 'venues']));
     }
 
     /**

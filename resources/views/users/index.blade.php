@@ -25,7 +25,9 @@
 
 <script>
   $(document).ready( function () {
-    var table=$('#usersTable').DataTable();
+    var table=$('#usersTable').DataTable({
+        responsive: true
+    });
   });
 </script>
 @endsection

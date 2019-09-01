@@ -20,10 +20,6 @@
 @endif
 <div class="defaultForm">
   <h3 class="panel-title">Nuevo Usuario</h3>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
                     <form method="POST" action="{{ route('users.store') }}">
                         @csrf
 
@@ -74,7 +70,7 @@
 
                         <div class="form-group row">
 
-                            <div class="col-md-6">
+                            <div class="col">
                                     <label for="password-confirm" class="">Confirmacion de contrasena</label>
 
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -91,17 +87,14 @@
                           </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="">
                                 <button type="submit" class="btn btn-primary">
                                     Crear usuario
                                 </button>
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 
 @endsection

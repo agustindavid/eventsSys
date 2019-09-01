@@ -25,11 +25,15 @@
             </div>
             <div class="col">
               <label for="dniType">Tipo de documento</label>
-              <input type="text" name="dniType" id="dniType" class="form-control input-sm" placeholder="Tipo de documento">
+              <select name="dniType" id="dniType" class="form-control input-sm">
+                  <option value="IFE">IFE</option>
+                  <option value="FMM">FMM</option>
+                  <option value="Pasaporte">Pasaporte</option>
+              </select>
             </div>
             <div class="col">
-              <label for="dni">DNI</label>
-              <input type="text" name="dni" id="dni" class="form-control input-sm" placeholder="DNI">
+              <label for="dni">Numero de documento</label>
+              <input type="text" name="dni" id="dni" class="form-control input-sm" placeholder="Numero de documento">
             </div>
           </div>
           <div class="form-row form-group">
@@ -56,6 +60,22 @@
               <h4 class="text-center">Datos de direccion</h4>
           </div>
           <div class="form-row form-group">
+              <div class="col">
+                <label>Ingrese ciudad o estado</label>
+                <input type="text" class="my-input form-control input-sm" placeholder="Buscar por ciudad o estado" autocomplete="off">
+              </div>
+          </div>
+          <div class="form-row form-group">
+                <div class="col">
+                  <label for="city">Ciudad</label>
+                  <input type="text" name="city" id="city" readonly class="form-control input-sm" placeholder="Ciudad">
+                </div>
+                <div class="col">
+                  <label for="state">Estado</label>
+                  <input type="text" name="state" id="state" readonly class="form-control input-sm" placeholder="Estado">
+               </div>
+              </div>
+          <div class="form-row form-group">
             <div class="col">
               <label for="number">Numero de casa</label>
               <input type="text" name="number" id="number" class="form-control input-sm" placeholder="Numero de casa/Departamento">
@@ -75,24 +95,12 @@
                 <input type="number" name="postalCode" id="postalCode" class="form-control input-sm" placeholder="Codigo Postal">
             </div>
           </div>
-          <div class="form-row form-group">
-            <div class="col">
-              <label for="state">Estado</label>
-              <input type="text" name="state" id="state" class="form-control input-sm" placeholder="Estado">
-
-            </div>
-            <div class="col">
-              <label for="city">Ciudad</label>
-              <input type="text" name="city" id="city" class="form-control input-sm" placeholder="Ciudad">
-            </div>
-          </div>
           <div class="form-group">
               <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
               <a href="#" class="btn btn-info btn-block clientFormClose" >Cerrar</a>
           </div>
         </form>
       </div>
-
       <div class="alert alert-success success-message" role="alert"></div>
 
       <table id="clientsTable" class="infotable stripe">
@@ -162,7 +170,18 @@ $.ajax({
 } );
 
 </script>
+<script src="https://developers.teleport.org/assets/autocomplete/teleport-autocomplete.6024c12b.js"></script>
+<script>
+    var $results = document.querySelector('.results');
+    var appendToResult = $results.insertAdjacentHTML.bind($results, 'afterend');
 
+    TeleportAutocomplete.init('.my-input').on('change', function(value) {
+      var data=value;
+      console.log(data);
+      $('#city').val(data.name);
+      $('#state').val(data.admin1Division);
+    });
+  </script>
 @endsection
 
 
