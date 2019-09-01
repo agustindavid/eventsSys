@@ -9,9 +9,7 @@
     <header class="row">
         @include('includes.header')
     </header>
-
     <div id="main" class="row">
-
         <!-- sidebar content -->
         <div id="sidebar" class="sidebar">
             @include('includes.sidebar')
@@ -23,9 +21,7 @@
               @yield('content')
             </div>
         </div>
-
     </div>
-
     <footer class="row">
         @include('includes.footer')
     </footer>

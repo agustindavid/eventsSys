@@ -12,6 +12,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware(['permission:categorias']);
+      }
+
     public function index()
     {
         $quotesCategories=\App\models\Category::where('categorizable_type', 'quotes')->get();

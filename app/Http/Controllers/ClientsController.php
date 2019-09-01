@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\models\Client;
+use App\models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -12,8 +14,16 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+      $this->middleware('auth');
+      $this->middleware(['permission:clientes']);
+    }
+
     public function index()
     {
+        //$user=Auth::user();
+        //print_r($user);
+        //$user->assignRole('writer');
         $clients=\App\models\Client::All();
         return view('clients.index', ['clients' => $clients]);
         //return $clients;
@@ -37,6 +47,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
         \App\models\Client::create($request->all());
         return redirect()->route('clients.index')->with('success','Registro creado satisfactoriamente');

@@ -12,6 +12,11 @@ class CalendarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth');
+      $this->middleware(['permission:calendario']);
+    }
+
     public function index()
     {
         $quotes=\App\models\Quote::All();

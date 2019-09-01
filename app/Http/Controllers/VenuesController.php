@@ -12,6 +12,12 @@ class VenuesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth');
+
+      $this->middleware(['permission:locaciones']);
+    }
+
     public function index()
     {
         $venues=\App\models\Venue::All();

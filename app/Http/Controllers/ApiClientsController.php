@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 class ApiClientsController extends Controller
 {
 
+    public function __construct(){
+      $this->middleware(['permission:clientes']);
+    }
+
     public function index(){
         $clients=\App\models\Client::All();
         return $clients;

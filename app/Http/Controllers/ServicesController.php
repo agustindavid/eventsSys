@@ -12,6 +12,13 @@ class ServicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->middleware('auth');
+
+        $this->middleware(['permission:servicios']);
+    }
+
     public function index()
     {
         $services_categories=\App\models\Category::where('categorizable_type', 'services')->get();

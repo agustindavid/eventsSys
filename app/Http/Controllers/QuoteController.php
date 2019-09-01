@@ -12,6 +12,11 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+      $this->middleware('auth');
+      $this->middleware(['permission:cotizaciones']);
+    }
+
     public function index()
     {
         $quotes = \App\models\Quote::with('package', 'client', 'venue')->get();

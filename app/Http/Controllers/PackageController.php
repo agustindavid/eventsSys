@@ -12,6 +12,11 @@ class PackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware(['permission:paquetes']);
+    }
+
     public function index()
     {
         $allServices=\App\models\Service::all();

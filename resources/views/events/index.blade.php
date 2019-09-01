@@ -104,7 +104,7 @@ $('.js-typeahead-client').typeahead({
             var i=0;
     $.map(data, function(){
         console.log(data[i]);
-        console.log(moment().format('l'));
+        //console.log(moment().format('l'));
         $('.results').append("<tr><td>"+data[i].eventName+"</td><td>"+data[i].eventDate+"</td><td>"+data[i].price+"$</td><td>"+data[i].package.name+"</td><td><p><button href='#' class='quote-selector btn btn-primary' data-eventDate='"+data[i].eventDate+"' data-name='"+data[i].eventName+"' data-id='"+data[i].id+"'>Crear evento</button></p><p><a role='button' class='btn btn-info'>Ver detalles</a></p></td></tr>");
         i++;
     })
