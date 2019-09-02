@@ -7,13 +7,10 @@
 <nav>
     <ul>
         @foreach ($venues as $venue)
-    <li>{{$venue->name}}</li>
+          <li>{{$venue->name}}</li>
         @endforeach
     </ul>
 </nav>
-
-
-{{$venues}}
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -30,9 +27,9 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      events: 'http://localhost:8000/api/calendar'
+      events: 'http://localhost:8000/api/quotes'
     });
-
+    console.log(this.events);
     calendar.render();
   });
 

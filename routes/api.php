@@ -26,6 +26,7 @@ Route::resources([
     'venues' => 'ApiVenuesController',
     'categories' => 'ApiCategoryController',
     'services' => 'ApiServiceController',
+    'quotes' => 'ApiQuotesController',
 ]);
 
 

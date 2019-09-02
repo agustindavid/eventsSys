@@ -96,32 +96,6 @@
   </div>
   <div class="form-row form-group">
     <div class="col">
-      <label for="eventDate">Fecha del evento</label>
-      <input type="text" name="eventDate" id="eventDate" class="form-control input-sm" placeholder="Fecha del evento">
-    </div>
-    <div class="col">
-      <label for="eventTime">Hora del evento</label>
-      <input type="datetime" name="eventTime" id="eventTime" class="form-control input-sm" value="2019-08-22 00:00:00">
-    </div>
-  </div>
-  <div class="form-row form-group">
-    <div class="col">
-      <label for="eventFinishDate">Fecha final del evento</label>
-      <input type="text" name="eventFinishDate" id="eventFinishDate" class="form-control input-sm" placeholder="Fecha final del evento">
-    </div>
-    <div class="col">
-      <label for="eventFinishTime">Hora final del evento</label>
-      <input type="datetime" name="eventFinishTime" id="eventFinishTime" class="form-control input-sm" value="2019-08-23 00:00:00">
-    </div>
-  </div>
-  <div class="form-row form-group">
-    <div class="col-md-6">
-      <label for="validThru">Cotizacion valida hasta:</label>
-      <input type="text" name="validThru" id="validThru" class="form-control input-sm" placeholder="Valido hasta">
-    </div>
-  </div>
-  <div class="form-row form-group">
-    <div class="col">
       <label for="venue_id">Locacion</label>
       <select name="venue_id" id="venue_id" class="form-control">
             <option value="">Selecciona una locacion</option>
@@ -140,6 +114,34 @@
         @endforeach
       </select>
     </div>
+  </div>
+  <div class="dateGroup">
+  <div class="form-row form-group">
+    <div class="col">
+      <label for="eventDate">Fecha del evento</label>
+      <input type="text" name="eventDate" id="eventDate" class="form-control input-sm" readonly="readonly" disabled  autocomplete="off" placeholder="Fecha del evento">
+    </div>
+    <div class="col">
+      <label for="eventTime">Hora del evento</label>
+      <input type="datetime" name="eventTime" id="eventTime" class="form-control input-sm" value="2019-08-22 00:00:00">
+    </div>
+  </div>
+  <div class="form-row form-group">
+    <div class="col">
+      <label for="eventFinishDate">Fecha final del evento</label>
+      <input type="text" name="eventFinishDate" id="eventFinishDate" class="form-control input-sm" readonly="readonly"  autocomplete="off" placeholder="Fecha final del evento">
+    </div>
+    <div class="col">
+      <label for="eventFinishTime">Hora final del evento</label>
+      <input type="datetime" name="eventFinishTime" id="eventFinishTime" class="form-control input-sm" value="2019-08-23 00:00:00">
+    </div>
+  </div>
+  <div class="form-row form-group">
+    <div class="col-md-6">
+      <label for="validThru">Cotizacion valida hasta:</label>
+      <input type="text" name="validThru" id="validThru" class="form-control input-sm" readonly="readonly"  autocomplete="off" placeholder="Valido hasta">
+    </div>
+  </div>
   </div>
   <div class="form-row form-group">
     <div class="col">
@@ -193,18 +195,30 @@
 </form>
 </div>
 <script>
-    $(document).ready(function(){
-        $('.showHiddenForm, .hiddenFormClose').click(function(e){
-            e.preventDefault();
-            $('.hiddenFormWrapper').slideToggle();
-        });
-    })
+$(document).ready(function(){
+    $('.showHiddenForm, .hiddenFormClose').click(function(e){
+        e.preventDefault();
+        $('.hiddenFormWrapper').slideToggle();
+    });
     $('#eventDate').datepicker({
         format:'yyyy/mm/dd',
         startDate: "+1w",
         language: 'es'
     }).on('changeDate', function (selected) {
-        if($('#eventFinishDate').val() != ''){
+        var date=$(this).val().replace(/\//g, "-");
+        var venue=$('#venue_id').val();
+        console.log(date);
+        $.ajax({
+            type: 'get',
+            url: '/checkdates/'+venue+'/'+date,
+        }).done(function(data) {
+            console.log(data);
+            if(data.status==false){
+                alert('La locacion esta ocupada para la fecha seleccionada');
+                $('#eventDate').val('');
+            }
+        });
+    if($('#eventFinishDate').val() != ''){
           var auxDate=$('#eventFinishDate').val();
           var eventFinishDate=Date.parse(auxDate);
           eventFinishDate=new Date(eventFinishDate);
@@ -229,7 +243,7 @@
         endDate: "+1m",
         language: 'es'
     });
-
+});
 </script>
 <script>
 $('.js-typeahead-client').typeahead({
@@ -330,6 +344,7 @@ $('#venue_id').change(function(){
   }
   $('#maxVenuePeopleQty').text(maxQty);
   $('#peopleQty').attr('max', maxQty);
+  $('#eventDate').prop('disabled', false);
 });
 
 $('#extras').change(function(){

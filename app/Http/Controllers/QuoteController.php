@@ -96,4 +96,14 @@ class QuoteController extends Controller
     {
         //
     }
+
+    public function check_dates($venue, $date){
+        $date=str_replace("-","/",$date);
+        $quotes=\App\models\Quote::where('eventDate', $date)->where('venue_id', $venue)->get();
+        $arr = array('msg' => '', 'status' => true);
+        if($quotes->count()>0){
+          $arr = array('msg' => 'La fecha no esta disponible', 'status' => false);
+        }
+        return Response()->json($arr);
+    }
 }

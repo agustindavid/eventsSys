@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/checkdates/{venue}/{date}', 'QuoteController@check_dates');
 Route::resources([
     'clients' => 'ClientController',
     'services' => 'ServicesController',

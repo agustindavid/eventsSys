@@ -3,7 +3,7 @@
 @section('pageTitle', 'quotees')
 
 @section('content')
-<a href="/quotes/create">Nueva Cotizacion</a>
+<a href="/quotes/create" class="btn btn-primary">Crear Nueva Cotizacion</a>
 <table id="quotesTable" class="infotable">
         <thead>
           <tr>

@@ -19,19 +19,9 @@ class CalendarController extends Controller
 
     public function index()
     {
-        $quotes=\App\models\Quote::All();
-        //$subset = $users->map->only(['id', 'name', 'email']);
-        foreach($quotes as $quote){
-            $quote->title = $quote->eventName;
-            $quote->start = $quote->eventDate;
-            $quote->end = $quote->eventFinishDate;
-            $quote->url ='http://localhost:8000/quotes/'.$quote->id;
-        }
         $venues=\App\models\Venue::all();
-
-        $quotes_sub = $quotes->map->only(['title', 'start', 'end', 'id', 'url']);
         //return [$quotes_sub, $venues];
-        return view('calendar', compact(['quotes_sub', 'venues']));
+        return view('calendar', compact(['venues']));
     }
 
     /**
