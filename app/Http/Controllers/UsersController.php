@@ -17,7 +17,8 @@ class UsersController extends Controller
 
     public function index() {
       $users=\App\User::All();
-      return view('users.index', ['users' => $users]);
+      $allPermissions=Permission::All();
+      return view('users.index', ['users' => $users, 'allPermissions'=>$allPermissions]);
     }
 
     public function create()
@@ -53,7 +54,10 @@ class UsersController extends Controller
       //$this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
       //print_r($request->permissions);
       $user->syncPermissions($request->permissions);
-      $user->update($request->all());
+      $user->update([
+          'name' => $request['name'],
+          'password' => Hash::make($request['password']),
+      ]);
       return redirect()->route('users.index')->with('success','Registro actualizado satisfactoriamente');
     }
 

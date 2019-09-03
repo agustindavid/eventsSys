@@ -49,6 +49,9 @@
 
 <script src='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js'></script>
 
+<script src='https://unpkg.com/fullcalendar@3.10.1/dist/locale-all.js'></script>
+
+
 
 
 

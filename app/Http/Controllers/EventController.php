@@ -21,7 +21,7 @@ class EventController extends Controller
     public function index()
     {
         $paid=0;
-        $events=\App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments'])->get();
+        $events=\App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments', 'expenses'])->get();
 
         return view('events.index', ['events' => $events, 'paid' => $paid]);
     }
@@ -49,6 +49,9 @@ class EventController extends Controller
         $firstPayment=$request->firstPayment;
         $carbon = new Carbon();
         $relatedQuote=\App\models\Quote::find($newEvent->quote_id);
+        //print_r($relatedQuote);
+        $relatedQuote->status = 1;
+        $relatedQuote->save();
         $debtAmount=$relatedQuote->price - $firstPayment;
         $eachPay=$debtAmount/($newEvent->receiptsQty-1);
         $payTotal=0;

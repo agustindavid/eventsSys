@@ -3,8 +3,14 @@
 @section('pageTitle', 'Clientes')
 
 @section('content')
-<a href="/clients/create">Agregar nuevo</a>
-<div class="defaultForm">
+<div class="row">
+    <div class="col">
+        <div class="btn-wrap">
+            <a class="btn btn-primary create-btn newClient" href="/clients/create">Dar de alta nuevo cliente</a>
+        </div>
+    </div>
+</div>
+<div class="defaultForm hiddenFormWrapper" id="newClientFormWrap">
         <h3 class="panel-title">Nuevo Cliente</h3>
         <form role="form" class="newClientForm">
         {{ csrf_field() }}
@@ -123,8 +129,12 @@
     </table>
 
 <script>
-    $(document).ready( function () {
+$(document).ready( function () {
     var table=$('#clientsTable').DataTable();
+$('.newClient').click(function(e){
+    e.preventDefault();
+    $('#newClientFormWrap').slideToggle();
+})
 
 
 $.ajaxSetup({

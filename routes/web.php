@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('/calendar', 'CalendarController@index');
+Route::get('/calendar/{venue}', 'CalendarController@calendar_venue');
+
 
 Auth::routes();
 

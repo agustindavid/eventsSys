@@ -91,7 +91,7 @@ $('.js-typeahead-client').typeahead({
     display: ["name", "lastname", "email"],
     source: {
         name: {
-        url: "http://localhost:8000/api/clients", // Ajax request to get JSON from the action url
+        url: "/api/clients", // Ajax request to get JSON from the action url
         path:"name"
         },
     },
@@ -100,7 +100,7 @@ $('.js-typeahead-client').typeahead({
 
         onClickAfter: function (node, a, item, event) {
             //console.log(item.id);
-        $.get("http://localhost:8000/api/clients/"+item.id, function(data, status){
+        $.get("/api/clients/"+item.id, function(data, status){
             var i=0;
     $.map(data, function(){
         console.log(data[i]);

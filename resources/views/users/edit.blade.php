@@ -22,6 +22,43 @@
   <form method="POST" action="{{ route('users.update',$user->id) }}"  role="form">
   {{ csrf_field() }}
   <input name="_method" type="hidden" value="PATCH">
+  <div class="form-group row">
+
+        <div class="col">
+                <label for="name" class="">Nombre</label>
+
+            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
+
+            @error('name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+    </div>
+    <div class="form-group row">
+
+            <div class="col">
+                    <label for="password" class="">Contrasena</label>
+
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col">
+                    <label for="password-confirm" class="">Confirmacion de contrasena</label>
+
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+            </div>
+        </div>
     @foreach ($allPermissions as $permission)
     @if ($user->hasPermissionTo($permission->name))
     <input type="checkbox" name="permissions[]" checked="checked" value="{{$permission->name}}">{{$permission->name}}<br>

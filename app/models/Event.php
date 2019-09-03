@@ -17,6 +17,10 @@ class Event extends Model
         return $this->hasMany('App\models\Payment');
     }
 
+    public function expenses() {
+        return $this->hasMany('App\models\Expense');
+    }
+
     public function getTotalPaidAttribute()
     {
         return $this->payments()->where('status', 1)->sum('amount');

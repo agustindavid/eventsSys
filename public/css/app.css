@@ -909,6 +909,10 @@ span.typeahead__cancel-button {
   margin-top: 20px;
 }
 
+.btn-wrap {
+  margin: 15px;
+}
+
 /*! teleport-autocomplete - v0.3.3 | https://github.com/teleport/autocomplete#readme | MIT */
 
 .tp-autocomplete {

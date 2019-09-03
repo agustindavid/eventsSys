@@ -15,7 +15,7 @@ class ApiClientsController extends Controller
     }
 
     public function show(Client $client){
-        $quotes=\App\models\Quote::where('client_id', $client->id)->with('package')->get();
+        $quotes=\App\models\Quote::where('client_id', $client->id)->with('package')->orderBy('eventDate', 'desc')->get();
         //$clients=\App\models\Client::All();
         return $quotes;
     }

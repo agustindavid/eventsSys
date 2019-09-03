@@ -63,7 +63,7 @@
   <tbody>
       @foreach ($venues as $venue)
       <tr>
-          <td>{{$venue->name}}</td>
+      <td>{{$venue->name}} <a href="venues/{{$venue->id}}">Ver calendario</a></td>
           <td>{{$venue->location}}</td>
           <td>{{$venue->mincapacity}}</td>
           <td>{{$venue->maxcapacity}}</td>

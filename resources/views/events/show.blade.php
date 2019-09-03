@@ -72,7 +72,7 @@
       <p>Monto por pagar hasta la fecha: {{$event->quote->price-$event->total_paid}}$</p>
     </div>
 </div>
-        <div class="hiddenFormWrapper defaultForm">
+        <div class="hiddenFormWrapper defaultForm" id="newPaymentWrapper">
         <h3 class="panel-title">Nuevo abono para el Evento {{$event->quote->eventName}}</h3>
                 <form role="form" class="newPaymentForm">
                 {{ csrf_field() }}
@@ -176,7 +176,57 @@
             @endif
           @endforeach
         </table>
-        <h4><button class="btn btn-primary makePay" href="#" class="showHiddenForm">Registrar nuevo pago para este evento</button></h4>
+        <h4><button class="btn btn-primary makePay" href="#" class="newPaymentBtn">Registrar nuevo pago para este evento</button></h4>
+        <h3>Control de gastos</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                    <th>Concepto</th>
+                    <th>Numero de recibo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($event->expenses as $expense)
+                    <tr>
+                      <td>{{$expense->amount}}</td>
+                      <td>{{$expense->expenseDate}}</td>
+                      <td>{{$expense->concept}}</td>
+                      <td>{{$expense->receipt}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <button class="btn btn-primary newExpense">Registar gasto</button>
+        <div class="hiddenFormWrapper defaultForm" id="newExpenseWrapper">
+            <h3 class="panel-title">Cargar gasto</h3>
+                    <form role="form" class="newExpenseForm">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="user_id" value="1">
+                    <input type="hidden" name="event_id" value="{{$event->id}}">
+                      <div class="form-row form-group">
+                        <div class="col">
+                          <label for="amount">Monto pagado</label>
+                          <input type="number" step="0.01" name="amount" id="amount" class="form-control input-sm" placeholder="">
+                        </div>
+                        <div class="col">
+                          <label for="payDate">Fecha de pago</label>
+                          <input type="text" name="expenseDate" id="expenseDate" class="form-control input-sm" placeholder="Dia de pago">
+                        </div>
+                      </div>
+                      <div class="form-row form-group">
+                        <div class="col">
+                          <label for="comments">Concepto</label>
+                          <textarea name="concept" id="concept" class="form-control input-sm"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                          <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
+                          <a href="#" class="btn btn-info btn-block hiddenFormClose" >Cerrar</a>
+                      </div>
+                    </form>
+                  </div>
       </div>
     </div>
 </div>
@@ -188,34 +238,50 @@
 
 <script>
 $(document).ready(function(){
-  $('.showHiddenForm, .hiddenFormClose').click(function(e){
-    e.preventDefault();
-    $('.hiddenFormWrapper').slideToggle();
+
+  $('.newExpense').click(function(event){
+    event.preventDefault();
+    $('#newExpenseWrapper').slideToggle();
   });
-  $.ajaxSetup({
+
+  $('.makePay').click(function(event) {
+    event.preventDefault();
+    $('#newPaymentWrapper').slideToggle();
+    $('#paymentId').val($(this).data('payment'));
+    $('#amount').val($(this).data('amount'));
+  });
+
+$.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
 });
 
 $('#payDate').datepicker({
-        format:'yyyy/mm/dd',
-        language: 'es',
-        endDate: 'today',
-        todayHighlight: true
-    });
+    format:'yyyy/mm/dd',
+    language: 'es',
+    endDate: 'today',
+    todayHighlight: true
+});
+
+$('#expenseDate').datepicker({
+    format:'yyyy/mm/dd',
+    language: 'es',
+    endDate: 'today',
+    todayHighlight: true
+});
 
 $('.newPaymentForm').submit(function(event) {
-event.preventDefault();
-var paymentID=$('input[name=id]').val();
-if(paymentID != ''){
+  event.preventDefault();
+  var paymentID=$('input[name=id]').val();
+  if(paymentID != ''){
     requestType='PUT';
     requestUrl='/api/payment/'+paymentID;
-} else {
+  } else {
     requestUrl='/api/payment';
     requestType='POST';
-}
-var formData = {
+  }
+  var formData = {
     'id': $('input[name=id]').val(),
     'amount': $('input[name=amount]').val(),
     'payMethod': $('input[name=payMethod]').val(),
@@ -226,6 +292,32 @@ var formData = {
     'comments': $('textarea[name=comments]').val(),
     'user_id': $('input[name=user_id]').val(),
     'event_id': $('input[name=event_id]').val()
+  };
+// process the form
+$.ajax({
+    type        : requestType, // define the type of HTTP verb we want to use (POST for our form)
+    url         : requestUrl, // the url where we want to POST
+    data        : formData // our data object
+}).done(function(data) {
+        $('.newPaymentForm').trigger("reset");
+        $('.createClient').attr('disabled', 'disabled');
+        $('.hiddenFormWrapper').slideToggle();
+        $('.success-message').slideToggle();
+        $('.success-message').html(data.msg);
+        console.log(data);
+       // here we will handle errors and validation messages
+    });
+});
+
+$('.newExpenseForm').submit(function(event) {
+event.preventDefault();
+    requestUrl='/api/expenses';
+    requestType='POST';
+var formData = {
+    'amount': $('input[name=amount]', this).val(),
+    'expenseDate': $('input[name=expenseDate]', this).val(),
+    'concept': $('textarea[name=concept]', this).val(),
+    'event_id': $('input[name=event_id]', this).val()
 };
 // process the form
 $.ajax({
@@ -244,12 +336,6 @@ $.ajax({
     });
 });
 
-$('.makePay').click(function(event) {
-  event.preventDefault();
-  $('.hiddenFormWrapper').slideToggle();
-  $('#paymentId').val($(this).data('payment'));
-  $('#amount').val($(this).data('amount'));
-});
 });
 
 </script>
