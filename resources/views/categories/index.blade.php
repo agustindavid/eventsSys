@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
 
-@section('pageTitle', 'Clientes')
+@section('pageTitle', 'Categorías')
 
 @section('content')
 
@@ -20,7 +20,7 @@
         {{Session::get('success')}}
     </div>
     @endif
-    <h3 class="panel-title">Nueva Categoria</h3>
+    <h3 class="panel-title">Nueva Categoría</h3>
       <form method="POST" class="newCategoryForm"  role="form">
       {{ csrf_field() }}
       <div class="form-row form-group">
@@ -33,16 +33,15 @@
             <option value="services">Servicio</option>
           </select>
         </div>
-      </div>
-      <div class="form-group">
-        <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
-        <a href="#" class="btn btn-info btn-block clientFormClose" >Cerrar</a>
+        <div class="col">
+            <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
+        </div>
       </div>
       </form>
 </div>
 <div class="alert alert-success success-message" role="alert"></div>
 
-<h2>Categorias de servicios</h2>
+<h2>Categorías de servicios</h2>
 <table class="stripe infotable" id="servicesCategoriesTable">
     <thead>
         <tr>
@@ -60,7 +59,7 @@
     </tbody>
   </table>
 
-<h2>Categorias de eventos</h2>
+<h2>Categorías de eventos</h2>
 <table class="stripe infotable" id="quotesCategoriesTable">
     <thead>
         <tr>
@@ -96,22 +95,18 @@ var formData = {
     'slug': $('input[name=name]').val(),
     'categorizable_type': $('select[name=categorizable_type]').val(),
     };
-// process the form
 $.ajax({
-    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-    url         : '/api/categories', // the url where we want to POST
-    data        : formData // our data object
+    type        : 'POST',
+    url         : '{{url('/')}}/api/categories',
+    data        : formData
 }).done(function(data) {
         $('.newCategoryForm').trigger("reset");
         $('.success-message').slideToggle();
         $('.success-message').html(data.msg);
         console.log(data);
         window.location.reload();
-        // here we will handle errors and validation messages
     });
 });
-
-
 });
 
 

@@ -9,7 +9,7 @@ class Quote extends Model
     protected $fillable = ['parent_id', 'eventName', 'eventDate', 'eventTime', 'eventFinishDate', 'eventFinishTime', 'price', 'status', 'peopleQty', 'validThru', 'receiptsQty', 'user_id', 'venue_id', 'package_id', 'client_id', 'category_id', 'adultsQty', 'kidsQty', 'extras', 'extrasPrice'];
 
     public function categories() {
-        return $this->belongsTo('App\models\Category');
+        return $this->belongsTo('App\models\Category', 'category_id');
     }
 
     public function client() {
@@ -35,4 +35,5 @@ class Quote extends Model
     public function event() {
         return $this->hasOne('App\models\Event');
     }
+
 }

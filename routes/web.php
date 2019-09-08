@@ -24,6 +24,10 @@ Route::get('/calendar/{venue}', 'CalendarController@calendar_venue');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/generate-contract/{event_id}','EventController@generatePDF');
+Route::get('/pdf',function(){
+    return view('events.contract');
+});
 
 Route::get('/checkdates/{venue}/{date}', 'QuoteController@check_dates');
 Route::resources([

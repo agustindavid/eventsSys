@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\models\Event;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class EventController extends Controller
 {
@@ -45,7 +46,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $newEvent=\App\models\Event::firstOrCreate(['quote_id'=>$request->quote_id], ['receiptsQty' => $request->receiptsQty]);
+        $newEvent=\App\models\Event::firstOrCreate(['quote_id'=>$request->quote_id, 'receiptsQty' => $request->receiptsQty, 'extraPerson' => $request->extraPerson, 'deposit' => $request->deposit]);
         $firstPayment=$request->firstPayment;
         $carbon = new Carbon();
         $relatedQuote=\App\models\Quote::find($newEvent->quote_id);
@@ -114,5 +115,18 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    public function generatePDF($event_id)
+    {
+        $event=\App\models\Event::with('quote', 'quote.client', 'quote.venue', 'quote.categories', 'quote.package', 'payments')->find($event_id);
+        $data=['event'=>$event];
+        //$event = ['title' => 'Welcome to HDTuto.com'];
+        //
+        $pdf = PDF::loadView('events.contract', $data);
+
+
+        //return view('events.contract', ['event'=>$event]);
+        return $pdf->download('contratoevento'. $event->id .'.pdf');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    protected $fillable = ['quote_id', 'receiptsQty'];
+    protected $fillable = ['quote_id', 'receiptsQty', 'extraPerson', 'deposit'];
 
 
     public function quote() {
@@ -34,5 +34,15 @@ class Event extends Model
         return $this->quote()->sum('price')-$paid;
     }
 
-    protected $appends = ['total_paid', 'total_debt'];
+    public function getdurationAttribute()
+    {
+        $startTime=$this->quote->eventTime;
+        $endTime=$this->quote->eventFinishTime;
+        $startTime=\Carbon\Carbon::parse($startTime);
+        $endTime=\Carbon\Carbon::parse($endTime);
+        $duration=$endTime->diffInHours($startTime);
+        return $duration;
+    }
+
+    protected $appends = ['total_paid', 'total_debt', 'duration'];
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExpensesTable extends Migration
+class AlterTableEventsAddExtra extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateExpensesTable extends Migration
      */
     public function up()
     {
-        Schema::create('expenses', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->timestamps();
+        Schema::table('events', function (Blueprint $table) {
+            $table->float('extraPerson');
+            $table->float('deposit');
         });
     }
 
@@ -26,6 +26,8 @@ class CreateExpensesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expenses');
+        Schema::table('events', function (Blueprint $table) {
+            //
+        });
     }
 }

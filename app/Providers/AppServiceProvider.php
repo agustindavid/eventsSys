@@ -27,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        setlocale(LC_ALL, 'es_ES');
+
     }
 }

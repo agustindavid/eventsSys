@@ -14,10 +14,10 @@
 <table class="stripe infotable" id="usersTable">
   <thead>
     <tr>
-      <th>Nombre</th>
-      <th>Correo</th>
-      <th>Tiene acceso a</th>
-      <th>Acciones</th>
+      <th style="width:20%">Nombre</th>
+      <th style="width:20%">Correo</th>
+      <th style="width:40%">Tiene acceso a</th>
+      <th style="width:20%">Acciones</th>
     </tr>
   </thead>
   <tbody>

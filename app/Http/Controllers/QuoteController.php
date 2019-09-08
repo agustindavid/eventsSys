@@ -19,8 +19,9 @@ class QuoteController extends Controller
 
     public function index()
     {
-        $quotes = \App\models\Quote::with('package', 'client', 'venue')->get();
-        return view('quotes.index', ['quotes' => $quotes]);
+        $quotes = \App\models\Quote::with('package', 'client', 'venue')->where('status', 0)->get();
+        $approvedQuotes = \App\models\Quote::with('package', 'client', 'venue', 'event')->where('status', 1)->get();
+        return view('quotes.index', ['quotes' => $quotes, 'approvedQuotes' => $approvedQuotes]);
     }
 
     /**
@@ -46,6 +47,15 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
 
+        //$date=str_replace("/","-",$eventDate);
+        $startTime=str_replace("/","-",$request->eventDate) . ' ' . $request->eventTime. ':00';
+        $endTime=str_replace("/","-",$request->eventFinishDate) . ' ' . $request->eventFinishTime. ':00';
+        $startTime=\Carbon\Carbon::parse($startTime);
+        $endTime=\Carbon\Carbon::parse($endTime);
+        $request->offsetSet('eventTime', $startTime);
+        $request->offsetSet('eventFinishTime', $endTime);
+        $duration=$endTime->diffInHours($startTime);
+        print_r($duration);
         $newQuote=\App\models\Quote::create($request->all());
         return redirect()->route('quotes.index')->with('success','Registro creado satisfactoriamente');
     }

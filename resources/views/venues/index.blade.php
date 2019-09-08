@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
 
-@section('pageTitle', 'services')
+@section('pageTitle', 'Salones')
 
 @section('content')
 
@@ -29,23 +29,22 @@
        <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
      </div>
      <div class="col">
-       <label for="location">Ubicacion</label>
-       <input type="text" name="location" id="pac-input" class="controls form-control input-sm" placeholder="Ubicacion">
+       <label for="location">Ubicación</label>
+       <input type="text" name="location" id="pac-input" class="controls form-control input-sm" placeholder="Ubicación">
      </div>
    </div>
    <div class="form-row form-group">
      <div class="col">
-       <label for="mincapacity">Minimo de personas recomendado</label>
+       <label for="mincapacity">Mínimo de personas recomendado</label>
        <input type="number" name="mincapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Minima">
       </div>
       <div class="col">
-        <label for="maxcapacity">Capacidad maxima</label>
+        <label for="maxcapacity">Capacidad máxima</label>
         <input type="number" name="maxcapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Maxima">
       </div>
-    </div>
-    <div class="form-group">
-      <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
-      <a href="#" class="btn btn-info btn-block clientFormClose" >Cerrar</a>
+      <div class="col align-self-end">
+        <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
+      </div>
     </div>
   </form>
 </div>
@@ -63,7 +62,7 @@
   <tbody>
       @foreach ($venues as $venue)
       <tr>
-      <td>{{$venue->name}} <a href="venues/{{$venue->id}}">Ver calendario</a></td>
+      <td>{{$venue->name}} <a href="{{url('/')}}/venues/{{$venue->id}}">Ver calendario</a></td>
           <td>{{$venue->location}}</td>
           <td>{{$venue->mincapacity}}</td>
           <td>{{$venue->maxcapacity}}</td>
@@ -93,7 +92,7 @@ var formData = {
 // process the form
 $.ajax({
     type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-    url         : '/api/venues', // the url where we want to POST
+    url         : '{{url('/')}}/api/venues', // the url where we want to POST
     data        : formData // our data object
 }).done(function(data) {
         $('.newVenueForm').trigger("reset");

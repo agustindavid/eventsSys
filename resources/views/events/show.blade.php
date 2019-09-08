@@ -7,13 +7,18 @@
 <div class="col-md-4">
   <h2>Detalles del evento</h2>
   <div class="row">
-    <div class="col">
-      <p>Cliente:<strong> {{$event->quote->client->name}} {{$event->quote->client->lastname}}</strong></p>
-    </div>
+      <div class="col">
+        <p><a href="/generate-contract/{{$event->id}}" class="btn btn-primary"><i class="far fa-file-alt icon-btn"></i>Descargar contrato</a></p>
+      </div>
   </div>
   <div class="row">
     <div class="col">
       <p>Nombre del evento: <strong>{{$event->quote->eventName}}</strong></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+    <p>Cliente:<strong> {{$event->quote->client->name}} {{$event->quote->client->lastname}} </strong><small>(<a href="{{url('/')}}/clients/{{$event->quote->client->id}}">ver detalles</a>)</small></p>
     </div>
   </div>
   <div class="row">
@@ -23,23 +28,28 @@
   </div>
   <div class="row">
     <div class="col">
-      <p>Fecha de inicio: <strong>{!! \Carbon\Carbon::parse($event->quote->eventDate)->format('d-m-Y') !!}</strong></p>
+      <p>Fecha de inicio: <strong>{!! \Carbon\Carbon::parse($event->quote->eventDate)->format('d/m/Y') !!}</strong></p>
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <p>Hora de inicio: <strong>{{$event->quote->eventTime}}</strong></p>
+      <p>Hora de inicio: <strong>{!! \Carbon\Carbon::parse($event->quote->eventTime)->isoFormat('h:mm a') !!}</strong></p>
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <p>Fecha final: <strong>{!! \Carbon\Carbon::parse($event->quote->eventFinishDate)->format('d-m-Y') !!}</strong></p>
+      <p>Fecha final: <strong>{!! \Carbon\Carbon::parse($event->quote->eventFinishDate)->format('d/m/Y') !!}</strong></p>
    </div>
   </div>
   <div class="row">
    <div class="col">
-     <p>Hora final: <strong>{{$event->quote->eventFinishTime}}</strong></p>
+     <p>Hora final: <strong>{!! \Carbon\Carbon::parse($event->quote->eventFinishTime)->isoFormat('h:mm a') !!}</strong></p>
    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p>Duracion: <strong>{{$event->duration}} Horas</strong></p>
+    </div>
   </div>
   <div class="row">
     <div class="col">
@@ -305,6 +315,8 @@ $.ajax({
         $('.success-message').slideToggle();
         $('.success-message').html(data.msg);
         console.log(data);
+        window.location.reload();
+
        // here we will handle errors and validation messages
     });
 });
@@ -331,6 +343,8 @@ $.ajax({
         $('.success-message').slideToggle();
         $('.success-message').html(data.msg);
         console.log(data);
+        window.location.reload();
+
 
         // here we will handle errors and validation messages
     });

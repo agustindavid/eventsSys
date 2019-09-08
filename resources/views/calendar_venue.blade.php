@@ -38,7 +38,7 @@
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: '/api/checkquotes/{{$venue->id}}'
+        events: '{{url('/')}}/api/checkquotes/{{$venue->id}}'
       });
       calendar.render();
 

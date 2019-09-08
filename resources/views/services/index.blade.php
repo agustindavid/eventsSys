@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
 
-@section('pageTitle', 'services')
+@section('pageTitle', 'Servicios')
 
 @section('content')
 
@@ -28,25 +28,24 @@
           <label for="name">Nombre del servicio</label>
           <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
         </div>
-        <div class="col">
-          <label for="servicePrice">Precio</label>
-          <input type="text" name="servicePrice" id="servicePrice" class="form-control input-sm" placeholder="Precio">
-        </div>
       </div>
       <div class="form-row form-group">
         <div class="col">
-          <label for="category_id">Categoria</label>
+          <label for="category_id">Categoría</label>
           <select name="category_id" id="category_id" class="form-control input-sm">
-              <option value="">Seleccione una Categoria</option>
+              <option value="">Seleccione una Categoría</option>
             @foreach ($services_categories as $service_category)
               <option value="{{$service_category->id}}">{{$service_category->name}}</option>
             @endforeach
           </select>
         </div>
-      </div>
-      <div class="form-group form-row">
-        <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
-        <a href="#" class="btn btn-info btn-block clientFormClose" >Cerrar</a>
+        <div class="col">
+          <label for="servicePrice">Precio</label>
+          <input type="text" name="servicePrice" id="servicePrice" class="form-control input-sm" placeholder="Precio">
+        </div>
+        <div class="col align-self-end">
+          <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
+        </div>
       </div>
     </form>
 </>
@@ -63,10 +62,10 @@
     <tbody>
     @foreach ($services as $service)
      <tr>
-       <td><a href="/services/{{$service->id}}">{{$service->name}}</a></td>
+       <td>{{$service->name}}</td>
        <td>{{$service->servicePrice}}</td>
        <td>{{$service->categories->name}}</td>
-     <td><a href="/services/{{$service->id}}/edit">Editar</a> - Eliminar</td>
+     <td>Editar - Eliminar</td>
      </tr>
     @endforeach
     </tbody>
@@ -91,7 +90,7 @@ var formData = {
 // process the form
 $.ajax({
     type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-    url         : '/api/services', // the url where we want to POST
+    url         : '{{url('/')}}/api/services', // the url where we want to POST
     data        : formData // our data object
 }).done(function(data) {
         $('.newServiceForm').trigger("reset");

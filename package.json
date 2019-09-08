@@ -25,6 +25,9 @@
     },
     "dependencies": {
         "datatables.net-bs4": "^1.10.19",
-        "jquery-typeahead": "^2.10.6"
+        "datepair.js": "^0.4.16",
+        "jquery-timepicker": "^1.3.3",
+        "jquery-typeahead": "^2.10.6",
+        "jquery-validation": "^1.19.1"
     }
 }

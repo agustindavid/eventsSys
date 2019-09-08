@@ -41,7 +41,7 @@
             <div class="col">
                     <label for="password" class="">Contrasena</label>
 
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
 
                 @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
             <div class="col">
                     <label for="password-confirm" class="">Confirmacion de contrasena</label>
 
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
             </div>
         </div>
     @foreach ($allPermissions as $permission)

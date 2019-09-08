@@ -13,6 +13,11 @@ try {
     require('bootstrap');
     require('datatables.net-bs4');
     require('jquery-typeahead');
+    require('jquery-validation');
+    require('jquery-validation/dist/localization/messages_es');
+    require('jquery-timepicker/jquery.timepicker');
+    require('datepair.js/dist/jquery.datepair');
+    require('datepair.js/dist/datepair');
 
 } catch (e) {}
 

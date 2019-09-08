@@ -12,11 +12,11 @@ class ApiQuotesController extends Controller
         foreach($quotes as $quote){
             if($quote->status==0){
                 $color='#ccc';
-                $url='http://localhost:8000/quotes/'.$quote->id;
+                $url=url('/').'/quotes/'.$quote->id;
             }else{
                 $color="#f5a445";
                 $event=\App\models\Event::where('quote_id', $quote->id)->first();
-                $url='http://localhost:8000/events/'.$event->id;
+                $url=url('/').'/events/'.$event->id;
             }
             $quote->title = $quote->eventName;
             $quote->start = $quote->eventDate;
@@ -40,11 +40,11 @@ class ApiQuotesController extends Controller
         foreach($quotes as $quote){
             if($quote->status==0){
                 $color='#ccc';
-                $url='http://localhost:8000/quotes/'.$quote->id;
+                $url=url('/').'/quotes/'.$quote->id;
             }else{
                 $color="#f5a445";
                 $event=\App\models\Event::where('quote_id', $quote->id)->first();
-                $url='http://localhost:8000/events/'.$event->id;
+                $url=url('/').'/events/'.$event->id;
             }
             $quote->title = $quote->eventName;
             $quote->start = $quote->eventDate;

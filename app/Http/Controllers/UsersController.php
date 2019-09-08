@@ -58,7 +58,7 @@ class UsersController extends Controller
           'name' => $request['name'],
           'password' => Hash::make($request['password']),
       ]);
-      return redirect()->route('users.index')->with('success','Registro actualizado satisfactoriamente');
+      //return redirect()->route('users.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
 }

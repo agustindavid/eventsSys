@@ -29,11 +29,14 @@ class ApiPaymentController extends Controller
         $debtAmount=$prevPayment->debtAmount - $request->amount;
         $payTotal=$prevPayment->payTotal+$request->amount;
         if($request->amount < $payment->toBePaid){
+          $payment->update(array('amount' => $request->amount, 'payDate'=>$request->payDate, 'payMethod' => $request->payMethod, 'debtAmount' => $debtAmount, 'payTotal'=> $payTotal, 'comments'=>$request->comments, 'user_id'=>$request->user_id, 'status' => 1));
           $remaing=$payment->toBePaid-$request->amount;
           $newPayment=\App\models\Payment::create(array('amount' => 0, 'payDate'=>null, 'payMethod' => $request->payMethod,'tentativeDate'=>$payment->tentativeDate, 'debtAmount' => $debtAmount-$request->amount, 'payTotal'=> $payTotal, 'comments'=>'', 'event_id'=>$payment->event_id, 'user_id'=>1, 'status' => 0, 'toBePaid'=>$remaing));
         } else if ($request->amount > $payment->toBePaid){
           $payment->update(array('amount' => $request->amount, 'payDate'=>$request->payDate, 'payMethod' => $request->payMethod, 'debtAmount' => $debtAmount, 'payTotal'=> $payTotal, 'comments'=>$request->comments, 'user_id'=>$request->user_id, 'status' => 1));
-          $missingPayments=\App\models\Payment::where('status', 0)->get();
+          $debtAmount=$payment->debtAmount;
+          $missingPayments=\App\models\Payment::where('status', 0)->where('event_id', $payment->event_id)->get();
+          echo count($missingPayments);
             foreach($missingPayments as $missingPayment){
               $missingPayment->update(array('toBePaid' => $debtAmount/count($missingPayments)));
             }

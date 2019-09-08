@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
 
-@section('pageTitle', 'packagees')
+@section('pageTitle', 'Paquetes')
 
 @section('content')
 <div class="defaultForm">
@@ -28,6 +28,7 @@
       </div>
   </div>
   <div class="servicesSelection form-group">
+      <h4>Servicios incluidos</h4>
     @foreach ($allServices as $service)
     <div class="form-check">
       <input type="checkbox" class="form-check-input" id="service{{$service->id}}" name="services[]" value="{{$service->id}}">
@@ -36,8 +37,9 @@
     @endforeach
   </div>
   <div class="form-group form-row">
-    <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
-    <a href="#" class="btn btn-info btn-block clientFormClose" >Cerrar</a>
+    <div class="col-md-3 offset-md-9">
+      <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
+    </div>
   </div>
  </form>
 </div>
@@ -54,11 +56,11 @@
         <tbody>
         @foreach ($packages as $package)
          <tr>
-           <td><a href="/packages/{{$package->id}}">{{$package->name}}</a></td>
+           <td>{{$package->name}}</td>
            <td>{{$package->kidsPrice}}</td>
            <td>{{$package->adultPrice}}</td>
            <td>{{$package->minQty}}</td>
-         <td><a href="/packages/{{$package->id}}/edit">Editar</a> - Eliminar</td>
+           <td>Editar - Eliminar</td>
          </tr>
         @endforeach
         </tbody>
@@ -85,7 +87,7 @@ var formData = {
 // process the form
 $.ajax({
     type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-    url         : '/api/packages', // the url where we want to POST
+    url         : '{{url('/')}}/api/packages', // the url where we want to POST
     data        : formData // our data object
 }).done(function(data) {
         $('.newServiceForm').trigger("reset");
