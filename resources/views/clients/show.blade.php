@@ -69,7 +69,7 @@
             <td>{{$event->quote->price}}</td>
             <td>{{$event->total_paid}}</td>
             <td>{{$event->total_debt}}</td>
-            <td><a href="/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
+            <td><a href="{{url('/')}}/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
             </tr>
         @endforeach
         </tbody>

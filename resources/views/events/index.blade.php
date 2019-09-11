@@ -36,7 +36,7 @@
                 <div class="form-row form-group">
                 <div class="col-md-4">
                     <label for="firstPayment">Monto del primer pago</label>
-                    <input type="number" name="firstPayment" id="firstPayment" class="form-control input-sm" placeholder="Primer pago" value="3500">
+                    <input type="number" name="firstPayment" id="firstPayment" class="form-control input-sm" placeholder="Primer pago" value="{{setting('abono')}}">
                 </div>
                 <div class="col-md-6">
                     <label for="payMethod">Forma de pago</label>
@@ -55,7 +55,7 @@
                 <div class="form-row form-group">
                 <div class="col-md-4">
                     <label for="deposit">Deposito de garantia</label>
-                    <input type="number" name="deposit" id="#deposit" class="form-control input-sm" value="5000">
+                    <input type="number" name="deposit" id="#deposit" class="form-control input-sm" >
                 </div>
                 <div class="col-md-4">
                     <label for="extraPerson">Costo por persona extra</label>
@@ -89,7 +89,7 @@
        <td>{{$event->quote->venue->name}}</td>
        <td>{{$event->quote->price}}</td>
        <td>{{$event->total_paid}}</td>
-       <td><a href="/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
+       <td><a href="{{url('/')}}/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
      </tr>
     @endforeach
     </tbody>

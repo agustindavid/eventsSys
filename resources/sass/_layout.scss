@@ -14,6 +14,8 @@ body{
   position: fixed;
   height: 100vh;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 
   nav {
       flex-direction: column;
@@ -41,6 +43,10 @@ body{
         }
       }
   }
+}
+
+.flex-auto{
+    flex:auto;
 }
 
 .page-wrap {
@@ -80,8 +86,6 @@ body{
 
 .services-container{
     ul {
-        list-style: none;
-        display: flex;
         justify-content: space-between;
         padding: 0;
         flex-wrap: wrap;
@@ -128,4 +132,21 @@ span.typeahead__cancel-button {
 
 .icon-btn{
     margin-right:15px;
+}
+
+.endDateWrap{
+ display: none;
+}
+
+.infoText {
+    margin-top: 8px;
+}
+
+span.reqStar {
+    color: red;
+}
+
+input.error, select.error {
+    border-color: #e3342f52 !important;
+    box-shadow: 0 0 0 0.2rem #e3342f52 !important;
 }

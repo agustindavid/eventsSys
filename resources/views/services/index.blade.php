@@ -26,13 +26,13 @@
       <div class="form-row form-group">
         <div class="col">
           <label for="name">Nombre del servicio</label>
-          <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
+          <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre" required>
         </div>
       </div>
       <div class="form-row form-group">
         <div class="col">
           <label for="category_id">Categoría</label>
-          <select name="category_id" id="category_id" class="form-control input-sm">
+          <select name="category_id" id="category_id" class="form-control input-sm" required>
               <option value="">Seleccione una Categoría</option>
             @foreach ($services_categories as $service_category)
               <option value="{{$service_category->id}}">{{$service_category->name}}</option>
@@ -41,7 +41,7 @@
         </div>
         <div class="col">
           <label for="servicePrice">Precio</label>
-          <input type="text" name="servicePrice" id="servicePrice" class="form-control input-sm" placeholder="Precio">
+          <input type="text" name="servicePrice" id="servicePrice" class="form-control input-sm" placeholder="Precio" required>
         </div>
         <div class="col align-self-end">
           <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
@@ -73,6 +73,9 @@
 <script>
 $(document).ready( function () {
   $('#servicesTable').DataTable();
+  $(".newServiceForm").validate({
+    lang:'es'  
+  });
 
   $.ajaxSetup({
   headers: {

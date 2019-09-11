@@ -94,17 +94,32 @@ $.ajax({
 } );
 
 </script>
-<script src="https://raw.githubusercontent.com/teleport/autocomplete/master/dist/teleport-autocomplete.js"></script>
-<script>
-    var $results = document.querySelector('.results');
-    var appendToResult = $results.insertAdjacentHTML.bind($results, 'afterend');
 
-    TeleportAutocomplete.init('.my-input').on('change', function(value) {
-      var data=value;
-      console.log(data);
-      $('#city').val(data.name);
-      $('#state').val(data.admin1Division);
+<script>
+    function initialize() {
+      var options = {
+        language:'es',
+        types: ['(cities)'],
+        componentRestrictions: {
+          country: "mx"
+        }
+      };
+
+      var input = document.getElementById('autocomplete_search');
+      var autocomplete = new google.maps.places.Autocomplete(input, options);
+      autocomplete.addListener('place_changed', function () {
+      var place = autocomplete.getPlace();
+      // place variable will have all the information you are looking for.
+      $('#lat').val(place.geometry['location'].lat());
+      $('#long').val(place.geometry['location'].lng());
+      console.log(place.address_components[0].long_name);
+      console.log(place.address_components[1].long_name);
+      $('#city').val(place.address_components[0].long_name)
+      $('#state').val(place.address_components[1].long_name)
     });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
   </script>
 @endsection
 

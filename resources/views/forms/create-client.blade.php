@@ -2,30 +2,31 @@
         {{ csrf_field() }}
           <div class="form-row form-group">
             <div class="col">
-              <label for="name">Nombre</label>
-              <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
+              <label for="name">Nombre <span class="reqStar">*</span></label>
+              <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre" required>
             </div>
             <div class="col">
-              <label for="lastname">Apellido</label>
-              <input type="text" name="lastname" id="lastname" class="form-control input-sm" placeholder="Apellido">
+              <label for="lastname">Apellido <span class="reqStar">*</span></label>
+              <input type="text" name="lastname" id="lastname" class="form-control input-sm" placeholder="Apellido" required>
             </div>
           </div>
           <div class="form-row form-group">
             <div class="col">
-              <label for="email">Email</label>
-              <input type="text" name="email" id="email" class="form-control input-sm" placeholder="Correo Electronico">
+              <label for="email">Email <span class="reqStar">*</span></label>
+              <input type="text" name="email" id="email" class="form-control input-sm" placeholder="Correo Electronico" required>
             </div>
             <div class="col">
-              <label for="dniType">Tipo de documento</label>
-              <select name="dniType" id="dniType" class="form-control input-sm">
+              <label for="dniType">Tipo de documento <span class="reqStar">*</span></label>
+              <select name="dniType" id="dniType" class="form-control input-sm" required>
+                  <option value="">Seleccione un tipo de documento</option>
                   <option value="IFE">IFE</option>
                   <option value="FMM">FMM</option>
                   <option value="Pasaporte">Pasaporte</option>
               </select>
             </div>
             <div class="col">
-              <label for="dni">Numero de documento</label>
-              <input type="text" name="dni" id="dni" class="form-control input-sm" placeholder="Numero de documento">
+              <label for="dni">Numero de documento <span class="reqStar">*</span></label>
+              <input type="text" name="dni" id="dni" class="form-control input-sm" placeholder="Numero de documento" required>
             </div>
           </div>
           <div class="form-row form-group">
@@ -37,54 +38,54 @@
               <label for="commercialname">Nombre Comercial</label>
               <input type="text" name="commercialname" id="commercialname" class="form-control input-sm" placeholder="Nombre Comercial">
             </div>
+            <div class="col">
+              <label for="rfc">RFC <span class="reqStar">*</span></label>
+              <input type="text" name="rfc" id="rfc" class="form-control input-sm" placeholder="RFC" required>
+            </div>
           </div>
           <div class="form-row form-group">
-            <div class="col">
-              <label for="phone">Telefono</label>
-              <input type="text" name="phone" id="phone" class="form-control input-sm" placeholder="Telefono">
+            <div class="col-md-6">
+              <label for="phone">Telefono <span class="reqStar">*</span></label>
+              <input type="text" name="phone" id="phone" class="form-control input-sm" placeholder="Telefono" required>
             </div>
-            <div class="col">
-                <label for="rfc">RFC</label>
-                <input type="text" name="rfc" id="rfc" class="form-control input-sm" placeholder="RFC">
-              </div>
           </div>
           <div class="form-row text-center">
               <h4 class="text-center">Datos de dirección</h4>
           </div>
           <div class="form-row form-group">
               <div class="col">
-                <label>Ingrese ciudad o estado</label>
-                <input type="text" class="my-input form-control input-sm" placeholder="Buscar por ciudad o estado" autocomplete="off">
-              </div>
+                <label>Búsqueda por ciudad o estado</label>
+                <input id="autocomplete_search" name="autocomplete_search" type="text" class="form-control" placeholder="Search" />
+            </div>
           </div>
           <div class="form-row form-group">
                 <div class="col">
-                  <label for="city">Ciudad</label>
-                  <input type="text" name="city" id="city"  class="form-control input-sm" placeholder="Ciudad">
+                  <label for="city">Ciudad <span class="reqStar">*</span></label>
+                  <input type="text" name="city" id="city" readonly class="form-control input-sm" placeholder="Ciudad" required>
                 </div>
                 <div class="col">
-                  <label for="state">Estado</label>
-                  <input type="text" name="state" id="state" class="form-control input-sm" placeholder="Estado">
+                  <label for="state">Estado <span class="reqStar">*</span></label>
+                  <input type="text" name="state" id="state" readonly class="form-control input-sm" placeholder="Estado" required>
                </div>
               </div>
           <div class="form-row form-group">
             <div class="col">
-              <label for="number">Numero de casa</label>
-              <input type="text" name="number" id="number" class="form-control input-sm" placeholder="Numero de casa/Departamento">
+              <label for="number">Numero de casa <span class="reqStar">*</span></label>
+              <input type="text" name="number" id="number" class="form-control input-sm" placeholder="Numero de casa/Departamento" required>
             </div>
             <div class="col">
-                <label for="street">Calle</label>
-                <input type="text" name="street" id="street" class="form-control input-sm" placeholder="Calle">
+                <label for="street">Calle <span class="reqStar">*</span></label>
+                <input type="text" name="street" id="street" class="form-control input-sm" placeholder="Calle" required>
             </div>
           </div>
           <div class="form-row form-group">
             <div class="col">
-              <label for="colony">Colonia</label>
-              <input type="text" name="colony" id="colony" class="form-control input-sm" placeholder="Colonia">
+              <label for="colony">Colonia <span class="reqStar">*</span></label>
+              <input type="text" name="colony" id="colony" class="form-control input-sm" placeholder="Colonia" required>
             </div>
             <div class="col">
-                <label for="postalCode">Código postal</label>
-                <input type="number" name="postalCode" id="postalCode" class="form-control input-sm" placeholder="Codigo Postal">
+                <label for="postalCode">Código postal <span class="reqStar">*</span></label>
+                <input type="number" name="postalCode" id="postalCode" class="form-control input-sm" placeholder="Codigo Postal" required>
             </div>
           </div>
           <div class="form-group form-row">
@@ -96,3 +97,13 @@
             </div>
           </div>
         </form>
+
+<script>
+  $(".newClientForm").validate({
+    lang:'es'
+  });
+</script>
+
+
+
+

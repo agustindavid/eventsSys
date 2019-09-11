@@ -25,15 +25,18 @@
       {{ csrf_field() }}
       <div class="form-row form-group">
         <div class="col">
-          <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
+            <label for="name">Nombre de la categoría</label>
+          <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre" required>
         </div>
         <div class="col">
-          <select name="categorizable_type" id="categorizable_type" class="form-control input-sm">
+          <label for="categorizable_type">Tipo de categoría</label>  
+          <select name="categorizable_type" id="categorizable_type" class="form-control input-sm" required>
+            <option value="">Seleccione el tipo de categoría</option>
             <option value="quotes">Evento</option>
             <option value="services">Servicio</option>
           </select>
         </div>
-        <div class="col">
+        <div class="col align-self-end">
             <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
         </div>
       </div>
@@ -79,6 +82,9 @@
 
 <script>
 $(document).ready( function () {
+    $(".newCategoryForm").validate({
+        lang:'es'  
+    });
   var servicestable=$('#servicesCategoriesTable').DataTable();
   var quotestable=$('#quotesCategoriesTable').DataTable();
 

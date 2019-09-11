@@ -45,28 +45,28 @@
   <input type="hidden" name="user_id" id="user_id" class="form-control input-sm" value="1">
   <input type="hidden" name="client_id" id="client_id">
   <div class="form-group">
-      <label for="clientname">Cliente</label>
+      <label for="clientname">Cliente <span class="reqStar">*</span></label>
       <input type="text" id="clientname" class="form-control input-sm" disabled value="">
   </div>
   <div class="form-group">
-    <label for="eventName">Nombre del evento</label>
+    <label for="eventName">Nombre del evento <span class="reqStar">*</span></label>
     <input type="text" name="eventName" id="eventName" class="form-control input-sm" placeholder="Nombre" required>
   </div>
   <div class="form-row form-group">
     <div class="col">
-      <label for="venue_id">Locacion</label>
-      <select name="venue_id" id="venue_id" class="form-control">
+      <label for="venue_id">Locacion <span class="reqStar">*</span></label>
+      <select name="venue_id" id="venue_id" class="form-control" required>
             <option value="">Selecciona una locacion</option>
         @foreach ($allVenues as $venue)
           <option data-maxcapacity="{{$venue->maxcapacity}}" value="{{$venue->id}}">{{$venue->name}}</option>
         @endforeach
       </select>
-      <p class="infoText" id="maxVenuePeople">Maximo de personas: <span id="maxVenuePeopleQty"></span></p>
+      <p class="infoText" id="maxVenuePeople"><small>Capacidad del salón: <strong><span id="maxVenuePeopleQty"></span></strong></small></p>
 
     </div>
     <div class="col">
-      <label for="category_id">Categoria</label>
-      <select name="category_id" id="category_id" class="form-control">
+      <label for="category_id">Categoria <span class="reqStar">*</span></label>
+      <select name="category_id" id="category_id" class="form-control" required>
            <option value="">Seleccione una categoria</option>
         @foreach ($eventsCategories as $eventCategory)
           <option value="{{$eventCategory->id}}">{{$eventCategory->name}}</option>
@@ -75,48 +75,56 @@
     </div>
   </div>
   <div class="dateGroup">
+      <hr>
   <div class="form-row form-group" id="dateGroup">
     <div class="col">
-      <label for="eventDate">Fecha del evento</label>
-      <input type="text" name="eventDate" id="eventDate" onkeydown="return false" class="form-control input-sm date start"  disabled  autocomplete="off" placeholder="Fecha del evento">
+      <label for="eventDate">Fecha del evento <span class="reqStar">*</span></label>
+      <input type="text" name="eventDate" id="eventDate" onkeydown="return false" class="form-control input-sm date start" required  disabled  autocomplete="off" placeholder="Fecha del evento">
     </div>
     <div class="col">
-      <label for="eventTime">Hora del evento</label>
-      <input name="eventTime" id="eventTime" class="form-control input-sm time start">
+      <label for="eventTime">Hora del evento <span class="reqStar">*</span></label>
+      <input name="eventTime" id="eventTime" required class="form-control input-sm time start">
     </div>
     <div class="col">
-        <label for="eventFinishTime">Hora de culminación</label>
-        <input type="datetime" name="eventFinishTime" id="eventFinishTime" class="form-control input-sm time end">
+        <label for="eventFinishTime">Hora de culminación <span class="reqStar">*</span></label>
+        <input type="datetime" name="eventFinishTime" required id="eventFinishTime" class="form-control input-sm time end">
       </div>
-    <div class="col" style="visibility:hidden">
+    <div class="col endDateWrap" >
       <label for="eventFinishDate">Fecha de culminación</label>
       <input type="text" name="eventFinishDate" id="eventFinishDate" class="form-control input-sm date-end" readonly="readonly"  autocomplete="off" placeholder="Fecha final del evento">
     </div>
   </div>
+  <div class="row">
+      <div class="col">
+          <p><input name="multiDay" type="checkbox" id="multiDay"><label for="multiDay">El evento ocupa más de un día</label></p>
+      </div>
+  </div>
+  <hr>
   <div class="form-row form-group">
     <div class="col-md-6">
-      <label for="validThru">Cotización valida hasta:</label>
-      <input type="text" name="validThru" id="validThru" class="form-control input-sm" readonly="readonly"  autocomplete="off" placeholder="Valido hasta">
+      <label for="validThru">Cotización valida hasta: <span class="reqStar">*</span></label>
+      <input type="text" name="validThru" id="validThru" class="form-control input-sm" readonly="readonly" required autocomplete="off" placeholder="Valido hasta">
     </div>
   </div>
   </div>
+  <hr>
   <div class="form-row form-group">
     <div class="col">
-      <label for="package_id">Paquete</label>
-      <select name="package_id" id="package_id" class="form-control">
+      <label for="package_id">Paquete <span class="reqStar">*</span></label>
+      <select name="package_id" id="package_id" class="form-control required">
           <option value="">Selecciona un paquete</option>
         @foreach ($allPackages as $package)
           <option value="{{$package->id}}" data-minQty="{{$package->minQty}}" data-kidsPrice="{{$package->kidsPrice}}" data-adultsPrice="{{$package->adultsPrice}}">{{$package->name}}</option>
         @endforeach
       </select>
-      <p class="infoText" id="minPkgPeople">Minimo de personas: <span id="minPkgPeopleQty"></span></p>
+      <p class="infoText" id="minPkgPeople"><small>Minimo de personas: <strong><span id="minPkgPeopleQty"></span></strong></small></p>
     </div>
     <div class="col-md-2">
-      <label for="kidsQty">Niños</label>
+      <label for="kidsQty">Niños <span class="reqStar">*</span></label>
       <input type="number" name="kidsQty" id="kidsQty" class="form-control input-sm" disabled value="0">
     </div>
     <div class="col-md-2">
-        <label for="adultsQty">Adultos</label>
+        <label for="adultsQty">Adultos <span class="reqStar">*</span></label>
         <input type="number" name="adultsQty" id="adultsQty" class="form-control input-sm" disabled value="0">
       </div>
       <div class="col-md-2">
@@ -136,21 +144,19 @@
       <textarea name="extras" id="extras" class="form-control input-sm" disabled></textarea>
     </div>
     <div class="col">
-        <label for="extrasPrice">Precio adicionales</label>
+        <label for="extrasPrice">Monto adicional</label>
         <input type="number" name="extrasPrice" id="extrasPrice" class="form-control input-sm" disabled  value="0">
       </div>
   </div>
-  <div class="form-group">
-    <label for="price">Precio</label>
-    <input type="text" name="price_shown" id="price_shown" disabled class="form-control input-sm">
-    <input type="hidden" name="price" id="price" class="form-control input-sm" placeholder="Precio">
-</div>
+  <hr>
   <div class="form-group form-row">
-    <div class="col">
-      <a href="{{ route('quotes.index') }}" class="btn btn-info btn-block" >Atrás</a>
+    <div class="col-md-4">
+      <label for="price">Precio Total</label>
+      <input type="text" name="price_shown" id="price_shown" disabled class="form-control input-sm">
+      <input type="hidden" name="price" id="price" class="form-control input-sm" placeholder="Precio">
     </div>
-    <div class="col">
-      <input type="submit"  value="Guardar" class="btn btn-success btn-block">
+    <div class="col-md-4 align-self-end offset-md-4">
+        <input type="submit"  value="Crear Cotización" class="btn btn-success btn-block">
     </div>
   </div>
 </form>
@@ -158,9 +164,36 @@
 </div>
 
 <script>
+        function initialize() {
+          var options = {
+            language:'es',
+            types: ['(cities)'],
+            componentRestrictions: {
+              country: "mx"
+            }
+          };
+
+          var input = document.getElementById('autocomplete_search');
+          var autocomplete = new google.maps.places.Autocomplete(input, options);
+          autocomplete.addListener('place_changed', function () {
+          var place = autocomplete.getPlace();
+          // place variable will have all the information you are looking for.
+          $('#lat').val(place.geometry['location'].lat());
+          $('#long').val(place.geometry['location'].lng());
+          console.log(place.address_components[0].long_name);
+          console.log(place.address_components[1].long_name);
+          $('#city').val(place.address_components[0].long_name)
+          $('#state').val(place.address_components[1].long_name)
+        });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+      </script>
+
+<script>
     // initialize input widgets first
     $('#dateGroup .time').timepicker({
-        'showDuration': true,
+        'showDuration': false,
         'timeFormat': 'H:i',
         'step': 60,
         'minTime': '10:00',
@@ -179,6 +212,14 @@
 
 <script>
 $(document).ready(function(){
+    $('#multiDay').click(function(){
+        if($(this).is(":checked")){
+            $('.endDateWrap').show()
+        }
+        else if($(this).is(":not(:checked)")){
+            $('.endDateWrap').hide()        }
+    });
+
     $('.showHiddenForm, .hiddenFormClose').click(function(e){
         e.preventDefault();
         $('.hiddenFormWrapper').slideToggle();
@@ -250,6 +291,7 @@ $.ajaxSetup({
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
 });
+
 
 $('.newClientForm').submit(function(event) {
 event.preventDefault();
@@ -331,7 +373,7 @@ $('#venue_id').change(function(){
   if(maxQty < totalPeople){
     $('#kidsQty, #adultsQty, #peopleQty, #price, #price_shown').val('');
   }
-  $('#maxVenuePeopleQty').text(maxQty);
+  $('#maxVenuePeopleQty').text(maxQty+' personas');
   $('#peopleQty').attr('max', maxQty);
   $('#eventDate').prop('disabled', false);
 });

@@ -8,7 +8,7 @@
   <h2>Detalles del evento</h2>
   <div class="row">
       <div class="col">
-        <p><a href="/generate-contract/{{$event->id}}" class="btn btn-primary"><i class="far fa-file-alt icon-btn"></i>Descargar contrato</a></p>
+      <p><a href="{{url('/')}}/generate-contract/{{$event->id}}" class="btn btn-primary"><i class="far fa-file-alt icon-btn"></i>Descargar contrato</a></p>
       </div>
   </div>
   <div class="row">

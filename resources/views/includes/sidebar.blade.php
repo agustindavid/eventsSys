@@ -1,38 +1,52 @@
-<nav id="sidebar-nav">
+<nav id="sidebar-nav" class="flex-auto">
     <ul class="nav sidebar-list">
-        {{Auth::user()->name}}
+        <p>Bienvenido, {{Auth::user()->name}}
+        <small><a style="color:#fff;" href="{{ route('logout') }}"
+        onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();">
+         (Salir)
+     </a></small></p>
+
+     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+         @csrf
+     </form>
         @can('usuarios')
-          <li><a href="{{url('/')}}/users"><i class="fas fa-users"></i>Usuarios</a></li>
+          <li><a href="{{url('/')}}/users"><i class="fas fa-users"></i><span>Usuarios</span></a></li>
         @endcan
         @can('clientes')
-          <li><a href="{{url('/')}}/clients"><i class="fas fa-chalkboard-teacher"></i>Clientes</a></li>
+          <li><a href="{{url('/')}}/clients"><i class="fas fa-chalkboard-teacher"></i><span><span>Clientes</span></a></li>
         @endcan
         @can('locaciones')
-          <li><a href="{{url('/')}}/venues"><i class="fas fa-hotel"></i>Locaciones</a></li>
+          <li><a href="{{url('/')}}/venues"><i class="fas fa-hotel"></i><span>Locaciones</span></a></li>
         @endcan
         @can('categorias')
-          <li><a href="{{url('/')}}/categories"><i class="fas fa-list-ul"></i>Categorias</a></li>
+          <li><a href="{{url('/')}}/categories"><i class="fas fa-list-ul"></i><span>Categorias</span></a></li>
         @endcan
         @can('servicios')
-          <li><a href="{{url('/')}}/services"><i class="fas fa-concierge-bell"></i>Servicios</a></li>
+          <li><a href="{{url('/')}}/services"><i class="fas fa-concierge-bell"></i><span>Servicios</span></a></li>
         @endcan
         @can('paquetes')
-          <li><a href="{{url('/')}}/packages"><i class="fas fa-cubes"></i>Paquetes</a></li>
+          <li><a href="{{url('/')}}/packages"><i class="fas fa-cubes"></i><span>Paquetes</span></a></li>
         @endcan
         @can('cotizaciones')
-          <li><a href="{{url('/')}}/quotes"><i class="fas fa-file-invoice"></i>Cotizaciones</a></li>
+          <li><a href="{{url('/')}}/quotes"><i class="fas fa-file-invoice"></i><span>Cotizaciones</span></a></li>
         @endcan
         @can('eventos')
-          <li><a href="{{url('/')}}/events"><i class="fas fa-birthday-cake"></i>Eventos</a></li>
+          <li><a href="{{url('/')}}/events"><i class="fas fa-birthday-cake"></i><span>Eventos</span></a></li>
         @endcan
         @can('calendario')
-          <li><a href="{{url('/')}}/calendar"><i class="fas fa-calendar"></i>Calendario</a></li>
+          <li><a href="{{url('/')}}/calendar"><i class="fas fa-calendar"></i><span>Calendario</span></a></li>
         @endcan
         @can('pagos')
-          <li><a href="{{url('/')}}/payments"><i class="fas fa-calendar"></i>Pagos</a></li>
+          <li><a href="{{url('/')}}/payments"><i class="fas fa-calendar"></i><span>Pagos</span></a></li>
         @endcan
         @can('gastos')
-          <li><a href="{{url('/')}}/calendar"><i class="fas fa-calendar"></i>Gastos</a></li>
+          <li><a href="{{url('/')}}/calendar"><i class="fas fa-calendar"></i><span>Gastos</span></a></li>
         @endcan
     </ul>
+
 </nav>
+    <ul class="nav sidebar-list">
+        <li><a href="{{url('/')}}/settings"><i class="fas fa-cog"></i>Configuración</a></li>
+    </ul>
+

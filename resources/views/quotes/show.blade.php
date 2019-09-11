@@ -17,7 +17,7 @@
             <div class="form-row form-group">
             <div class="col-md-4">
                 <label for="firstPayment">Monto del primer pago</label>
-                <input type="number" name="firstPayment" id="firstPayment" class="form-control input-sm" placeholder="Primer pago">
+                <input type="number" name="firstPayment" id="firstPayment" class="form-control input-sm" placeholder="Primer pago" value="{{setting('abono')}}">
             </div>
             <div class="col-md-6">
                 <label for="payMethod">Forma de pago</label>

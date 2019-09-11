@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col">
         <div class="btn-wrap">
-          <a href="{{url('/')}}/quotes/create" class="btn btn-primary">Crear Nueva Cotizacion</a>
+          <a href="{{url('/')}}/quotes/create" class="btn btn-primary">Crear Nueva Cotización</a>
         </div>
     </div>
 </div>

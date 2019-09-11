@@ -26,21 +26,21 @@
    <div class="form-row form-group">
      <div class="col">
        <label for="name">Nombre</label>
-       <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
+       <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre" required>
      </div>
      <div class="col">
        <label for="location">Ubicación</label>
-       <input type="text" name="location" id="pac-input" class="controls form-control input-sm" placeholder="Ubicación">
+       <input type="text" name="location" id="pac-input" class="controls form-control input-sm" placeholder="Ubicación" required>
      </div>
    </div>
    <div class="form-row form-group">
      <div class="col">
        <label for="mincapacity">Mínimo de personas recomendado</label>
-       <input type="number" name="mincapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Minima">
+       <input type="number" name="mincapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Minima" required>
       </div>
       <div class="col">
         <label for="maxcapacity">Capacidad máxima</label>
-        <input type="number" name="maxcapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Maxima">
+        <input type="number" name="maxcapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Maxima" required>
       </div>
       <div class="col align-self-end">
         <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
@@ -104,6 +104,12 @@ $.ajax({
     });
 });
   });
+
+$(".newVenueForm").validate({
+    lang:'es'
+});
 </script>
+
+
 
 @endsection
