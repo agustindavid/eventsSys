@@ -11,7 +11,7 @@
     </header>
     <div id="main" class="row">
         <!-- sidebar content -->
-        <div id="sidebar" class="sidebar">
+        <div id="sidebar" class="sidebar collapsed">
             @include('includes.sidebar')
         </div>
 

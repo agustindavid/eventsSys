@@ -3,14 +3,14 @@
 @section('pageTitle', 'Cotizaciones')
 
 @section('content')
-<div class="row">
+<div class="row no-margin">
     <div class="col">
         <div class="btn-wrap">
           <a href="{{url('/')}}/quotes/create" class="btn btn-primary">Crear Nueva Cotización</a>
         </div>
     </div>
 </div>
-<div class="row tableWrapper">
+<div class="row no-margin tableWrapper table-responsive">
     <div class="col">
         <h3>Cotizaciones Aprobadas</h3>
         <hr>
@@ -42,7 +42,7 @@
         </tbody>
     </table>
 </div>
-<div class="row tableWrapper">
+<div class="row no-margin tableWrapper table-responsive">
         <div class="col">
                 <h3>Cotizaciones por aprobar</h3>
                 <hr>
@@ -76,7 +76,9 @@
 </div>
     <script>
     $(document).ready( function () {
-      $('#quotesTable').DataTable();
+      $('#quotesTable').DataTable({
+          responsive: true
+      });
       $('#approvedQuotesTable').DataTable();
     });
     </script>

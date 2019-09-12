@@ -16,7 +16,7 @@
     @include('forms.create-client')
 </div>
       <div class="alert alert-success success-message" role="alert"></div>
-
+  <div class="table-responsive">
       <table id="clientsTable" class="infotable stripe">
         <thead>
           <tr>
@@ -35,6 +35,7 @@
         @endforeach
         </tbody>
     </table>
+  </div>
 
 <script>
 $(document).ready( function () {

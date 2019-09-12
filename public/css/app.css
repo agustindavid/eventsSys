@@ -801,15 +801,22 @@ body {
   margin-right: 0 !important;
 }
 
+.no-margin {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 .sidebar {
   background-color: #1b3b56;
   width: 280px;
   color: #fff;
   position: fixed;
-  height: 100vh;
+  height: 100%;
   overflow: auto;
   display: flex;
   flex-direction: column;
+  transition: 0.25s all ease-in-out;
+  z-index: 99;
 }
 
 .sidebar nav {
@@ -817,7 +824,7 @@ body {
 }
 
 .sidebar ul {
-  padding: 15px 50px;
+  padding: 5px 50px;
   list-style: none;
   flex-direction: column;
 }
@@ -825,6 +832,7 @@ body {
 .sidebar ul li {
   list-style: none;
   display: block;
+  margin: 5px 0;
 }
 
 .sidebar ul li a {
@@ -835,8 +843,24 @@ body {
 }
 
 .sidebar ul li a i {
-  font-size: 1rem;
+  font-size: 1.8rem;
   margin-right: 10px;
+  width: 35px;
+  text-align: center;
+}
+
+.sidebar ul li a span {
+  position: absolute;
+  white-space: nowrap;
+}
+
+.bottom-item {
+  position: absolute;
+  bottom: 25px;
+}
+
+#openMenu {
+  color: #fff;
 }
 
 .flex-auto {
@@ -854,9 +878,14 @@ body {
 }
 
 .content-page {
-  left: 280px;
+  width: calc(100%);
   position: relative;
-  width: calc(100% - 280px);
+  transition: 0.25s all ease-in-out;
+}
+
+.content-page.translated {
+  transform: translateX(280px);
+  position: relative;
   background-color: #f5f5f3;
 }
 
@@ -941,6 +970,45 @@ input.error,
 select.error {
   border-color: #e3342f52 !important;
   box-shadow: 0 0 0 0.2rem #e3342f52 !important;
+}
+
+.sidebar.collapsed {
+  width: 55px;
+}
+
+.sidebar.collapsed ul {
+  padding: 5px 10px;
+}
+
+.sidebar.collapsed ul li {
+  width: 100%;
+  margin: 5px auto;
+  text-align: center;
+}
+
+.sidebar.collapsed ul li a span {
+  display: none;
+}
+
+.sidebar.collapsed ul li a i {
+  font-size: 1.8rem;
+  margin-right: 0px;
+}
+
+@media (max-width: 767.98px) {
+  .page-wrap {
+    width: 100%;
+  }
+
+  .content-page {
+    width: calc(100% - 60px);
+    left: 60px;
+  }
+
+  .defaultForm {
+    width: 95%;
+    padding: 10px;
+  }
 }
 
 /*! teleport-autocomplete - v0.3.3 | https://github.com/teleport/autocomplete#readme | MIT */

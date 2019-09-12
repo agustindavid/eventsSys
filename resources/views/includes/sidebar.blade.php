@@ -1,6 +1,6 @@
-<nav id="sidebar-nav" class="flex-auto">
+<nav id="sidebar-nav">
     <ul class="nav sidebar-list">
-        <p>Bienvenido, {{Auth::user()->name}}
+        <p style="display:none;">Bienvenido, {{Auth::user()->name}}
         <small><a style="color:#fff;" href="{{ route('logout') }}"
         onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();">
@@ -10,6 +10,7 @@
      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
          @csrf
      </form>
+        <li><a href="{{url('/')}}/users" id="openMenu"><i class="fas fa-chevron-right"></i><span><small>Cerrar Menú</small></span></a></li>
         @can('usuarios')
           <li><a href="{{url('/')}}/users"><i class="fas fa-users"></i><span>Usuarios</span></a></li>
         @endcan
@@ -46,7 +47,7 @@
     </ul>
 
 </nav>
-    <ul class="nav sidebar-list">
-        <li><a href="{{url('/')}}/settings"><i class="fas fa-cog"></i>Configuración</a></li>
+    <ul class="nav sidebar-list bottom-item">
+        <li><a href="{{url('/')}}/settings"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
     </ul>
 

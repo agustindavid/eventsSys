@@ -7,28 +7,36 @@ body{
     margin-right: 0 !important;
 }
 
+.no-margin {
+ margin-left: 0 !important;
+ margin-right: 0 !important;
+}
+
 .sidebar{
   background-color: $darkblue;
   width: 280px;
   color: #fff;
   position: fixed;
-  height: 100vh;
+  height: 100%;
   overflow: auto;
   display: flex;
   flex-direction: column;
+  transition: 0.25s all ease-in-out;
+  z-index: 99;
 
   nav {
       flex-direction: column;
   }
 
   ul{
-      padding: 15px 50px;
+      padding: 5px 50px;
       list-style: none;
       flex-direction: column;
 
       li {
           list-style: none;
           display: block;
+          margin: 5px 0;
 
         a {
             color: $lightfont;
@@ -37,12 +45,28 @@ body{
             font-weight: 100;
 
             i {
-                font-size: 1rem;
+                font-size: 1.8rem;
                 margin-right: 10px;
+                width: 35px;
+                text-align: center;
+            }
+
+            span {
+                position: absolute;
+                white-space: nowrap;
             }
         }
       }
   }
+}
+
+.bottom-item{
+    position: absolute;
+    bottom: 25px;
+}
+
+#openMenu{
+    color: #fff;
 }
 
 .flex-auto{
@@ -59,10 +83,15 @@ body{
     padding: 40px;
 }
 
-.content-page{
-    left: 280px;
+.content-page {
+    width: calc(100%);
     position: relative;
-    width: calc(100% - 280px);
+    transition: 0.25s all ease-in-out;
+}
+
+.content-page.translated{
+    transform: translateX(280px);
+    position: relative;
     background-color: $lightgray;
 }
 
@@ -150,3 +179,43 @@ input.error, select.error {
     border-color: #e3342f52 !important;
     box-shadow: 0 0 0 0.2rem #e3342f52 !important;
 }
+
+.sidebar.collapsed {
+    width: 55px;
+
+    ul {
+        padding: 5px 10px;
+
+        li {
+            width: 100%;
+            margin: 5px auto;
+            text-align: center;
+            a {
+                span {
+                    display: none;
+                }
+
+                i {
+                    font-size: 1.8rem;
+                    margin-right: 0px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 767.98px){
+    .page-wrap {
+        width: 100%;
+    }
+
+    .content-page {
+        width: calc(100% - 60px);
+        left: 60px;
+    }
+
+    .defaultForm {
+        width: 95%;
+        padding: 10px;
+    }
+ }
