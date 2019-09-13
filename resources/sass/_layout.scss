@@ -12,7 +12,17 @@ body{
  margin-right: 0 !important;
 }
 
+.top-bar {
+    width: 100%;
+    text-align: right;
+    background: $darkblue;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
 .sidebar{
+  top: 0;
   background-color: $darkblue;
   width: 280px;
   color: #fff;

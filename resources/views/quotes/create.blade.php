@@ -82,7 +82,7 @@
       <input type="text" name="eventDate" id="eventDate" onkeydown="return false" class="form-control input-sm date start" required  disabled  autocomplete="off" placeholder="Fecha del evento">
     </div>
     <div class="col">
-      <label for="eventTime">Hora del evento <span class="reqStar">*</span></label>
+      <label for="eventTime">Hora de inicio <span class="reqStar">*</span></label>
       <input name="eventTime" id="eventTime" required class="form-control input-sm time start">
     </div>
     <div class="col">

@@ -1,11 +1,5 @@
 <nav id="sidebar-nav">
     <ul class="nav sidebar-list">
-        <p style="display:none;">Bienvenido, {{Auth::user()->name}}
-        <small><a style="color:#fff;" href="{{ route('logout') }}"
-        onclick="event.preventDefault();
-                      document.getElementById('logout-form').submit();">
-         (Salir)
-     </a></small></p>
 
      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
          @csrf
