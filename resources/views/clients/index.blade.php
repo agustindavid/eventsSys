@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="row">
+<div class="row no-margin">
     <div class="col">
         <div class="btn-wrap">
             <a class="btn btn-primary create-btn newClient" href="/clients/create">Dar de alta nuevo cliente</a>
@@ -28,9 +28,9 @@
         <tbody>
         @foreach ($clients as $client)
          <tr>
-           <td>{{$client->name}} {{$client->lastname}} <small>(<a href="{{url('/')}}/clients/{{$client->id}}">Ver detalles</a>)</small></td>
-           <td>{{$client->email}}</td>
-           <td>Editar - Eliminar</td>
+           <td data-title="Nombre">{{$client->name}} {{$client->lastname}} <small>(<a href="{{url('/')}}/clients/{{$client->id}}">Ver detalles</a>)</small></td>
+           <td data-title="Email">{{$client->email}}</td>
+           <td data-title="Acciones">Editar - Eliminar</td>
          </tr>
         @endforeach
         </tbody>

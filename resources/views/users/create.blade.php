@@ -86,8 +86,8 @@
                             @endforeach
                           </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="">
+                        <div class="form-group row">
+                            <div class="col text-right">
                                 <button type="submit" class="btn btn-primary">
                                     Crear usuario
                                 </button>

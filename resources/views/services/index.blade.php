@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="form-row form-group">
-        <div class="col">
+        <div class="col-xs col-md-6 mb1r">
           <label for="category_id">Categoría</label>
           <select name="category_id" id="category_id" class="form-control input-sm" required>
               <option value="">Seleccione una Categoría</option>
@@ -48,33 +48,35 @@
         </div>
       </div>
     </form>
-</>
+</div>
 <div class="alert alert-success success-message" role="alert"></div>
-<table id="servicesTable" class="infotable">
+<div class="table-responsive">
+  <table id="servicesTable" class="infotable">
     <thead>
-      <tr>
+    <tr>
         <th>Nombre</th>
         <th>Precio</th>
         <th>Categoria</th>
         <th>Acciones</th>
-      </tr>
+    </tr>
     </thead>
     <tbody>
     @foreach ($services as $service)
-     <tr>
-       <td>{{$service->name}}</td>
-       <td>{{$service->servicePrice}}</td>
-       <td>{{$service->categories->name}}</td>
-     <td>Editar - Eliminar</td>
-     </tr>
+    <tr>
+    <td>{{$service->name}}</td>
+    <td>{{$service->servicePrice}}</td>
+    <td>{{$service->categories->name}}</td>
+    <td>Editar - Eliminar</td>
+    </tr>
     @endforeach
     </tbody>
-</table>
+  </table>
+</div>
 <script>
 $(document).ready( function () {
   $('#servicesTable').DataTable();
   $(".newServiceForm").validate({
-    lang:'es'  
+    lang:'es'
   });
 
   $.ajaxSetup({

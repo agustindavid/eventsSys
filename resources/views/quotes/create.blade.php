@@ -139,7 +139,7 @@
     </ul>
   </div>
   <div class="form-row form-group">
-    <div class="col">
+    <div class="col-xs col-md-6 mb1r">
       <label for="extras">Adicionales</label>
       <textarea name="extras" id="extras" class="form-control input-sm" disabled></textarea>
     </div>
@@ -150,7 +150,7 @@
   </div>
   <hr>
   <div class="form-group form-row">
-    <div class="col-md-4">
+    <div class="col-md-4 mb1r">
       <label for="price">Precio Total</label>
       <input type="text" name="price_shown" id="price_shown" disabled class="form-control input-sm">
       <input type="hidden" name="price" id="price" class="form-control input-sm" placeholder="Precio">

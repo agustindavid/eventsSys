@@ -8,11 +8,11 @@
   <form method="POST" class="newPackageForm"  role="form">
   {{ csrf_field() }}
     <div class="form-row form-group">
-      <div class="col">
+      <div class="col-xs col-md-6 mb1r">
         <label for="name">Nombre del paquete</label>
         <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre">
       </div>
-      <div class="col">
+      <div class="col-xs-6 col-md-6">
         <label for="minQty">Cantidad minima de personas</label>
         <input type="number" name="minQty" id="minQty" class="form-control input-sm" placeholder="Cantidad minima de personas">
       </div>
@@ -43,28 +43,30 @@
   </div>
  </form>
 </div>
-<table id="packagesTable" class="infotable">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Precio por niño</th>
-            <th>Precio por adulto</th>
-            <th>Cantidad mínima de personas</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-        @foreach ($packages as $package)
-         <tr>
-           <td>{{$package->name}}</td>
-           <td>{{$package->kidsPrice}}</td>
-           <td>{{$package->adultPrice}}</td>
-           <td>{{$package->minQty}}</td>
-           <td>Editar - Eliminar</td>
-         </tr>
-        @endforeach
-        </tbody>
-    </table>
+<div class="table-responsive">
+  <table id="packagesTable" class="infotable stripe">
+    <thead>
+        <tr>
+        <th>Nombre</th>
+        <th>Precio por niño</th>
+        <th>Precio por adulto</th>
+        <th>Cantidad mínima de personas</th>
+        <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach ($packages as $package)
+        <tr>
+        <td>{{$package->name}}</td>
+        <td>{{$package->kidsPrice}}</td>
+        <td>{{$package->adultPrice}}</td>
+        <td>{{$package->minQty}}</td>
+        <td>Editar - Eliminar</td>
+        </tr>
+    @endforeach
+    </tbody>
+  </table>
+</div>
 <script>
   $(document).ready( function () {
     $('#packagesTable').DataTable();

@@ -34,11 +34,11 @@
      </div>
    </div>
    <div class="form-row form-group">
-     <div class="col">
+     <div class="col-md-6 col-xs mb1r">
        <label for="mincapacity">Mínimo de personas recomendado</label>
        <input type="number" name="mincapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Minima" required>
       </div>
-      <div class="col">
+      <div class="col-md-6 col-xs mb1r">
         <label for="maxcapacity">Capacidad máxima</label>
         <input type="number" name="maxcapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Maxima" required>
       </div>
@@ -49,27 +49,28 @@
   </form>
 </div>
 <div class="alert alert-success success-message" role="alert"></div>
-
-<table class="stripe infotable" id="venuesTable">
-  <thead>
-      <tr>
-          <th>Nombre</th>
-          <th>Direccion</th>
-          <th>Minimo de personas recomendado</th>
-          <th>Capacidad Maxima</th>
-      </tr>
-  </thead>
-  <tbody>
-      @foreach ($venues as $venue)
-      <tr>
-      <td>{{$venue->name}} <a href="{{url('/')}}/venues/{{$venue->id}}">Ver calendario</a></td>
-          <td>{{$venue->location}}</td>
-          <td>{{$venue->mincapacity}}</td>
-          <td>{{$venue->maxcapacity}}</td>
-      </tr>
-      @endforeach
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="stripe infotable" id="venuesTable">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>Minimo de personas recomendado</th>
+            <th>Capacidad Maxima</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($venues as $venue)
+        <tr>
+        <td>{{$venue->name}} <a href="{{url('/')}}/venues/{{$venue->id}}">Ver calendario</a></td>
+            <td>{{$venue->location}}</td>
+            <td>{{$venue->mincapacity}}</td>
+            <td>{{$venue->maxcapacity}}</td>
+        </tr>
+        @endforeach
+    </tbody>
+  </table>
+</div>
 
 <script>
   $(document).ready( function () {

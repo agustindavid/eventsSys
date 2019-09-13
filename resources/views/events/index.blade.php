@@ -68,9 +68,10 @@
             </form>
       </div>
 
-<table id="eventsTable" class="infotable">
+<div class="table-responsive">
+  <table id="eventsTable" class="infotable">
     <thead>
-      <tr>
+        <tr>
         <th>Nombre</th>
         <th>Paquete</th>
         <th>Cliente</th>
@@ -78,22 +79,23 @@
         <th>Monto total</th>
         <th>Monto pagado</th>
         <th>Acciones</th>
-      </tr>
+        </tr>
     </thead>
     <tbody>
     @foreach ($events as $event)
-     <tr>
-       <td>{{$event->quote->eventName}}</td>
-       <td>{{$event->quote->package->name}}</td>
-       <td>{{$event->quote->client->name}} {{$event->quote->client->lastname}}</td>
-       <td>{{$event->quote->venue->name}}</td>
-       <td>{{$event->quote->price}}</td>
-       <td>{{$event->total_paid}}</td>
-       <td><a href="{{url('/')}}/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
-     </tr>
+        <tr>
+        <td>{{$event->quote->eventName}}</td>
+        <td>{{$event->quote->package->name}}</td>
+        <td>{{$event->quote->client->name}} {{$event->quote->client->lastname}}</td>
+        <td>{{$event->quote->venue->name}}</td>
+        <td>{{$event->quote->price}}</td>
+        <td>{{$event->total_paid}}</td>
+        <td><a href="{{url('/')}}/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
+        </tr>
     @endforeach
     </tbody>
-</table>
+  </table>
+</div>
 <script>
 $(document).ready( function () {
    $('#eventsTable').DataTable();

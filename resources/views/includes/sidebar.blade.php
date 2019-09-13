@@ -44,10 +44,6 @@
         @can('gastos')
           <li><a href="{{url('/')}}/calendar"><i class="fas fa-calendar"></i><span>Gastos</span></a></li>
         @endcan
+            <li><a href="{{url('/')}}/settings"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
     </ul>
-
 </nav>
-    <ul class="nav sidebar-list bottom-item">
-        <li><a href="{{url('/')}}/settings"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
-    </ul>
-

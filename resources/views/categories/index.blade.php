@@ -24,12 +24,12 @@
       <form method="POST" class="newCategoryForm"  role="form">
       {{ csrf_field() }}
       <div class="form-row form-group">
-        <div class="col">
+        <div class="col-xs col-md-6">
             <label for="name">Nombre de la categoría</label>
           <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre" required>
         </div>
-        <div class="col">
-          <label for="categorizable_type">Tipo de categoría</label>  
+        <div class="col-xs col-md-6 mb1r">
+          <label for="categorizable_type">Tipo de categoría</label>
           <select name="categorizable_type" id="categorizable_type" class="form-control input-sm" required>
             <option value="">Seleccione el tipo de categoría</option>
             <option value="quotes">Evento</option>
@@ -63,7 +63,8 @@
   </table>
 
 <h2>Categorías de eventos</h2>
-<table class="stripe infotable" id="quotesCategoriesTable">
+<div class="table-responsive">
+  <table class="stripe infotable" id="quotesCategoriesTable">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -79,11 +80,12 @@
         @endforeach
     </tbody>
   </table>
+</div>
 
 <script>
 $(document).ready( function () {
     $(".newCategoryForm").validate({
-        lang:'es'  
+        lang:'es'
     });
   var servicestable=$('#servicesCategoriesTable').DataTable();
   var quotestable=$('#quotesCategoriesTable').DataTable();

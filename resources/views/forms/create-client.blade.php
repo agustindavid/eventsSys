@@ -1,21 +1,21 @@
 <form role="form" class="newClientForm">
         {{ csrf_field() }}
           <div class="form-row form-group">
-            <div class="col">
+            <div class="col-xs col-md-6">
               <label for="name">Nombre <span class="reqStar">*</span></label>
               <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre" required>
             </div>
-            <div class="col">
+            <div class="col-xs col-md-6">
               <label for="lastname">Apellido <span class="reqStar">*</span></label>
               <input type="text" name="lastname" id="lastname" class="form-control input-sm" placeholder="Apellido" required>
             </div>
           </div>
           <div class="form-row form-group">
-            <div class="col">
+            <div class="col-md-4 col-xs mb1r">
               <label for="email">Email <span class="reqStar">*</span></label>
               <input type="text" name="email" id="email" class="form-control input-sm" placeholder="Correo Electronico" required>
             </div>
-            <div class="col">
+            <div class="col-md-4 col-xs mb1r">
               <label for="dniType">Tipo de documento <span class="reqStar">*</span></label>
               <select name="dniType" id="dniType" class="form-control input-sm" required>
                   <option value="">Seleccione un tipo de documento</option>
@@ -24,21 +24,21 @@
                   <option value="Pasaporte">Pasaporte</option>
               </select>
             </div>
-            <div class="col">
+            <div class="col-md-4 col-xs">
               <label for="dni">Numero de documento <span class="reqStar">*</span></label>
               <input type="text" name="dni" id="dni" class="form-control input-sm" placeholder="Numero de documento" required>
             </div>
           </div>
           <div class="form-row form-group">
-            <div class="col">
+            <div class="col-md-4 col-xs mb1r">
               <label for="fiscalname">Nombre Fiscal</label>
               <input type="text" name="fiscalname" id="fiscalname" class="form-control input-sm" placeholder="Nombre Fiscal">
             </div>
-            <div class="col">
+            <div class="col-md-4 col-xs mb1r">
               <label for="commercialname">Nombre Comercial</label>
               <input type="text" name="commercialname" id="commercialname" class="form-control input-sm" placeholder="Nombre Comercial">
             </div>
-            <div class="col">
+            <div class="col-md-4 col-xs">
               <label for="rfc">RFC <span class="reqStar">*</span></label>
               <input type="text" name="rfc" id="rfc" class="form-control input-sm" placeholder="RFC" required>
             </div>
@@ -89,10 +89,10 @@
             </div>
           </div>
           <div class="form-group form-row">
-            <div class="col">
+            <div class="col-md-6 col-xs mb1r">
               <a href="#" class="btn btn-info btn-block clientFormClose" >Cerrar</a>
             </div>
-            <div class="col">
+            <div class="col-md-6 col-xs">
               <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
             </div>
           </div>

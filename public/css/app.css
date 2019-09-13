@@ -843,7 +843,7 @@ body {
 }
 
 .sidebar ul li a i {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   margin-right: 10px;
   width: 35px;
   text-align: center;
@@ -943,7 +943,7 @@ span.typeahead__cancel-button {
 }
 
 .btn-wrap {
-  margin: 15px;
+  margin: 15px 0;
 }
 
 .dataTables_wrapper {
@@ -991,8 +991,37 @@ select.error {
 }
 
 .sidebar.collapsed ul li a i {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   margin-right: 0px;
+}
+
+.quoteSelector {
+  width: 100%;
+  max-width: 400px;
+}
+
+.quoteSelector li {
+  width: 50%;
+  text-align: center;
+}
+
+.quoteSelector li a {
+  padding: 5px;
+  display: block;
+  background: #ececec;
+  margin: 5px;
+  border-radius: 5px;
+  color: #000;
+  font-weight: 700;
+}
+
+.quoteSelector a.active {
+  background: #3490dc;
+  color: #fff;
+}
+
+.tab-content {
+  margin-top: 15px;
 }
 
 @media (max-width: 767.98px) {
@@ -1008,6 +1037,74 @@ select.error {
   .defaultForm {
     width: 95%;
     padding: 10px;
+  }
+
+  .mb1r {
+    margin-bottom: 1rem;
+  }
+
+  .fc-button {
+    padding: 0.1em 0.1em !important;
+    font-size: 0.8em !important;
+  }
+
+  .fc-toolbar h2 {
+    font-size: 1rem !important;
+    margin: 0;
+  }
+
+  /* Force table to not be like tables anymore */
+
+  .table-responsive table,
+  .table-responsive thead,
+  .table-responsive tbody,
+  .table-responsive th,
+  .table-responsive td,
+  .table-responsive tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+
+  .table-responsive thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .table-responsive tr {
+    border: 1px solid #ccc;
+  }
+
+  .table-responsive td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50% !important;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .table-responsive td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  /*
+  Label the data
+  */
+
+  .table-responsive td:before {
+    content: attr(data-title);
   }
 }
 
