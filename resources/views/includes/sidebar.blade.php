@@ -41,3 +41,4 @@
             <li><a href="{{url('/')}}/settings"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
     </ul>
 </nav>
+

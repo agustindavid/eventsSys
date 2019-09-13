@@ -18,7 +18,6 @@ try {
     require('jquery-timepicker/jquery.timepicker');
     require('datepair.js/dist/jquery.datepair');
     require('datepair.js/dist/datepair');
-
 } catch (e) {}
 
 /**

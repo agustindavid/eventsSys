@@ -12,8 +12,8 @@
 </div>
 <div class="row no-margin">
   <ul class="nav nav-pills quoteSelector">
-    <li class="active"><a class="active" data-toggle="tab" href="#home">Cotizaciones Aprobadas</a></li>
-    <li><a data-toggle="tab" href="#menu1">Cotizaciones sin aprobar</a></li>
+    <li class="active"><a class="active" data-toggle="tab" href="#home">Aprobadas</a></li>
+    <li><a data-toggle="tab" href="#menu1">Por aprobar</a></li>
   </ul>
 </div>
 <div class="tab-content">
@@ -37,14 +37,14 @@
           </thead>
           <tbody>
             @foreach ($approvedQuotes as $quote)
-            <tr>
-              <td data-title="Nombre"><a href="{{url('/')}}/quotes/{{$quote->id}}">{{$quote->eventName}}</a></td>
-              <td data-title="Fecha">{{$quote->eventDate}}</td>
+            <tr class="data-row">
+              <td data-title="">{{$quote->eventName}}</td>
+              <td data-title="Fecha">{!! \Carbon\Carbon::parse($quote->eventDate)->format('d/m/Y') !!}</td>
               <td data-title="Cliente">{{$quote->client->name}} {{$quote->client->lastname}}</td>
               <td data-title="Paquete">{{$quote->package->name}}</td>
               <td data-title="Locación">{{$quote->venue->name}}</td>
-              <td data-title="Precio">{{$quote->price}}</td>
-              <td data-title="Acciones"><a href="{{url('/')}}/events/{{$quote->event->id}}">Ver Detalles del evento</a></td>
+              <td data-title="Precio">${{$quote->price}}</td>
+              <td data-title="Acciones"><a class="btn btn-primary btn-sm" href="{{url('/')}}/events/{{$quote->event->id}}">+ info</a></td>
             </tr>
             @endforeach
           </tbody>
@@ -71,14 +71,14 @@
       </thead>
       <tbody>
       @foreach ($quotes as $quote)
-        <tr>
-          <td data-title="Nombre"><a href="{{url('/')}}/quotes/{{$quote->id}}">{{$quote->eventName}}</a></td>
-          <td data-title="Fecha">{{$quote->eventDate}}</>
+        <tr class="data-row">
+          <td data-title="">{{$quote->eventName}}</td>
+          <td data-title="Fecha">{!! \Carbon\Carbon::parse($quote->eventDate)->format('d/m/Y') !!}</td>
           <td data-title="Cliente">{{$quote->client->name}} {{$quote->client->lastname}}</td>
           <td data-title="Paquete">{{$quote->package->name}}</td>
           <td data-title="Locación">{{$quote->venue->name}}</td>
           <td data-title="Precio">{{$quote->price}}</td>
-          <td data-title="Acciones"><a href="{{url('/')}}/quotes/{{$quote->id}}">Ver Detalles de la Cotizacion</a></td>
+          <td data-title="Acciones"><a class="btn btn-primary" href="{{url('/')}}/quotes/{{$quote->id}}">+ info</a></td>
         </tr>
     @endforeach
     </tbody>
@@ -102,6 +102,15 @@
           responsive: true
       });
       $('#approvedQuotesTable').DataTable();
+
+      $('.data-row').click(function(){
+          if($(this).hasClass('visible-info')){
+            $(this).removeClass('visible-info');
+          }else{
+            $('.data-row').removeClass('visible-info');
+            $(this).addClass('visible-info');
+          }
+      })
     });
     </script>
 @endsection

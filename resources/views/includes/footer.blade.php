@@ -5,7 +5,7 @@ Footer
       e.preventDefault();
       $('.sidebar').toggleClass('collapsed');
       $('.content-page').toggleClass('translated');
-      $('body').css('overflow-x', 'hidden');
+      $('.container-fluid').css('overflow-x', 'hidden');
     });
   });
 </script>

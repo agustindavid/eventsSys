@@ -249,8 +249,8 @@ input.error, select.error {
     }
 
     .content-page {
-        width: calc(100% - 60px);
-        left: 60px;
+        width: calc(100% - 75px);
+        left: 65px;
     }
 
     .defaultForm {
@@ -260,6 +260,10 @@ input.error, select.error {
 
     .mb1r{
         margin-bottom: 1rem;
+    }
+
+    .tableWrapper h3 {
+        font-size: 1.2rem;
     }
 
     .fc-button {
@@ -301,6 +305,18 @@ input.error, select.error {
 		text-align:left;
 	}
 
+    .table-responsive td:first-child{
+        padding-left: 0 !important;
+        text-align: center;
+    }
+
+    .table-responsive td:first-child:after {
+        position: absolute;
+        right: 15px;
+        content: '\25BC';
+        color:$darkblue;
+    }
+
 	.table-responsive td:before {
 		/* Now like a table header */
 		position: absolute;
@@ -317,5 +333,30 @@ input.error, select.error {
 	/*
 	Label the data
 	*/
-	.table-responsive td:before { content: attr(data-title); }
+    .table-responsive td:before { content: attr(data-title); }
+
+    .data-row td:not(:first-child) {
+        height: 0;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        line-height: 0;
+        border: 0;
+        transition: 0.2s all ease-in-out;
+        opacity: 0;
+    }
+
+    .data-row.visible-info td:not(:first-child) {
+        height: auto;
+        overflow: auto;
+        padding: 8px 10px;
+        margin: 0;
+        line-height: 1.4;
+        border: 1px solid #eee;
+        opacity: 1;
+    }
+
+    .data-row.visible-info td:first-child::after {
+        content: '\25B2';
+    }
 }
