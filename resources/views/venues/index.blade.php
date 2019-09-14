@@ -20,7 +20,7 @@
       {{Session::get('success')}}
     </div>
    @endif
-   <h3 class="panel-title">Nueva Ubicacion</h3>
+   <h3 class="panel-title">Nueva Ubicación</h3>
    <form method="POST" class="newVenueForm"  role="form">
    {{ csrf_field() }}
    <div class="form-row form-group">
@@ -34,15 +34,15 @@
      </div>
    </div>
    <div class="form-row form-group">
-     <div class="col-md-6 col-xs mb1r">
+     <div class="col-md-4 col-xs mb1r">
        <label for="mincapacity">Mínimo de personas recomendado</label>
        <input type="number" name="mincapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Minima" required>
       </div>
-      <div class="col-md-6 col-xs mb1r">
+      <div class="col-md-4 col-xs mb1r">
         <label for="maxcapacity">Capacidad máxima</label>
         <input type="number" name="maxcapacity" id="maxcapacity" class="form-control input-sm" placeholder="Capacidad Maxima" required>
       </div>
-      <div class="col align-self-end">
+      <div class="col-md-4 align-self-end">
         <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
       </div>
     </div>
@@ -56,16 +56,18 @@
             <th>Nombre</th>
             <th>Direccion</th>
             <th>Minimo de personas recomendado</th>
-            <th>Capacidad Maxima</th>
+            <th>Capacidad Máxima</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($venues as $venue)
-        <tr>
-        <td>{{$venue->name}} <a href="{{url('/')}}/venues/{{$venue->id}}">Ver calendario</a></td>
-            <td>{{$venue->location}}</td>
-            <td>{{$venue->mincapacity}}</td>
-            <td>{{$venue->maxcapacity}}</td>
+        <tr class="data-row">
+            <td>{{$venue->name}} <a href="{{url('/')}}/venues/{{$venue->id}}">Ver calendario</a></td>
+            <td data-title="Dirección">{{$venue->location}}</td>
+            <td data-title="Mínimo de personas">{{$venue->mincapacity}}</td>
+            <td data-title="Capacidad Máxima">{{$venue->maxcapacity}}</td>
+            <td data-title="Acciones"><a class="btn btn-outline-info" href="{{url('/')}}/venues/{{$venue->id}}/edit">Editar</a></td>
         </tr>
         @endforeach
     </tbody>
@@ -108,6 +110,19 @@ $.ajax({
 
 $(".newVenueForm").validate({
     lang:'es'
+});
+</script>
+
+<script>
+$(document).ready(function(){
+    $('.data-row').click(function(){
+        if($(this).hasClass('visible-info')){
+        $(this).removeClass('visible-info');
+    }else{
+        $('.data-row').removeClass('visible-info');
+        $(this).addClass('visible-info');
+    }
+    });
 });
 </script>
 

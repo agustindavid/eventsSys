@@ -24,11 +24,11 @@
       <form method="POST" class="newCategoryForm"  role="form">
       {{ csrf_field() }}
       <div class="form-row form-group">
-        <div class="col-xs col-md-6">
+        <div class="col-xs col-md-4">
             <label for="name">Nombre de la categoría</label>
           <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre" required>
         </div>
-        <div class="col-xs col-md-6 mb1r">
+        <div class="col-xs col-md-4 mb1r">
           <label for="categorizable_type">Tipo de categoría</label>
           <select name="categorizable_type" id="categorizable_type" class="form-control input-sm" required>
             <option value="">Seleccione el tipo de categoría</option>
@@ -36,7 +36,7 @@
             <option value="services">Servicio</option>
           </select>
         </div>
-        <div class="col align-self-end">
+        <div class="col-md-4 col-xs align-self-end">
             <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
         </div>
       </div>
@@ -45,22 +45,24 @@
 <div class="alert alert-success success-message" role="alert"></div>
 
 <h2>Categorías de servicios</h2>
-<table class="stripe infotable" id="servicesCategoriesTable">
+<div class="table-responsive">
+  <table class="stripe infotable" id="servicesCategoriesTable">
     <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Nombre corto</th>
-        </tr>
+      <tr>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
     </thead>
     <tbody>
-        @foreach ($servicesCategories as $servicesCategory)
-        <tr>
-            <td>{{$servicesCategory->name}}</td>
-            <td>{{$servicesCategory->slug}}</td>
-        </tr>
-        @endforeach
+    @foreach ($servicesCategories as $servicesCategory)
+      <tr class="data-row">
+        <td>{{$servicesCategory->name}}</td>
+        <td data-title="Acciones"><a class="btn btn-outline-info" href="{{url('/')}}/categories/{{$servicesCategory->id}}/edit">Editar</a></td>
+      </tr>
+    @endforeach
     </tbody>
   </table>
+</div>
 
 <h2>Categorías de eventos</h2>
 <div class="table-responsive">
@@ -68,14 +70,14 @@
     <thead>
         <tr>
             <th>Nombre</th>
-            <th>Nombre corto</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($quotesCategories as $quotesCategory)
-        <tr>
+        <tr class="data-row">
             <td>{{$quotesCategory->name}}</td>
-            <td>{{$quotesCategory->slug}}</td>
+            <td data-title="Acciones"><a class="btn btn-outline-info" href="{{url('/')}}/categories/{{$quotesCategory->id}}/edit">Editar</a></td>
         </tr>
         @endforeach
     </tbody>
@@ -117,6 +119,19 @@ $.ajax({
 });
 });
 
-
 </script>
+
+<script>
+        $(document).ready(function(){
+            $('.data-row').click(function(){
+                if($(this).hasClass('visible-info')){
+                $(this).removeClass('visible-info');
+            }else{
+                $('.data-row').removeClass('visible-info');
+                $(this).addClass('visible-info');
+            }
+            });
+        });
+        </script>
+
 @endsection

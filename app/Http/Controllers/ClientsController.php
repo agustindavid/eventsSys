@@ -90,7 +90,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        $this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
+        //$this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
 
         $client->update($request->all());
         return redirect()->route('clients.index')->with('success','Registro actualizado satisfactoriamente');

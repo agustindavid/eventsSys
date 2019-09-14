@@ -46,22 +46,22 @@
 <div class="table-responsive">
   <table id="packagesTable" class="infotable stripe">
     <thead>
-        <tr>
-        <th>Nombre</th>
-        <th>Precio por niño</th>
-        <th>Precio por adulto</th>
-        <th>Cantidad mínima de personas</th>
-        <th>Acciones</th>
+        <tr class="data-row">
+            <th>Nombre</th>
+            <th>Precio por niño</th>
+            <th>Precio por adulto</th>
+            <th>Cantidad mínima de personas</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
     @foreach ($packages as $package)
-        <tr>
-        <td>{{$package->name}}</td>
-        <td>{{$package->kidsPrice}}</td>
-        <td>{{$package->adultPrice}}</td>
-        <td>{{$package->minQty}}</td>
-        <td>Editar - Eliminar</td>
+        <tr class="data-row">
+            <td>{{$package->name}}</td>
+            <td data-title="Precio niño">{{$package->kidsPrice}}</td>
+            <td data-title="Precio por adulto">{{$package->adultPrice}}</td>
+            <td data-title="Mínimo de personas">{{$package->minQty}}</td>
+            <td data-title="acciones"><a href="{{url('/')}}/packages/{{$package->id}}/edit">Editar</a> - Eliminar</td>
         </tr>
     @endforeach
     </tbody>
@@ -102,5 +102,17 @@ $.ajax({
 });
 
   });
+</script>
+<script>
+$(document).ready(function(){
+    $('.data-row').click(function(){
+        if($(this).hasClass('visible-info')){
+        $(this).removeClass('visible-info');
+    }else{
+        $('.data-row').removeClass('visible-info');
+        $(this).addClass('visible-info');
+    }
+    });
+});
 </script>
 @endsection

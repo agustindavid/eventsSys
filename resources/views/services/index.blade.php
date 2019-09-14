@@ -56,17 +56,17 @@
     <tr>
         <th>Nombre</th>
         <th>Precio</th>
-        <th>Categoria</th>
+        <th>Categoría</th>
         <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
     @foreach ($services as $service)
-    <tr>
-    <td>{{$service->name}}</td>
-    <td>{{$service->servicePrice}}</td>
-    <td>{{$service->categories->name}}</td>
-    <td>Editar - Eliminar</td>
+    <tr class="data-row">
+        <td>{{$service->name}}</td>
+        <td data-title="Precio">{{$service->servicePrice}}</td>
+        <td data-title="Categoría">{{$service->categories->name}}</td>
+        <td data-title="acciones"><a class="btn btn-outline-info" href="{{url('/')}}/services/{{$service->id}}/edit">Editar </a> - Eliminar</td>
     </tr>
     @endforeach
     </tbody>
@@ -106,6 +106,18 @@ $.ajax({
         // here we will handle errors and validation messages
     });
 });
+});
+</script>
+<script>
+$(document).ready(function(){
+    $('.data-row').click(function(){
+        if($(this).hasClass('visible-info')){
+        $(this).removeClass('visible-info');
+    }else{
+        $('.data-row').removeClass('visible-info');
+        $(this).addClass('visible-info');
+    }
+    });
 });
 </script>
 @endsection

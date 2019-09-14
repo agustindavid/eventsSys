@@ -12,6 +12,21 @@
     </div>
 </div>
 <div class="defaultForm hiddenFormWrapper" id="newClientFormWrap">
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+          <strong>Error!</strong> Revise los campos obligatorios.<br><br>
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+        </div>
+      @endif
+      @if(Session::has('success'))
+        <div class="alert alert-info">
+          {{Session::get('success')}}
+        </div>
+       @endif
         <h3 class="panel-title">Nuevo Cliente</h3>
     @include('forms.create-client')
 </div>
@@ -27,10 +42,10 @@
         </thead>
         <tbody>
         @foreach ($clients as $client)
-         <tr>
-           <td data-title="Nombre">{{$client->name}} {{$client->lastname}} <small>(<a href="{{url('/')}}/clients/{{$client->id}}">Ver detalles</a>)</small></td>
+         <tr class="data-row">
+           <td data-title=""><a href="{{url('/')}}/clients/{{$client->id}}">{{$client->name}} {{$client->lastname}}</a></td>
            <td data-title="Email">{{$client->email}}</td>
-           <td data-title="Acciones">Editar - Eliminar</td>
+         <td data-title="Acciones"><a class="btn btn-outline-info" href="{{url('/')}}/clients/{{$client->id}}/edit">Editar</a> - Eliminar</td>
          </tr>
         @endforeach
         </tbody>
@@ -121,6 +136,18 @@ $.ajax({
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+  <script>
+    $(document).ready(function(){
+        $('.data-row').click(function(){
+          if($(this).hasClass('visible-info')){
+            $(this).removeClass('visible-info');
+        }else{
+            $('.data-row').removeClass('visible-info');
+            $(this).addClass('visible-info');
+        }
+      });
+    });
   </script>
 @endsection
 

@@ -119,7 +119,6 @@
       </div>
     </div>
   </div>
-</div>
 <script>
     $('.showHiddenForm, .hiddenFormClose').click(function(e){
         e.preventDefault();

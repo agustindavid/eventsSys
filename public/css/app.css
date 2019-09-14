@@ -1116,13 +1116,14 @@ select.error {
     /* Now like a table header */
     position: absolute;
     /* Top/left values mimic padding */
-    top: 6px;
+    top: 50%;
     left: 6px;
     width: 45%;
     padding-right: 10px;
     white-space: nowrap;
     text-align: left;
     font-weight: bold;
+    margin-top: -10px;
   }
 
   /*
