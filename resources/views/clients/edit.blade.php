@@ -69,9 +69,13 @@
             </div>
         </div>
         <div class="form-row form-group">
-            <div class="col-md-6">
-                <label for="phone">Telefono <span class="reqStar">*</span></label>
-                <input type="text" name="phone" id="phone" class="form-control input-sm" placeholder="Telefono" required value="{{$client->phone}}">
+            <div class="col-md-6 col-xs">
+                <label for="phone">Teléfono fijo<span class="reqStar">*</span></label>
+                <input type="text" name="phone" id="phone" class="form-control input-sm" placeholder="Teléfono" required value="{{$client->phone}}">
+            </div>
+            <div class="col-md-6 col-xs">
+                <label for="phone">Teléfono celular<span class="reqStar">*</span></label>
+                <input type="text" name="mobilePhone" id="mobilePhone" class="form-control input-sm" placeholder="Teléfono" required value="{{$client->mobilePhone}}">
             </div>
         </div>
         <div class="form-row text-center">
@@ -95,8 +99,12 @@
         </div>
         <div class="form-row form-group">
             <div class="col">
-                <label for="number">Numero de casa <span class="reqStar">*</span></label>
-                <input type="text" name="number" id="number" class="form-control input-sm" placeholder="Numero de casa/Departamento" required value="{{$client->number}}">
+                <label for="number">Número exterior <span class="reqStar">*</span></label>
+                <input type="text" name="number" id="number" class="form-control input-sm" placeholder="Número exterior" required value="{{$client->number}}">
+            </div>
+            <div class="col">
+                <label for="number">Número interior</label>
+                <input type="text" name="interiorNumber" id="interiorNumber" class="form-control input-sm" placeholder="Número interior" value="{{$client->interiorNumber}}">
             </div>
             <div class="col">
                 <label for="street">Calle <span class="reqStar">*</span></label>

@@ -57,6 +57,7 @@ class QuoteController extends Controller
         $duration=$endTime->diffInHours($startTime);
         print_r($duration);
         $newQuote=\App\models\Quote::create($request->all());
+        $newQuote->services()->sync($request->services);
         return redirect()->route('quotes.index')->with('success','Registro creado satisfactoriamente');
     }
 

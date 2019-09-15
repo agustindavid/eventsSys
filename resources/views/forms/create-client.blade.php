@@ -44,9 +44,13 @@
             </div>
           </div>
           <div class="form-row form-group">
-            <div class="col-md-6">
-              <label for="phone">Telefono <span class="reqStar">*</span></label>
-              <input type="text" name="phone" id="phone" class="form-control input-sm" placeholder="Telefono" required>
+            <div class="col-md-6 col-xs">
+              <label for="phone">Teléfono fijo <span class="reqStar">*</span></label>
+              <input type="tel" name="phone" id="phone" class="form-control input-sm" placeholder="Telefono" required>
+            </div>
+            <div class="col-md-6 col-xs">
+              <label for="phone">Teléfono celular <span class="reqStar">*</span></label>
+              <input type="tel" name="mobilePhone" id="mobilePhone" class="form-control input-sm" placeholder="Telefono celular" required>
             </div>
           </div>
           <div class="form-row text-center">
@@ -70,8 +74,12 @@
               </div>
           <div class="form-row form-group">
             <div class="col">
-              <label for="number">Numero de casa <span class="reqStar">*</span></label>
-              <input type="text" name="number" id="number" class="form-control input-sm" placeholder="Numero de casa/Departamento" required>
+              <label for="number">Número exterior<span class="reqStar">*</span></label>
+              <input type="text" name="number" id="number" class="form-control input-sm" placeholder="Número exterior" required>
+            </div>
+            <div class="col">
+              <label for="number">Número interior</label>
+              <input type="text" name="interiorNumber" id="interiorNumber" class="form-control input-sm" placeholder="Número interior">
             </div>
             <div class="col">
                 <label for="street">Calle <span class="reqStar">*</span></label>

@@ -61,7 +61,7 @@
             <td data-title="Precio niño">{{$package->kidsPrice}}</td>
             <td data-title="Precio por adulto">{{$package->adultPrice}}</td>
             <td data-title="Mínimo de personas">{{$package->minQty}}</td>
-            <td data-title="acciones"><a href="{{url('/')}}/packages/{{$package->id}}/edit">Editar</a> - Eliminar</td>
+            <td data-title="acciones"><a class="btn btn-outline-info" href="{{url('/')}}/packages/{{$package->id}}/edit">Editar</a> - Eliminar</td>
         </tr>
     @endforeach
     </tbody>

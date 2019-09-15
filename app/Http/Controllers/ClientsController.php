@@ -48,7 +48,7 @@ class ClientController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
+        //$this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
         \App\models\Client::create($request->all());
         return redirect()->route('clients.index')->with('success','Registro creado satisfactoriamente');
 

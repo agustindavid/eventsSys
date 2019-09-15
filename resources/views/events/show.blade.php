@@ -80,6 +80,7 @@
       <p>Costo total del evento: {{$event->quote->price}}$</p>
       <p>Monto pagado hasta la fecha: {{$event->total_paid}}$</p>
       <p>Monto por pagar hasta la fecha: {{$event->quote->price-$event->total_paid}}$</p>
+      <p>Depósito de garantía: {{$event->deposit}}</p>
     </div>
 </div>
         <div class="hiddenFormWrapper defaultForm" id="newPaymentWrapper">
@@ -186,7 +187,7 @@
             @endif
           @endforeach
         </table>
-        <h4><button class="btn btn-primary makePay" href="#" class="newPaymentBtn">Registrar nuevo pago para este evento</button></h4>
+ {{--        <h4><button class="btn btn-primary makePay" href="#" class="newPaymentBtn">Registrar nuevo pago para este evento</button></h4>
         <h3>Control de gastos</h3>
         <table class="table">
             <thead>
@@ -236,7 +237,7 @@
                           <a href="#" class="btn btn-info btn-block hiddenFormClose" >Cerrar</a>
                       </div>
                     </form>
-                  </div>
+                  </div> --}}
       </div>
     </div>
 </div>

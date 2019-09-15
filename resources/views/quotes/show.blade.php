@@ -116,6 +116,12 @@
       <div class="col">
         <p>Extras: <strong>{{$quote->extrasPrice}}</strong></p>
         <p>{{$quote->extras}}</p>
+        <h2>Servicios Extras</h2>
+        <ul>
+          @foreach ($quote->services as $service)
+            <li>{{$service->name}}</li>
+          @endforeach
+        </ul>
       </div>
     </div>
   </div>

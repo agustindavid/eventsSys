@@ -51,9 +51,9 @@
 
 <div><p>B) Que es su deseo obligarse en los términos y condiciones del presente contrato manifestó que cuenta con la capacidad legal para la celebración de este acto.</p></div>
 
-<div><p>C) Que su número telefónico es el <i><b>{{$event->quote->client->phone}}</b></i> y celular es el <i><b>{{$event->quote->client->phone}}</b></i> </p></div>
+<div><p>C) Que su número telefónico es el <i><b>{{$event->quote->client->phone}}</b></i> y celular es el <i><b>{{$event->quote->client->mobilePhone}}</b></i> </p></div>
 
-<div><p>D) Que para efectos legales del presente contrato, señala como su domicilio ubicado en la casa con número <i><b>{{$event->quote->client->number}}</b></i> de la calle <i><b>{{$event->quote->client->street}}</b></i> de la Colonia <i><b>{{$event->quote->client->colony}}</b></i> en la Ciudad de <i><b>{{$event->quote->client->city}}</b></i>.</p></div>
+<div><p>D) Que para efectos legales del presente contrato, señala como su domicilio ubicado en la casa con número <i><b>{{$event->quote->client->number}}-{{$event->quote->client->interiorNumber}}</b></i> de la calle <i><b>{{$event->quote->client->street}}</b></i> de la Colonia <i><b>{{$event->quote->client->colony}}</b></i> en la Ciudad de <i><b>{{$event->quote->client->city}}</b></i>.</p></div>
 
 <div><p class="text-center subtitle"><strong>CLÁUSULAS</strong></p></div>
 

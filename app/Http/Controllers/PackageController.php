@@ -85,7 +85,7 @@ class PackageController extends Controller
      */
     public function update(Request $request, Package $package)
     {
-        $this->validate($request,[ 'name'=>'required', 'price'=>'required']);
+        //$this->validate($request,[ 'name'=>'required', 'price'=>'required']);
 
         print_r($request->services);
         $package->services()->sync($request->services);

@@ -138,6 +138,12 @@
 
     </ul>
   </div>
+  <div class=>
+      <h3>Servicios Adicionales</h3>
+        <div class="addOnServices">
+
+        </div>
+  </div>
   <div class="form-row form-group">
     <div class="col-xs col-md-6 mb1r">
       <label for="extras">Adicionales</label>
@@ -303,9 +309,11 @@ var formData = {
     'fiscalname': $('input[name=fiscalname]').val(),
     'commercialname': $('input[name=commercialname]').val(),
     'phone': $('input[name=phone]').val(),
+    'mobilePhone': $('input[name=mobilePhone]').val(),
     'dni': $('input[name=dni]').val(),
     'dniType': $('select[name=dniType]').val(),
     'number': $('input[name=number]').val(),
+    'interiorNumber': $('input[name=interiorNumber]').val(),
     'street': $('input[name=street]').val(),
     'colony': $('input[name=colony]').val(),
     'postalCode': $('input[name=postalCode]').val(),
@@ -351,18 +359,23 @@ $('#package_id').change(function(){
         adultsPrice=data.package.adultPrice;
         minQty=data.package.minQty;
         var i=0;
+        var j=0;
         $('.services-container ul').html("");
+        $('.addOnServices').html("");
         $('#peopleQty').attr('min', minQty);
         $('#minPkgPeopleQty').text(minQty);
         $.map(data.package.services, function(){
         //console.log(data[i]);
-        $('.services-container ul').append("<li>"+data.package.services[i].name+"</li>");
-        i++;
-        console.log(kidsPrice);
-        console.log(adultsPrice);
+          $('.services-container ul').append("<li>"+data.package.services[i].name+"</li>");
+          i++;
         $('#kidsQty, #adultsQty, #peopleQty, #price').val('');
         $('#kidsQty, #adultsQty, #extras').prop('disabled', false);
-    })
+        })
+        $.map(data.otherServices, function(){
+          $('.addOnServices').append('<div class="form-check"><input type="checkbox" class="form-check-input" id="service'+data.otherServices[j].id+'" name="services[]" value="'+ data.otherServices[j].id +'"><label class="form-check-label" for="service'+data.otherServices[j].name+'">'+data.otherServices[j].name+'</label></div>');
+          j++;
+        });
+
         // here we will handle errors and validation messages
     });
 });

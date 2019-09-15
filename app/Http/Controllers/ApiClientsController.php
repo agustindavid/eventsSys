@@ -22,7 +22,7 @@ class ApiClientsController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
+        //$this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
         $newClient=\App\models\Client::create($request->all());
         $arr = array('msg' => 'Something goes to wrong. Please try again lator', 'status' => false);
         if($newClient){

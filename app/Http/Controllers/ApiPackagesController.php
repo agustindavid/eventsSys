@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use App\models\Package;
 
 class ApiPackagesController extends Controller
@@ -16,8 +17,10 @@ class ApiPackagesController extends Controller
     public function show(Package $package)
     {
         $services=$package->services;
-        //$allServices=\App\models\Service::with('packages')->get();
-        $data=array('package'=>$package);
+        $otherServices = \App\models\Service::whereDoesntHave('packages', function (Builder $query) use ($package) {
+            $query->where('package_id', $package->id);
+        })->get();
+        $data=array('package'=>$package, 'otherServices'=>$otherServices);
         return  $data;
     }
 
