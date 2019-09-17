@@ -3,14 +3,10 @@
 @section('pageTitle', 'Eventos')
 
 @section('content')
+@can('gastos')
 <div class="row dataInfo">
 <div class="col-md-4">
   <h2>Detalles del evento</h2>
-  <div class="row">
-      <div class="col">
-      <p><a href="{{url('/')}}/generate-contract/{{$event->id}}" class="btn btn-primary"><i class="far fa-file-alt icon-btn"></i>Descargar contrato</a></p>
-      </div>
-  </div>
   <div class="row">
     <div class="col">
       <p>Nombre del evento: <strong>{{$event->quote->eventName}}</strong></p>
@@ -28,27 +24,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <p>Fecha de inicio: <strong>{!! \Carbon\Carbon::parse($event->quote->eventDate)->format('d/m/Y') !!}</strong></p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <p>Hora de inicio: <strong>{!! \Carbon\Carbon::parse($event->quote->eventTime)->isoFormat('h:mm a') !!}</strong></p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <p>Fecha final: <strong>{!! \Carbon\Carbon::parse($event->quote->eventFinishDate)->format('d/m/Y') !!}</strong></p>
-   </div>
-  </div>
-  <div class="row">
-   <div class="col">
-     <p>Hora final: <strong>{!! \Carbon\Carbon::parse($event->quote->eventFinishTime)->isoFormat('h:mm a') !!}</strong></p>
-   </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <p>Duracion: <strong>{{$event->duration}} Horas</strong></p>
+      <p>Fecha del evento: <strong>{!! \Carbon\Carbon::parse($event->quote->eventDate)->format('d/m/Y') !!}</strong></p>
     </div>
   </div>
   <div class="row">
@@ -83,130 +59,24 @@
       <p>Depósito de garantía: {{$event->deposit}}</p>
     </div>
 </div>
-        <div class="hiddenFormWrapper defaultForm" id="newPaymentWrapper">
-        <h3 class="panel-title">Nuevo abono para el Evento {{$event->quote->eventName}}</h3>
-                <form role="form" class="newPaymentForm">
-                {{ csrf_field() }}
-                <input type="hidden" name="user_id" value="1">
-                <input type="hidden" name="event_id" value="{{$event->id}}">
-                <input type="hidden" name="debtAmount" value="{{$event->quote->price}}">
-                <input type="hidden" name="payTotal" value="0">
-                <input type="hidden" name="id" id="paymentId">
-                  <div class="form-row form-group">
-                    <div class="col">
-                      <label for="amount">Cantidad a abonar</label>
-                      <input type="number" step="0.01" max="{{$event->quote->price-$event->total_paid}}" min="1" name="amount" id="amount" class="form-control input-sm" placeholder="">
-                    </div>
-                    <div class="col">
-                      <label for="payMethod">Forma de pago:</label>
-                      <input type="text" name="payMethod" id="payMethod" class="form-control input-sm" placeholder="Forma de pago">
-                    </div>
-                  </div>
-                  <div class="form-row form-group">
-                    <div class="col">
-                      <label for="payDate">Fecha de pago</label>
-                      <input type="text" name="payDate" id="payDate" class="form-control input-sm" placeholder="Dia de pago">
-                    </div>
-                  </div>
-                  <div class="form-row form-group">
-                    <div class="col">
-                      <label for="comments">Comentarios</label>
-                      <textarea name="comments" id="comments" class="form-control input-sm"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                      <input type="submit"  value="Guardar" class="btn btn-success btn-block createClient">
-                      <a href="#" class="btn btn-info btn-block hiddenFormClose" >Cerrar</a>
-                  </div>
-                </form>
-              </div>
               <div class="alert alert-success success-message" role="alert"></div>
-        <h3  style="margin-top:30px;">Pagos Realizados</h3>
-        <table class="table">
-            <tr>
-                <th>Monto pagado</th>
-                <th>Fecha de pago</th>
-                <th>Forma de pago</th>
-                <th>Monto adeudado</th>
-                <th>Total pagado</th>
-                <th>Comentario</th>
-            </tr>
-            @foreach($event->payments->sortBy('payDate') as $payment)
-              @if($payment->status==1)
-                <tr>
-                  <td>
-                    {{$payment->amount}}
-                  </td>
-                  <td>
-                    {!! \Carbon\Carbon::parse($payment->payDate)->format('d-m-Y') !!}
-                  </td>
-                  <td>
-                    {{$payment->payMethod}}
-                  </td>
-                  <td>
-                    {{$payment->debtAmount}}
-                  </td>
-                  <td>
-                    {{$payment->payTotal}}
-                  </td>
-                  <td>
-                    {{$payment->comments}}
-                  </td>
-                </tr>
-              @endif
-            @endforeach
-        </table>
-        <h3  style="margin-top:30px;">Pagos por realizar</h3>
-        <div class="table-responsive">
-        <table class="table">
-          <tr>
-            <th>Monto a pagar</th>
-            <th>Fecha de vencimiento</th>
-            <th>Acciones</th>
-          </tr>
-          @foreach($event->payments->sortBy('tentativeDate') as $payment)
-            @if($payment->status==0)
-              <tr>
-                <td>
-                  <p>{{$payment->toBePaid}}</p>
-                </td>
-                <td>
-                  @if(\Carbon\Carbon::parse($payment->tentativeDate) < \Carbon\Carbon::now())
-                    <span style="color:red">{!! \Carbon\Carbon::parse($payment->tentativeDate)->format('d-m-Y') !!}</span>
-                  @else
-                  {!! \Carbon\Carbon::parse($payment->tentativeDate)->format('d-m-Y') !!}
-                  @endif
-                </td>
-                <td>
-                  @if($payment->toBePaid < 1)
-                    <button class="makePay btn btn-primary" data-amount="{{$payment->toBePaid}}" disabled data-payment="{{$payment->id}}">Realizar pago</button>
-                  @else
-                    <button class="makePay btn btn-primary" data-amount="{{$payment->toBePaid}}" data-payment="{{$payment->id}}">Realizar pago</button>
-                  @endif
-                </td>
-              </tr>
-            @endif
-          @endforeach
-        </table>
-        </div>
- <h4><button class="btn btn-primary makePay" href="#" class="newPaymentBtn">Registrar nuevo pago para este evento</button></h4>
- {{--       <h3>Control de gastos</h3>
+        <h3>Control de gastos</h3>
         <table class="table">
             <thead>
                 <tr>
                     <th>Monto</th>
                     <th>Fecha</th>
                     <th>Concepto</th>
-                    <th>Numero de recibo</th>
+                    <th>Número de recibo</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($event->expenses as $expense)
                     <tr>
-                      <td>{{$expense->amount}}</td>
-                      <td>{{$expense->expenseDate}}</td>
-                      <td>{{$expense->concept}}</td>
-                      <td>{{$expense->receipt}}</td>
+                      <td data-title="Monto">{{$expense->amount}}</td>
+                      <td data-title="Fecha">{{$expense->expenseDate}}</td>
+                      <td data-title="Concepto">{{$expense->concept}}</td>
+                      <td data-title="Número de recibo">{{$expense->receipt}}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -239,12 +109,12 @@
                           <a href="#" class="btn btn-info btn-block hiddenFormClose" >Cerrar</a>
                       </div>
                     </form>
-                  </div> --}}
+                  </div>
       </div>
     </div>
 </div>
 </div>
-
+@endcan
 
 
 

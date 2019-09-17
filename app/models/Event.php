@@ -44,5 +44,10 @@ class Event extends Model
         return $duration;
     }
 
-    protected $appends = ['total_paid', 'total_debt', 'duration'];
+    public function getTotalSpentAttribute()
+    {
+        return $this->expenses()->sum('amount');
+    }
+
+    protected $appends = ['total_paid', 'total_debt', 'duration', 'total_spent'];
 }

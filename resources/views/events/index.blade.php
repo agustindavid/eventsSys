@@ -75,7 +75,7 @@
         <th>Nombre</th>
         <th>Paquete</th>
         <th>Cliente</th>
-        <th>Locacion</th>
+        <th>Locación</th>
         <th>Monto total</th>
         <th>Monto pagado</th>
         <th>Acciones</th>
@@ -83,13 +83,13 @@
     </thead>
     <tbody>
     @foreach ($events as $event)
-        <tr>
+        <tr class="data-row">
         <td>{{$event->quote->eventName}}</td>
-        <td>{{$event->quote->package->name}}</td>
-        <td>{{$event->quote->client->name}} {{$event->quote->client->lastname}}</td>
-        <td>{{$event->quote->venue->name}}</td>
-        <td>{{$event->quote->price}}</td>
-        <td>{{$event->total_paid}}</td>
+        <td data-title="Paquete">{{$event->quote->package->name}}</td>
+        <td data-title="Cliente">{{$event->quote->client->name}} {{$event->quote->client->lastname}}</td>
+        <td data-title="Locación">{{$event->quote->venue->name}}</td>
+        <td data-title="Monto Total">{{$event->quote->price}}</td>
+        <td data-title="Acciones">{{$event->total_paid}}</td>
         <td><a href="{{url('/')}}/events/{{$event->id}}">ver detalles</a> - Eliminar</td>
         </tr>
     @endforeach
@@ -141,6 +141,19 @@ $(document).on("click", ".quote-selector", function(e){
     $('#quoteName').html('<b>'+$(this).data('name')+'.</b> <br> Costo Total: <b>'+$(this).data('price')+'</b>');
 })
 
+</script>
+
+<script>
+$(document).ready(function(){
+  $('.data-row').click(function(){
+    if($(this).hasClass('visible-info')){
+      $(this).removeClass('visible-info');
+    }else{
+      $('.data-row').removeClass('visible-info');
+      $(this).addClass('visible-info');
+    }
+  });
+});
 </script>
 
 @endsection

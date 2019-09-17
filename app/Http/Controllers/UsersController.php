@@ -54,11 +54,18 @@ class UsersController extends Controller
       //$this->validate($request,[ 'name'=>'required', 'lastname'=>'required', 'email'=>'required', 'rfc'=>'required', 'fiscalname'=>'required', 'commercialname'=>'required', 'phone'=>'required']);
       //print_r($request->permissions);
       $user->syncPermissions($request->permissions);
-      $user->update([
+      if($request['password'] && $request['password_confirmation']){
+        $user->update([
           'name' => $request['name'],
           'password' => Hash::make($request['password']),
-      ]);
-      //return redirect()->route('users.index')->with('success','Registro actualizado satisfactoriamente');
+        ]);
+      }
+      if($request['name'] && !($request['password'])){
+          $user->update([
+              'name' => $request['name']
+          ]);
+      }
+      return redirect()->route('users.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
 }

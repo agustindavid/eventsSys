@@ -129,4 +129,15 @@ class EventController extends Controller
         //return view('events.contract', ['event'=>$event]);
         return $pdf->download('contratoevento'. $event->id .'.pdf');
     }
+
+    public function eventBalance(){
+        $events=\App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments', 'expenses'])->get();
+
+        return view('events.balance', ['events' => $events]);
+    }
+
+    public function eventBalanceShow(Event $event){
+        $event = \App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments'])->find($event->id);
+        return view('events.balance-detail', compact('event'));
+    }
 }

@@ -4,7 +4,7 @@
      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
          @csrf
      </form>
-        <li><a href="{{url('/')}}/users" id="openMenu"><i class="fas fa-chevron-right"></i><span><small>Cerrar Menú</small></span></a></li>
+        <li><a href="{{url('/')}}/users" id="openMenu"><i class="fas fa-ellipsis-h"></i><span><small>Cerrar Menú</small></span></a></li>
         @can('usuarios')
           <li><a href="{{url('/')}}/users"><i class="fas fa-users"></i><span>Usuarios</span></a></li>
         @endcan
@@ -33,12 +33,12 @@
           <li><a href="{{url('/')}}/calendar"><i class="fas fa-calendar"></i><span>Calendario</span></a></li>
         @endcan
         @can('pagos')
-          <li><a href="{{url('/')}}/payments"><i class="fas fa-calendar"></i><span>Pagos</span></a></li>
+          <li><a href="{{url('/')}}/stats"><i class="fas fa-chart-bar"></i><span>informes</span></a></li>
         @endcan
         @can('gastos')
-          <li><a href="{{url('/')}}/calendar"><i class="fas fa-calendar"></i><span>Gastos</span></a></li>
+          <li><a href="{{url('/')}}/expenses"><i class="fas fa-money-check-alt"></i><span>Gastos</span></a></li>
         @endcan
-            <li><a href="{{url('/')}}/settings"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
+          <li><a href="{{url('/')}}/settings"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
     </ul>
 </nav>
 

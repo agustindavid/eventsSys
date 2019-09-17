@@ -36,7 +36,7 @@
             <div class="form-row form-group">
             <div class="col-md-4">
                 <label for="deposit">Deposito de garantia</label>
-                <input type="number" name="deposit" id="#deposit" class="form-control input-sm">
+                <input type="number" name="deposit" id="#deposit" class="form-control input-sm" value="{{setting('deposito')}}">
             </div>
             <div class="col-md-4">
                 <label for="extraPerson">Costo por persona extra</label>
