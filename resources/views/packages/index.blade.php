@@ -85,6 +85,7 @@ var formData = {
     'adultPrice': $('input[name=adultPrice]').val(),
     'minQty': $('input[name=minQty]').val(),
     'services': $('input[name=services[]]').val(),
+    //'services': $('input[name=services[]]').val(),
     };
 // process the form
 $.ajax({
@@ -100,8 +101,8 @@ $.ajax({
         // here we will handle errors and validation messages
     });
 });
-
   });
+
 </script>
 <script>
 $(document).ready(function(){

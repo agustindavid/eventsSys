@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\models\Event;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Charts\BalanceChart;
+
 use Barryvdh\DomPDF\Facade as PDF;
 
 class EventController extends Controller
@@ -46,13 +48,12 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $newEvent=\App\models\Event::firstOrCreate(['quote_id'=>$request->quote_id, 'receiptsQty' => $request->receiptsQty, 'extraPerson' => $request->extraPerson, 'deposit' => $request->deposit]);
+        $relatedQuote=\App\models\Quote::find($request->quote_id);
         $firstPayment=$request->firstPayment;
-        $carbon = new Carbon();
-        $relatedQuote=\App\models\Quote::find($newEvent->quote_id);
-        //print_r($relatedQuote);
+        $newEvent=\App\models\Event::firstOrCreate(['quote_id'=>$request->quote_id, 'receiptsQty' => $request->receiptsQty, 'extraPerson' => $request->extraPerson, 'deposit' => $request->deposit, 'price'=>$relatedQuote->price, 'paidTotal' => $request->firstPayment, 'debtAmount'=> $relatedQuote->price - $firstPayment, 'status' => 0 ]);
         $relatedQuote->status = 1;
         $relatedQuote->save();
+        $carbon = new Carbon();
         $debtAmount=$relatedQuote->price - $firstPayment;
         $eachPay=$debtAmount/($newEvent->receiptsQty-1);
         $payTotal=0;
@@ -79,8 +80,20 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $event = \App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments'])->find($event->id);
-        return view('events.show', compact('event'));
+        $event = \App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'quote.user', 'payments', 'services'])->find($event->id);
+        $specialServices=\App\models\Service::where('isSpecial', 1)->get();
+        $chart = new BalanceChart;
+        $chart->labels(['Monto total','Total Pagado', 'Total Adeudado']);
+        //$data=array();
+        $eventPrice=$event->price;
+        $eventPaid=\App\models\Payment::where('status', 1)->where('event_id', $event->id)->sum('amount');
+        $debtTotal=$eventPrice - $eventPaid;
+
+        $dataset=$chart->dataset('Balance', 'bar', [$eventPrice, $eventPaid, $debtTotal]);
+        $dataset->backgroundColor(collect(['#060657','#060657', '#060657']));
+        $dataset->color(collect(['#060657','#060657', '#060657']));
+
+        return view('events.show', compact('event', 'specialServices', 'chart'));
     }
 
     /**
@@ -119,7 +132,7 @@ class EventController extends Controller
 
     public function generatePDF($event_id)
     {
-        $event=\App\models\Event::with('quote', 'quote.client', 'quote.venue', 'quote.categories', 'quote.package', 'payments')->find($event_id);
+        $event=\App\models\Event::with('quote', 'quote.client', 'quote.venue', 'quote.categories', 'quote.package', 'quote.user', 'payments')->find($event_id);
         $data=['event'=>$event];
         //$event = ['title' => 'Welcome to HDTuto.com'];
         //
@@ -132,8 +145,17 @@ class EventController extends Controller
 
     public function eventBalance(){
         $events=\App\models\Event::with(['quote.package', 'quote.client', 'quote.venue', 'payments', 'expenses'])->get();
+        $chart = new BalanceChart;
+        $chart->labels(['Total Cotizado','Total Aprobado', 'Total Pagado', 'Total Gastado']);
+        //$data=array();
+        $quotesTotal=\App\models\Quote::where('status', 0)->sum('price');
+        $eventsTotal=\App\models\Quote::where('status', 1)->sum('price');
+        $paidTotal=\App\models\Payment::where('status', 1)->sum('amount');
+        $spentTotal=\App\models\Expense::all()->sum('amount');
 
-        return view('events.balance', ['events' => $events]);
+        $chart->dataset('My dataset', 'bar', [$quotesTotal, $eventsTotal, $paidTotal, $spentTotal]);
+        return view('events.balance', ['events' => $events, 'chart'=>$chart, 'quotesTotal'=>$quotesTotal]);
+
     }
 
     public function eventBalanceShow(Event $event){

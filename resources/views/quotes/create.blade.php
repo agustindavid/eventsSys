@@ -35,14 +35,13 @@
 </div>
 
 <div class="alert alert-success success-message" role="alert"></div>
-
 <div class="defaultForm">
   <h3 class="panel-title">Nueva Cotización</h3>
   <form method="POST" action="{{ route('quotes.store') }}" class="newQuoteForm" role="form">
   {{ csrf_field() }}
   <input type="hidden" name="parent_id" id="parent_id" class="form-control input-sm" value="32">
   <input type="hidden" name="status" id="status" class="form-control input-sm" value="0">
-  <input type="hidden" name="user_id" id="user_id" class="form-control input-sm" value="1">
+  <input type="hidden" name="user_id" id="user_id" class="form-control input-sm" value="{{Auth::user()->id}}">
   <input type="hidden" name="client_id" id="client_id">
   <div class="form-group">
       <label for="clientname">Cliente <span class="reqStar">*</span></label>
@@ -118,6 +117,8 @@
         @endforeach
       </select>
       <p class="infoText" id="minPkgPeople"><small>Minimo de personas: <strong><span id="minPkgPeopleQty"></span></strong></small></p>
+      <p class="infoText" id="kidsPkgPrice"><small>Precio por niño: <strong><span id="kidsPkgPriceText"></span></strong></small></p>
+      <p class="infoText" id="adultsPkgPrice"><small>Precio por adulto: <strong><span id="adultsPkgPriceText"></span></strong></small></p>
     </div>
     <div class="col-md-2">
       <label for="kidsQty">Niños <span class="reqStar">*</span></label>
@@ -132,16 +133,42 @@
         <input type="number" name="peopleQty" min="1" id="peopleQty" class="form-control input-sm" readonly placeholder="">
       </div>
   </div>
+  <div class="form-group form-row">
+    <div class="col">
+      <p>Precio del paquete: <span id="fullPackagePrice"></span></p>
+    </div>
+    <div class="col">
+      <label for="Descuento">Descuento</label>
+        <select class="discount" name="discount" id="discount">
+          <option value="0" disabled>0</option>
+          <option value="5" disabled>5%</option>
+          <option value="10" disabled>10%</option>
+          <option value="15" disabled>15%</option>
+          <option value="20" disabled>20%</option>
+       </select>
+    </div>
+    <div class="col">
+        <p>Precio con descuento: <span id="priceWithDiscount"></span></p>
+    </div>
+</div>
   <div class="services-container">
-    <h3>Servicios Incluidos</h3>
+    <h3>Servicios Incluidos en el paquete</h3>
     <ul>
 
     </ul>
   </div>
-  <div class=>
-      <h3>Servicios Adicionales</h3>
-        <div class="addOnServices">
-
+  <div class="form-group">
+      <h3>Servicios Especiales</h3>
+        <div class="specialServices">
+            @foreach ($specialServices as $s_service)
+            <div class="form-check row no-margin">
+              <input type="checkbox" class="form-check-input extraServiceCheck" id="service-{{$s_service->id}}" name="services[]" value="{{$s_service->id}}">
+              <label class="form-check-label" for="service-{{$s_service->id}}">{{$s_service->name}}</label><br>
+              <label class="extraServicePriceLabel"  for="servicePrice-{{$s_service->id}}">Precio del servicio</label>
+              <input type="number" min="0" class="extraServicePrice form-control input-sm" value="{{$s_service->servicePrice}}" name="servicePrice-{{$s_service->id}}" id="servicePrice-{{$s_service->id}}">
+              <div class="clearfix"></div>
+            </div>
+            @endforeach
         </div>
   </div>
   <div class="form-row form-group">
@@ -194,7 +221,7 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-      </script>
+</script>
 
 <script>
     // initialize input widgets first
@@ -208,7 +235,7 @@
     $('#dateGroup .date').datepicker({
         'format': 'yyyy/mm/dd',
         'autoclose': true,
-        'startDate': "+1w",
+        'startDate': "today",
         'language': 'es'
     });
 
@@ -244,8 +271,18 @@ $(document).ready(function(){
                 $('#eventDate').val('');
             } else {
                 $('#eventFinishDate').val($('#eventDate').val());
+                $('.discount option').each(function(){
+                    console.log($(this).val());
+                    if( Number($(this).val()) <= data.maxDiscount){
+                      $(this).prop('disabled', false);
+                    }else {
+                      $(this).prop('disabled', true);
+                    }
+                });
             }
         });
+
+
     if($('#eventFinishDate').val() != ''){
           var auxDate=$('#eventFinishDate').val();
           var eventFinishDate=Date.parse(auxDate);
@@ -268,8 +305,9 @@ $(document).ready(function(){
 
     $('#validThru').datepicker({
         format:'yyyy/mm/dd',
-        endDate: "+1m",
-        language: 'es'
+        endDate: "+{{setting('valid_thru')}}d",
+        language: 'es',
+        startDate: "today"
     });
 });
 </script>
@@ -340,41 +378,58 @@ $.ajax({
     });
 });
 
-var kidsPrice;
-var adultsPrice;
-var minQty;
-var maxQty;
-var totalPeople;
+
+</script>
+<script>
+
+var kidsPrice=0;
+var adultsPrice=0;
+var minQty=0;
+var maxQty=0;
+var totalPeople=0;
+var packagePrice=0;
+var priceWithDiscount=0;
+var totalPrice=0;
+var extrasPrice=0;
+var addOnPrice=0;
 
 $('#package_id').change(function(){
             //$('#price').val(packagePrice);
             //$('#price_shown').val(packagePrice);
+            $('#fullPackagePrice').text('');
     var item_id=$(this).val();
     $.ajax({
     type        : 'get', // define the type of HTTP verb we want to use (POST for our form)
     url         : '{{url('/')}}/api/packages/'+item_id, // the url where we want to POST
 }).done(function(data) {
-        console.log(data);
         kidsPrice=data.package.kidsPrice;
         adultsPrice=data.package.adultPrice;
         minQty=data.package.minQty;
         var i=0;
         var j=0;
+        $('.services-container h3').show();
         $('.services-container ul').html("");
-        $('.addOnServices').html("");
+        //$('.addOnServices').html("");
         $('#peopleQty').attr('min', minQty);
         $('#minPkgPeopleQty').text(minQty);
+        $('#kidsPkgPriceText').text(kidsPrice);
+        $('#adultsPkgPriceText').text(adultsPrice);
         $.map(data.package.services, function(){
-        //console.log(data[i]);
           $('.services-container ul').append("<li>"+data.package.services[i].name+"</li>");
           i++;
-        $('#kidsQty, #adultsQty, #peopleQty, #price').val('');
+        //$('#kidsQty, #adultsQty, #peopleQty, #price').val('');
         $('#kidsQty, #adultsQty, #extras').prop('disabled', false);
+        $('#fullPackagePrice').text(calculatePackagePrice() );
         })
-        $.map(data.otherServices, function(){
-          $('.addOnServices').append('<div class="form-check"><input type="checkbox" class="form-check-input" id="service'+data.otherServices[j].id+'" name="services[]" value="'+ data.otherServices[j].id +'"><label class="form-check-label" for="service'+data.otherServices[j].name+'">'+data.otherServices[j].name+'</label></div>');
-          j++;
-        });
+        console.log($('#kidsQty').val());
+        console.log($('#adultsQty').val());
+        if(($('#kidsQty').val() > 0) && ($('#adultsQty').val() > 0)){
+          calculateTotal();
+        }
+        //$.map(data.otherServices, function(){
+          //$('.addOnServices').append('<div class="form-check"><input type="checkbox" class="form-check-input" id="service'+data.otherServices[j].id+'" name="services[]" value="'+ data.otherServices[j].id +'"><label class="form-check-label" for="service'+data.otherServices[j].name+'">'+data.otherServices[j].name+'</label></div>');
+          //j++;
+        //});
 
         // here we will handle errors and validation messages
     });
@@ -395,20 +450,100 @@ $('#extras').change(function(){
     if($(this).val() != ''){
       $('#extrasPrice').prop('disabled', false);
     } else {
-        $('#extrasPrice').prop('disabled', true)
+      $('#extrasPrice').prop('disabled', true)
     }
 });
 
-$('#kidsQty, #adultsQty, #extrasPrice').keyup(function(){
+
+function calculateDiscountPrice(percentage){
+    var packagePrice=calculatePackagePrice();
+    var discount=0;
+    var discountPercentage=Number(percentage);
+    discount=(packagePrice * discountPercentage)/100;
+    priceWithDiscount=packagePrice-discount;
+    return priceWithDiscount;
+}
+
+function calculatePackagePrice(){
     totalKids=$('#kidsQty').val();
     totalAdults=$('#adultsQty').val();
-    extrasPrice=$('#extrasPrice').val();
-    totalPrice = (kidsPrice * totalKids*1 + adultsPrice * totalAdults*1) + extrasPrice*1;
+    //extrasPrice=$('#extrasPrice').val();
+    packagePrice=(kidsPrice * totalKids*1 + adultsPrice * totalAdults*1);
+    return packagePrice;
+}
+
+
+
+function calculateTotal(){
+    console.log('entra');
+    if ($('.discount').val() >= 0){
+        packageFullPrice=calculateDiscountPrice($('.discount').val());
+        $('#priceWithDiscount').text(packageFullPrice);
+    } else {
+        packageFullPrice=calculatePackagePrice();
+        $('#priceWithDiscount').text(packageFullPrice);
+    }
+    if($('#extrasPrice').val() > 0){
+        addOnPrice=Number($('#extrasPrice').val());
+    }
+    totalPrice=packageFullPrice+extrasPrice+addOnPrice;
     totalPeople=totalKids*1 + totalAdults*1;
     $('#peopleQty').val(totalPeople);
     $('#price').val(totalPrice);
     $('#price_shown').val(totalPrice);
-})
+}
+
+function countExtras(){
+    var result=0;
+    if($('.extraServiceCheck:checked ~.extraServicePrice')){
+    $('.extraServiceCheck:checked ~.extraServicePrice').each(function(){
+        result += Number($(this).val());
+    });
+      return result;
+    }else{
+      return 0;
+    }
+}
+
+$('.extraServicePrice').change(function(){
+  if($(this).val() > 0){
+    $('.extraServiceCheck', $(this).parent()).prop('checked', true);
+    extrasPrice=countExtras();
+    console.log(extrasPrice);
+    calculateTotal();
+  } else {
+    $('.extraServiceCheck', $(this).parent()).prop('checked', false);
+    extrasPrice=countExtras();
+    console.log(extrasPrice);
+    calculateTotal();
+  }
+
+});
+
+$('#kidsQty, #adultsQty, #extrasPrice').keyup(function(){
+  calculateTotal();
+});
+
+$('#kidsQty, #adultsQty').keyup(function(){
+  //console.log(calculatePackagePrice());
+  $('#fullPackagePrice').text(calculatePackagePrice());
+
+});
+
+
+$(document).on("change", ".discount", function(e){
+    calculateTotal();
+});
+
+
+$('.extraServiceCheck').click(function(){
+      extrasPrice=countExtras();
+      calculateTotal();
+});
+
+
+
+
 
 $('#kidsQty, #adultsQty').change(function(){
 

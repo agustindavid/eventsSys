@@ -68,6 +68,7 @@
                     <th>Fecha</th>
                     <th>Concepto</th>
                     <th>Número de recibo</th>
+                    <th>Imprimir</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,7 +77,9 @@
                       <td data-title="Monto">{{$expense->amount}}</td>
                       <td data-title="Fecha">{{$expense->expenseDate}}</td>
                       <td data-title="Concepto">{{$expense->concept}}</td>
-                      <td data-title="Número de recibo">{{$expense->receipt}}</td>
+                      <td data-title="Número de recibo">{{setting('payment_prefix')}}{{$expense->id}}</td>
+                      <td data-title="Imprimir"><a href="{{url('/')}}/print-expense/{{$expense->id}}"><i class="fas fa-print"></i></a>
+                      </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -159,9 +162,9 @@ $('.newPaymentForm').submit(function(event) {
   var paymentID=$('input[name=id]').val();
   if(paymentID != ''){
     requestType='PUT';
-    requestUrl='/api/payment/'+paymentID;
+    requestUrl='{{url('/')}}/api/payment/'+paymentID;
   } else {
-    requestUrl='/api/payment';
+    requestUrl='{{url('/')}}/api/payment';
     requestType='POST';
   }
   var formData = {
@@ -196,7 +199,7 @@ $.ajax({
 
 $('.newExpenseForm').submit(function(event) {
 event.preventDefault();
-    requestUrl='/api/expenses';
+    requestUrl='{{url('/')}}/api/expenses';
     requestType='POST';
 var formData = {
     'amount': $('input[name=amount]', this).val(),

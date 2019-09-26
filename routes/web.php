@@ -25,6 +25,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/generate-contract/{event_id}','EventController@generatePDF');
+Route::get('/print-payment/{payment_id}','PaymentController@paymentPDF');
+Route::get('/print-expense/{expense_id}','ExpensesController@expensePDF');
+Route::get('/printable-quote/{quote_id}','QuoteController@printableQuote');
 Route::get('/expenses','EventController@eventBalance');
 Route::get('/event_balance/{event}','EventController@eventBalanceShow');
 Route::get('/stats',function(){

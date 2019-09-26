@@ -3,10 +3,10 @@
 @section('pageTitle', 'Eventos')
 
 @section('content')
-<div class="dataInfo">
+{{-- <div class="dataInfo">
   <div class="row">
     <div class="col-md-6">
-      <h3>Cotizacion para {{$quote->eventName}}</h3>
+      <h3>Cotizacion para {{$quote->eventName}} <small>(<a href="{{url('/')}}/printable-quote/{{$quote->id}}">Obtener versión descargable</a>)</small></h3>
       <p>A nombre de {{$quote->client->name}} {{$quote->client->lastname}}</p>
       @if($quote->status==0)
       <p><strong>Para procesar el primer pago y crear un evento a partir de esta cotizacion haga click <a href="#" class="showHiddenForm">aqui</a></strong></p>
@@ -80,16 +80,28 @@
       </div>
       <div class="row">
         <div class="col">
-          <p>Fecha final: <strong>{!! \Carbon\Carbon::parse($quote->eventFinishDate)->format('d-m-Y') !!}</strong></p>
+          <p>Fecha de culminación: <strong>{!! \Carbon\Carbon::parse($quote->eventFinishDate)->format('d-m-Y') !!}</strong></p>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <p>Hora final: <strong>{{$quote->eventFinishTime}}</strong></p>
+          <p>Hora de culminación: <strong>{{$quote->eventFinishTime}}</strong></p>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="row">
+      <div class="col">
+        <p>Extras: <strong>{{$quote->extrasPrice}}</strong></p>
+        <p>{{$quote->extras}}</p>
+        <h2>Servicios Extras</h2>
+        <ul>
+          @foreach ($quote->services as $service)
+            <li>{{$service->name}}</li>
+          @endforeach
+        </ul>
+      </div>
+    </div>
+   <div class="col-md-6">
       <div class="row">
         <div class="col">
           <p>Nombre del paquete seleccionado: <strong>{{$quote->package->name}}</strong></p>
@@ -112,23 +124,101 @@
          <p>Precio: <strong>{{$quote->price}}</strong></>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <p>Extras: <strong>{{$quote->extrasPrice}}</strong></p>
-        <p>{{$quote->extras}}</p>
-        <h2>Servicios Extras</h2>
-        <ul>
-          @foreach ($quote->services as $service)
-            <li>{{$service->name}}</li>
-          @endforeach
-        </ul>
-      </div>
-    </div>
   </div>
+ --}}
+
+
+  <div class="row dataInfo">
+        <h2>Resumen de cotización</h2>
+      <div class="card-columns">
+        <div class="card shadow">
+          <div class="card-header">
+            Detalles del evento
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              <p>Nombre del evento: <strong>{{$quote->eventName}}</strong></p>
+              <p>Cliente:<strong> {{$quote->client->name}} {{$quote->client->lastname}} </strong></p>
+              <p>Salón: <strong>{{$quote->venue->name}}</strong></p>
+              <p>Fecha y hora: <strong>{!! \Carbon\Carbon::parse($quote->eventDate)->format('d/m/Y') !!} a las {!! \Carbon\Carbon::parse($quote->eventTime)->isoFormat('h:mm a') !!}</strong></p>
+              <p>Hasta: <strong>{!! \Carbon\Carbon::parse($quote->eventFinishDate)->format('d/m/Y') !!} a las {!! \Carbon\Carbon::parse($quote->eventFinishTime)->isoFormat('h:mm a') !!}</strong></p>
+              <p>Cantidad de personas: <strong>{{$quote->peopleQty}}</strong></p>
+              <p>Niños: <strong>{{$quote->kidsQty}}</strong> +</p>
+              <p>Adultos: <strong>{{$quote->adultsQty}}</strong> +</p>
+              <p><a href="{{url('/')}}/generate-contract/{{$quote->id}}" class="btn btn-primary"><i class="far fa-file-alt icon-btn"></i>Descargar contrato</a></p>
+            </p>
+           </div>
+        </div>
+        <div class="card shadow">
+                <div class="card-header">
+                  Resumen de cuenta:
+                </div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <p>Costo de la cotización: {{$quote->price}}$</p>
+                  </p>
+                </div>
+              </div>
+        <div class="card shadow">
+          <div class="card-header">
+            Paquete y servicios incluidos
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              <p>Paquete: <strong>{{$quote->package->name}}</strong></p>
+              <p>Servicios incluidos</p>
+               <ul>
+               @foreach($quote->package->services as $service)
+                 <li>{{$service->name}}</li>
+               @endforeach
+               </ul>
+            </p>
+          </div>
+        </div>
+        <div class="card shadow">
+          <div class="card-header">
+            Servicios Exclusivos
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              <ul>
+              @foreach($quote->services as $q_service)
+                <li>{{$q_service->name}}: {{$q_service->pivot->price}}</li>
+              @endforeach
+              </ul>
+            </p>
+          </div>
+        </div>
+        <div class="card shadow">
+          <div class="card-header">
+             Detalles del cliente
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              <p>Nombre: <strong>{{$quote->client->name}} {{$quote->client->lastname}}</strong></p>
+              <p>Teléfono: <strong>{{$quote->client->phone}}</strong></p>
+              <p>Teléfono celular: <strong>{{$quote->client->mobilePhone}}</strong></p>
+              <p>RFC: <strong>{{$quote->client->rfc}}</strong></p>
+              <p>Ciudad: <strong>{{$quote->client->city}}</strong></p>
+              <p>Estado: <strong>{{$quote->client->state}}</strong></p>
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+
 <script>
     $('.showHiddenForm, .hiddenFormClose').click(function(e){
         e.preventDefault();
         $('.hiddenFormWrapper').slideToggle();
     });
+</script>
+
+<script>
+        $('.card-header').click(function(){
+            var obj=$(this).parent();
+            $('.card-body', obj).slideToggle();
+        })
 </script>
 @endsection

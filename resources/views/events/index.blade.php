@@ -74,6 +74,7 @@
         <tr>
         <th>Nombre</th>
         <th>Paquete</th>
+        <th>Vendedor</th>
         <th>Cliente</th>
         <th>Locación</th>
         <th>Monto total</th>
@@ -86,6 +87,7 @@
         <tr class="data-row">
         <td>{{$event->quote->eventName}}</td>
         <td data-title="Paquete">{{$event->quote->package->name}}</td>
+        <td data-title="Paquete">{{$event->quote->user->name}}</td>
         <td data-title="Cliente">{{$event->quote->client->name}} {{$event->quote->client->lastname}}</td>
         <td data-title="Locación">{{$event->quote->venue->name}}</td>
         <td data-title="Monto Total">{{$event->quote->price}}</td>

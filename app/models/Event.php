@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    protected $fillable = ['quote_id', 'receiptsQty', 'extraPerson', 'deposit'];
+    protected $fillable = ['quote_id', 'receiptsQty', 'extraPerson', 'deposit', 'price', 'paidTotal', 'debtAmount', 'status'];
 
 
     public function quote() {
@@ -24,6 +24,10 @@ class Event extends Model
     public function getTotalPaidAttribute()
     {
         return $this->payments()->where('status', 1)->sum('amount');
+    }
+
+    public function services() {
+        return $this->belongsToMany('App\models\Service')->withPivot('price');
     }
 
     //protected $appends = ['total_paid'];

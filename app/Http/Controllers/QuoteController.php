@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\models\Quote;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 class QuoteController extends Controller
 {
@@ -34,8 +36,9 @@ class QuoteController extends Controller
         $allPackages=\App\models\Package::all();
         $allClients=\App\models\Client::all();
         $allVenues=\App\models\Venue::all();
+        $specialServices=\App\models\Service::where('isSpecial', 1)->get();
         $eventsCategories=\App\models\Category::where('categorizable_type', 'quotes')->get();
-        return view('quotes.create', ['allPackages' => $allPackages, 'allClients' => $allClients, 'allVenues'=> $allVenues, 'eventsCategories'=>$eventsCategories]);
+        return view('quotes.create', ['allPackages' => $allPackages, 'allClients' => $allClients, 'allVenues'=> $allVenues, 'eventsCategories'=>$eventsCategories, 'specialServices'=>$specialServices]);
     }
 
     /**
@@ -55,10 +58,14 @@ class QuoteController extends Controller
         $request->offsetSet('eventTime', $startTime);
         $request->offsetSet('eventFinishTime', $endTime);
         $duration=$endTime->diffInHours($startTime);
-        print_r($duration);
         $newQuote=\App\models\Quote::create($request->all());
-        $newQuote->services()->sync($request->services);
+        //$newQuote->services()->sync($request->services);
+        foreach($request->services as $s_service){
+            $requestIndex='servicePrice-'.$s_service;
+            $newQuote->services()->syncWithoutDetaching([$s_service=>['price'=>$request->$requestIndex]]);
+        }
         return redirect()->route('quotes.index')->with('success','Registro creado satisfactoriamente');
+        print_r($request->all());
     }
 
     /**
@@ -108,13 +115,41 @@ class QuoteController extends Controller
         //
     }
 
+    public function check_discount($date){
+        $day=\Carbon\Carbon::parse($date)->locale('es')->isoFormat('dddd');
+        $month=\Carbon\Carbon::parse($date)->locale('es')->isoFormat('MMMM');
+
+            if($day=='viernes' || $day=='sábado' || $day=='domingo'){
+                $day=str_slug($day);
+                $month=str_slug($month);
+                $maxDiscount=settings($month.'_'.$day);
+                return $maxDiscount;
+            } else {
+                return 0;
+            }
+    }
+
     public function check_dates($venue, $date){
         $date=str_replace("-","/",$date);
         $quotes=\App\models\Quote::where('eventDate', $date)->where('venue_id', $venue)->get();
         $arr = array('msg' => '', 'status' => true);
         if($quotes->count()>0){
           $arr = array('msg' => 'La fecha no esta disponible', 'status' => false);
+        } else {
+          $maxDiscount=$this->check_discount($date);
+          $arr = array('maxDiscount'=>$maxDiscount);
         }
         return Response()->json($arr);
+    }
+
+    public function printableQuote($quote_id)
+    {
+        $quote=\App\models\Quote::with('client', 'venue', 'categories', 'package', 'services')->find($quote_id);
+        $data=['quote'=>$quote];
+        $pdf = PDF::loadView('quotes.resume', $data);
+
+
+        return view('quotes.resume', ['quote'=>$quote]);
+        //return $pdf->download('cotizacion'. $quote->id .'.pdf');
     }
 }

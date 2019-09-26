@@ -29,6 +29,11 @@
           <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Nombre" required>
         </div>
       </div>
+      <div class="form-group">
+        <div class="col">
+            <label><input type="checkbox" name="isSpecial" value="1">Servicio Especial</label>
+          </div>
+      </div>
       <div class="form-row form-group">
         <div class="col-xs col-md-6 mb1r">
           <label for="category_id">Categoría</label>
@@ -90,6 +95,7 @@ event.preventDefault();
 var formData = {
     'name': $('input[name=name]').val(),
     'servicePrice': $('input[name=servicePrice]').val(),
+    'isSpecial': $('input[name=isSpecial]').val(),
     'category_id': $('select[name=category_id]').val(),
     };
 // process the form

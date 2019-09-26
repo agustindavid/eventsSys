@@ -9,6 +9,7 @@
     <header class="row">
         @include('includes.header')
     </header>
+    <div class="modal-overlay"></div>
     <div id="main" class="row">
         <!-- sidebar content -->
         <div id="sidebar" class="sidebar collapsed">
@@ -22,7 +23,7 @@
             </div>
         </div>
     </div>
-    <footer class="row">
+    <footer class="row no-margin">
         @include('includes.footer')
     </footer>
 

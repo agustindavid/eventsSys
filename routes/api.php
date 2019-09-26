@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Route::get('clients', 'ApiClientsController@clients_quotes');
 Route::get('/checkquotes/{venue}', 'ApiQuotesController@check_quotes');
+Route::get('/checkdiscount/{date}', 'ApiDiscountsController@check_discount');
+Route::post('/add-charge', 'ApiPaymentController@addCharge');
 Route::resources([
     'calendar' => 'CalendarController',
     'clients' => 'ApiClientsController',

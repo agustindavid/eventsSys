@@ -1,4 +1,3 @@
-Footer
 <script>
   $(document).ready(function(){
     $('#openMenu').click(function(e){

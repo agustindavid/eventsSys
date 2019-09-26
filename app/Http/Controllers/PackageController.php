@@ -21,7 +21,8 @@ class PackageController extends Controller
     {
         $allServices=\App\models\Service::all();
         $packages=\App\models\Package::All();
-        return view('packages.index', ['packages' => $packages, 'allServices'=>$allServices]);
+        $specialServices=\App\models\Service::where('isSpecial', 1)->get();
+        return view('packages.index', ['packages' => $packages, 'allServices'=>$allServices, 'specialServices' => $specialServices]);
     }
 
     /**

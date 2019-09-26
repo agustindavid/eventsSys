@@ -113,12 +113,14 @@
             <p>“EL PRESTADOR DEL SERVICIO”</p>
         </td>
         <td style="text-align:center; border-top:1px solid; padding-bottom:70px; width:40%;  margin-left:15px;">
-            <p>“EL CONSUMIDOR”</p>
+          <p style="text-transform:uppercase">El Consumidor</p>
+          <p style="text-transform:uppercase">{{$event->quote->client->name}} {{$event->quote->client->lastname}}</p>
         </td>
     </tr>
     <tr>
         <td style="text-align:center; border-top:1px solid;">
-            <p>EJECUTIVO DE VENTA</p>
+            <p style="text-transform:uppercase">El Vendedor</p>
+            <p style="text-transform:uppercase">{{$event->quote->user->name}}</p>
         </td>
         <td style="text-align:center; border-top:1px solid;">
             <p>TESTIGO</p>

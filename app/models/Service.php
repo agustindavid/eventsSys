@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Service extends Model
 {
-    protected $fillable = ['name', 'servicePrice', 'category_id'];
+    protected $fillable = ['name', 'servicePrice', 'category_id', 'isSpecial'];
 
     public function categories() {
         return $this->belongsTo('App\models\Category', 'category_id');
@@ -19,5 +19,9 @@ class Service extends Model
 
     public function quotes() {
         return $this->belongsToMany('App\models\Quote')->withPivot('price');
+    }
+
+    public function events() {
+        return $this->belongsToMany('App\models\Events')->withPivot('price');
     }
 }

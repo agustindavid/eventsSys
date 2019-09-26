@@ -1,6 +1,6 @@
 @extends('layouts.sidebar')
 
-@section('pageTitle', 'services')
+@section('pageTitle', 'Calendario')
 
 @section('content')
 
@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             @foreach ($venues as $u_venue)
-              <li class="nav-item"><a href="/calendar/{{$u_venue->id}}" class="nav-link" data-venue={{$u_venue->id}}>{{$u_venue->name}}</a></li>
+        <li class="nav-item"><a href="{{url('/')}}/calendar/{{$u_venue->id}}" class="nav-link" data-venue={{$u_venue->id}}>{{$u_venue->name}}</a></li>
             @endforeach
         </ul>
     </div>

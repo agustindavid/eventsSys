@@ -4,6 +4,7 @@
 
 @section('content')
 
+
 <div class="table-responsive">
   <table id="eventsTable" class="infotable">
     <thead>
@@ -30,6 +31,12 @@
     </tbody>
   </table>
 </div>
+<div class="container">
+  {!! $chart->container() !!}
+</div>
+
+{!! $chart->script() !!}
+
 <script>
 $(document).ready( function () {
    $('#eventsTable').DataTable();

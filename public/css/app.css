@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,600&display=swap);table.dataTable {
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css?family=Montserrat:300,400,600,900&display=swap);@import url(https://fonts.googleapis.com/css?family=Raleway:900&display=swap);table.dataTable {
   clear: both;
   margin-top: 6px !important;
   margin-bottom: 6px !important;
@@ -826,7 +826,7 @@ body {
   display: flex;
   flex-direction: column;
   transition: 0.25s all ease-in-out;
-  z-index: 99;
+  z-index: 97;
 }
 
 .sidebar nav {
@@ -917,6 +917,10 @@ body {
   display: none;
 }
 
+.services-container h3 {
+  display: none;
+}
+
 .services-container ul {
   justify-content: space-between;
   padding: 0;
@@ -970,6 +974,8 @@ span.typeahead__cancel-button {
 
 .infoText {
   margin-top: 8px;
+  margin-bottom: 0;
+  line-height: 1;
 }
 
 span.reqStar {
@@ -1032,6 +1038,111 @@ select.error {
 
 .tab-content {
   margin-top: 15px;
+}
+
+.specialServices .form-check {
+  margin-top: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.specialServices .form-check-label {
+  font-weight: 900;
+}
+
+.extraServicePriceLabel {
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+
+.extraServicePrice {
+  max-width: 120px;
+}
+
+.card-columns {
+  width: 100%;
+  -moz-column-count: 4 !important;
+       column-count: 4 !important;
+}
+
+.clock-bg {
+  background: #2722c3;
+  background: linear-gradient(140deg, #2722c3 0%, #000041 100%);
+}
+
+div#clockdiv {
+  text-align: center;
+  color: #ccc;
+  margin: auto;
+  position: relative;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+}
+
+div#clockdiv:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+div#clockdiv .clock-wrap {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  font-weight: 100;
+  line-height: 1;
+  font-family: "Montserrat", sans-serif;
+}
+
+.clock-wrap > div {
+  display: inline-block;
+}
+
+.smalltext {
+  font-size: 1rem;
+  font-weight: 100;
+}
+
+.card-body canvas {
+  min-height: 400px !important;
+}
+
+.slideInForm {
+  padding: 40px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin: 25px auto;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  margin: 0;
+  width: 100% !important;
+  left: auto;
+  right: 0;
+  height: 100%;
+  border-radius: 0;
+  transition: 0.25s all ease-in-out;
+  transform: translateX(300%);
+  overflow: auto;
+}
+
+.slideInForm.visible {
+  transform: translateX(0);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  left: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  display: none;
 }
 
 @media (max-width: 767.98px) {
@@ -1157,6 +1268,50 @@ select.error {
 
   .data-row.visible-info td:first-child::after {
     content: "\25B2";
+  }
+}
+
+@media (max-width: 576px) {
+  .card-columns {
+    -moz-column-count: 1 !important;
+         column-count: 1 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-columns {
+    -moz-column-count: 1 !important;
+         column-count: 1 !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .card-columns {
+    -moz-column-count: 2 !important;
+         column-count: 2 !important;
+  }
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+  .card-columns {
+    -moz-column-count: 2 !important;
+         column-count: 2 !important;
+  }
+
+  .page-wrap {
+    width: calc(100% - 90px);
+    margin-left: 60px;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1400px) {
+  .card-columns {
+    -moz-column-count: 3 !important;
+         column-count: 3 !important;
+  }
+
+  div#clockdiv .clock-wrap {
+    font-size: 2rem;
   }
 }
 
