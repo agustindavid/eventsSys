@@ -28,6 +28,6 @@
         "datepair.js": "^0.4.16",
         "jquery-timepicker": "^1.3.3",
         "jquery-typeahead": "^2.10.6",
-        "jquery-validation": "^1.19.1"
+        "jquery-validation": "^1.19.5"
     }
 }
